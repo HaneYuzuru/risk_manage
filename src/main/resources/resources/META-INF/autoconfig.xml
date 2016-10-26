@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<autoconfig>
+    <template-resources>
+        <resource template="spring/applicationContext.xml.vm" target="spring/applicationContext.xml"/>
+        <resource template="spring/spring-mvc.xml" target="spring/spring-mvc.xml"/>
+        <resource template="spring/tair_client.properties.vm" target="spring/tair_client.properties"/>
+        <resource template="log4j.xml.vm" target="log4j.xml"/>
+        <!-- jmonitor -->
+        <resource template="jmonitor.properties" target="jmonitor.properties"/>
+        <!-- dao -->
+        <resource template="spring/dao/datasource/mysql-datasource.xml.vm"
+                  target="spring/dao/datasource/mysql-datasource.xml"/>
+
+        <!-- constant -->
+        <resource template="spring/properties/env.properties.vm" target="spring/properties/env.properties"/>
+        <resource template="spring/properties/appconfig.properties.vm" target="spring/properties/appconfig.properties"/>
+        <!-- 发布系统相关 -->
+        <resource template="jetty/boot.ini" target="jetty/boot.ini"/>
+        <resource template="jetty/boot.properties" target="jetty/boot.properties"/>
+    </template-resources>
+</autoconfig>

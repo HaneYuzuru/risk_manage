@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/' >
+
+    <root>
+        <priority value ="INFO"/>
+        <appender-ref ref="rootAppender"/>
+    </root>
+
+    <logger name="error" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="errorAppender"/>
+        <appender-ref ref="catAppender" />
+    </logger>
+
+    <logger name="warn" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="warnAppender"/>
+    </logger>
+
+    <logger name="service" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="serviceAppender"/>
+    </logger>
+
+    <logger name="controller" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="controllerAppender"/>
+    </logger>
+
+    <logger name="rsSwitch" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="rsSwitchAppender"/>
+    </logger>
+
+    <logger name="job" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="jobAppender"/>
+    </logger>
+
+    <logger name="switchIeventJob" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="switchIeventAppender"/>
+    </logger>
+    <!-- hotelrslib -->
+    <logger name="rsquery.lib.dao" additivity="false">
+        <level value="TRACE"/>
+        <appender-ref ref="libDaoAppender"/>
+    </logger>
+
+    <logger name="rsquery.lib.switcher" additivity="false">
+        <level value="TRACE"/>
+        <appender-ref ref="libSwitcherAppender"/>
+    </logger>
+
+    <!-- jmonitor框架收集 -->
+    <logger name="jmonitor" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="jmonitorAppender"/>
+    </logger>
+
+    <logger name="jmonitorlogstore" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="jmonitorlogstoreAppender"/>
+    </logger>
+
+    <logger name="thrift" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="thriftAppender"/>
+    </logger>
+
+    <logger name="mq" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="mqAppender"/>
+    </logger>
+
+    <!-- activemq meituan 框架日志系统-->
+    <logger name="activemq" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="mqAppender"/>
+    </logger>
+
+    <logger name="ievent" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="ieventAppender"/>
+    </logger>
+
+
+    <appender name="rootAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/root.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="errorAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/error.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="warnAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/warn.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="serviceAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/service.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="controllerAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/controller.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="rsSwitchAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="threshold" value="INFO"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/rsSwitch.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="switchIeventAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="threshold" value="INFO"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/switchIevent.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="jobAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/job.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="libDaoAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/lib_dao.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="libSwitcherAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/lib_switcher.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="jmonitorAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/jmonitor.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="jmonitorlogstoreAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/jmonitor.logstore.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="thriftAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/thrift.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="mqAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/mq.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="ieventAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="file" value="/opt/logs/mobile/hotelrsindex/ievent.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="catAppender" class="com.dianping.cat.log4j.CatAppender"></appender>
+
+
+</log4j:configuration>

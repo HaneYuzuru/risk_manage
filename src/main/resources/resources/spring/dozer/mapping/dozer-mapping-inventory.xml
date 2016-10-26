@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://dozer.sourceforge.net"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+       http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mapping>
+        <class-a>com.meituan.hotel.inventory.thrift.model.InvContainerInventoryModel</class-a>
+        <class-b>com.meituan.hotel.rs.index.domain.HotelIndexRsDO</class-b>
+        <field>
+            <a>containerId</a>
+            <b>rsItem</b>
+        </field>
+        <field>
+            <a>invDate</a>
+            <b>rsDay</b>
+        </field>
+        <field>
+            <a>fixedRemain</a>
+            <b>fixedRs</b>
+        </field>
+        <field>
+            <a>uncertainRemain</a>
+            <b>uncertainRs</b>
+        </field>
+        <field>
+            <a>uncertainSwitch.value</a>
+            <b>uncertainSwitch</b>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>com.meituan.hotel.inventory.thrift.model.InvContainerModel</class-a>
+        <class-b>com.meituan.hotel.rs.index.domain.HotelIndexRsDO</class-b>
+        <field>
+            <a>containerId</a>
+            <b>rsItem</b>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>com.meituan.hotel.inventory.thrift.model.InvGoodsRoomModel</class-a>
+        <class-b>com.meituan.hotel.rs.index.domain.HotelIndexRsDO</class-b>
+        <field>
+            <a>invalidTime</a>
+            <b>fixedInvalidTime</b>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>com.meituan.hotel.rs.index.domain.HotelIndexGoodsDO</class-a>
+        <class-b>com.meituan.hotel.rsindex.thrift.model.HotelIndexGoodsData</class-b>
+        <field>
+            <a>isHide</a>
+            <b>hideStatus</b>
+        </field>
+    </mapping>
+
+</mappings>
