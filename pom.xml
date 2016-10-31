@@ -246,46 +246,22 @@
             <artifactId>netty</artifactId>
             <version>${netty.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.meituan</groupId>
-            <artifactId>jmonitor</artifactId>
-            <version>1.4.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.meituan.service.inf</groupId>
-            <artifactId>kms-java-client</artifactId>
-            <version>0.5.8</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.meituan.service.mobile</groupId>
-                    <artifactId>mtthrift</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!--压测-->
-        <dependency>
-            <groupId>org.databene</groupId>
-            <artifactId>contiperf</artifactId>
-            <version>${contiperf.version}</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
-    <distributionManagement>
+    <repositories>
         <repository>
-            <id>risk_manage_releases</id>
-            <name>Risk Manage Repository</name>
-            <url>http://nexus.sankuai.com:8081/nexus/content/repositories/releases/</url>
+            <id>mvnrepository</id>
+            <name>mvnrepository</name>
+            <url>http://www.mvnrepository.com/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
-        <snapshotRepository>
-            <id>risk_manage_snapshot</id>
-            <name>Risk Manage Repository</name>
-            <url>http://nexus.sankuai.com:8081/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+    </repositories>
 
     <build>
         <finalName>${project.artifactId}-release-${project.version}</finalName>
@@ -320,26 +296,6 @@
                     </connectors>
                     <contextPath>/</contextPath>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
-                </configuration>
-            </plugin>
-            <!-- auto config-->
-            <plugin>
-                <groupId>com.meituan.service.mobile</groupId>
-                <artifactId>autoconfig-maven-plugin</artifactId>
-                <version>0.0.1</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <envBase>src/main/resources/META-INF/environments</envBase>
-                    <templateBase>src/main/resources/META-INF/templates</templateBase>
-                    <targetBase>src/main/resources</targetBase>
-                    <config>src/main/resources/META-INF/autoconfig.xml</config>
                 </configuration>
             </plugin>
         </plugins>

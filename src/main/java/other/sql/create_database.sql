@@ -1,0 +1,1 @@
+create database risk_manage default character set utf8 collate utf8_general_ci;
