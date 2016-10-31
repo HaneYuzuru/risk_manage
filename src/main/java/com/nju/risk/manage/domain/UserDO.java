@@ -6,7 +6,6 @@ import java.util.Date;
  * @author chenyina
  * @version V1.0
  * @Description:
- * @Company:meituan
  * @date 16/10/31
  */
 public class UserDO {
