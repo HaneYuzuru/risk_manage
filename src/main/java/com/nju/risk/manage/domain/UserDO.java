@@ -15,6 +15,9 @@ public class UserDO {
     //用户id
     private Integer userId;
 
+    //用户密码
+    private String password;
+
     //用户类型
     private Integer userType;
 
@@ -95,5 +98,13 @@ public class UserDO {
 
     public void setDataStatus(Integer dataStatus) {
         this.dataStatus = dataStatus;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

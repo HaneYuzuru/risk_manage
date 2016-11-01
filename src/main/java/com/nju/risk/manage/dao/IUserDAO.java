@@ -7,5 +7,5 @@ package com.nju.risk.manage.dao;
  * @date 16/10/31
  */
 
-public class IUserDAO {
+public interface IUserDAO {
 }

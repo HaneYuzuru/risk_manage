@@ -15,11 +15,6 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:spring/applicationContext*.xml</param-value>
     </context-param>
-    <!-- jmonitor -->
-    <context-param>
-        <param-name>jmonitor-configfile</param-name>
-        <param-value>jmonitor.properties</param-value>
-    </context-param>
 
     <!-- filter -->
     <filter>
@@ -39,10 +34,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!-- jmonitor -->
-    <listener>
-        <listener-class>com.meituan.jmonitor.servlet.ContextListener</listener-class>
-    </listener>
     <!-- spring root -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

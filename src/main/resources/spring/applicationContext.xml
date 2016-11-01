@@ -26,17 +26,6 @@
     <task:annotation-driven/>
 
     <import resource="classpath:spring/dao/dao.xml"/>
-    <import resource="classpath:spring/util/thread.xml"/>
-    <import resource="classpath:spring/util/tairs.xml"/>
-            <import resource="classpath:spring/task/timerTask.xml"/>
-        <import resource="classpath:spring/task/localTimeTask.xml"/>
-    <import resource="classpath:spring/mq/kafka.xml"/>
     <import resource="classpath:spring/dozer/dozer.xml"/>
-    <import resource="classpath:spring/thrift/thrift-client.xml"/>
-    <import resource="classpath:spring/thrift/thrift-server.xml"/>
-
-    <!--ievent配置-->
-    <import resource="classpath*:/spring/ievent/ievent.xml"/>
-    <util:properties id="ieventProperties" location="classpath:ievent/ievent.properties"/>
 
 </beans>

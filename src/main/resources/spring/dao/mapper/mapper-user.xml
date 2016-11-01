@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nju.risk.manage.dao.IUserDAO">
+    <resultMap id="BaseResultMap" type="com.nju.risk.manage.domain.UserDO">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="user_type" property="userType" jdbcType="INTEGER"/>
+        <result column="user_switch" property="userSwitch" jdbcType="INTEGER"/>
+        <result column="group_id" property="groupId" jdbcType="INTEGER"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+        <result column="data_status" property="dataStatus" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,password,user_type,user_switch,group_id,gmt_create,gmt_modified,data_status
+    </sql>
+
+    <update id="update" parameterType="com.nju.risk.manage.domain.UserDO">
+        update `user`
+        <set>
+            gmt_modified = now(),
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                user_type = #{userType,jdbcType=INTEGER},
+            </if>
+            <if test="userSwitch != null">
+                user_switch = #{userSwitch,jdbcType=INTEGER},
+            </if>
+            <if test="groupId != null">
+                group_id = #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="dataStatus != null">
+                data_status = #{dataStatus,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="batchUpdate" parameterType="com.nju.risk.manage.domain.UserDO">
+        <foreach collection="list" item="item" open="" close="" index="index" separator=";">
+            update `user`
+            <set>
+                gmt_modified = now(),
+                password = #{item.password,jdbcType=VARCHAR},
+                user_type = #{item.userType,jdbcType=INTEGER},
+                user_switch = #{item.userSwitch,jdbcType=INTEGER},
+                group_id = #{item.groupId,jdbcType=INTEGER},
+                data_status = #{item.dataStatus,jdbcType=INTEGER}
+            </set>
+            <where>
+                user_id = #{item.userId,jdbcType=INTEGER}
+            </where>
+        </foreach>
+    </update>
+
+    <insert id="insert" parameterType="com.nju.risk.manage.domain.UserDO">
+        <selectKey order="AFTER" resultType="long" keyProperty="data.id">
+            select last_insert_id() as id
+        </selectKey>
+        insert into `user`(<include refid="Base_Column_List"/>)
+        values(
+        #{id,jdbcType=INTEGER},
+        #{userId,jdbcType=INTEGER},
+        #{password,jdbcType=VARCHAR},
+        #{userType,jdbcType=INTEGER},
+        #{userSwitch,jdbcType=INTEGER},
+        #{groupId,jdbcType=INTEGER},
+        now(),
+        now(),
+        #{dataStatus,jdbcType=INTEGER},
+    </insert>
+    <insert id="batchInsert" parameterType="com.nju.risk.manage.domain.UserDO">
+        <foreach collection="list" item="item" open="" close="" index="index" separator=";">
+            insert ignore into `user`(<include refid="Base_Column_List"/>)
+            values
+            (
+            #{item.id,jdbcType=INTEGER},
+            #{item.userId,jdbcType=INTEGER},
+            #{item.password,jdbcType=VARCHAR},
+            #{item.userType,jdbcType=INTEGER},
+            #{item.userSwitch,jdbcType=INTEGER},
+            #{item.groupId,jdbcType=INTEGER},
+            now(),
+            now(),
+            #{item.dataStatus,jdbcType=INTEGER}, )
+        </foreach>
+    </insert>
+    <delete id="delete" parameterType="com.nju.risk.manage.domain.UserDO">
+        delete from `user`
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="batchDeleteByIdList" parameterType="com.nju.risk.manage.domain.UserDO">
+        delete from `user`
+        <where>
+            id in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+                #{item.id,jdbcType=INTEGER}
+            </foreach>
+        </where>
+    </delete>
+    <delete id="batchDeleteByUserIdList" parameterType="com.nju.risk.manage.domain.UserDO">
+        delete from `user`
+        <where>
+            user_id in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+                #{item.userId,jdbcType=INTEGER}
+            </foreach>
+        </where>
+    </delete>
+    <select id="selectByUserIdList" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from `user`
+        <where>
+            user_id in
+            <foreach collection="userIdList" open="(" close=")" separator="," item="item">
+                #{item,jdbcType=INTEGER}
+            </foreach>
+        </where>
+    </select>
+</mapper>

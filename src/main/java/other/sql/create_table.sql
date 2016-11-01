@@ -4,6 +4,7 @@ set names utf8;
 CREATE TABLE `user` (
   `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
   `user_id` BIGINT UNSIGNED COMMENT '用户ID',
+  `user_password` VARCHAR(64) NOT NULL COMMENT '用户密码',
   `user_type` TINYINT UNSIGNED NOT NULL COMMENT '用户类型（）',
   `user_switch` TINYINT UNSIGNED NOT NULL COMMENT '用户状态（有效、暂停、无效）',
   `group_id` SMALLINT COMMENT '所属用户组id',

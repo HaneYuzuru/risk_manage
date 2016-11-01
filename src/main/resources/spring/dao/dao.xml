@@ -7,11 +7,4 @@
 
     <import resource="classpath:spring/dao/datasource/mysql-datasource.xml"/>
 
-    <context:component-scan base-package="com.meituan.hotel.common.dkeeper">
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
-
-    <!-- 启动分表功能 -->
-    <bean id="sqlAspect" class="com.meituan.hotel.common.dkeeper.SqlAspect" scope="singleton"/>
-
 </beans>
