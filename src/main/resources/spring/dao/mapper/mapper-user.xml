@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.nju.risk.manage.domain.UserDO">
         <result column="id" property="id" jdbcType="INTEGER"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
-        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="user_password" property="password" jdbcType="VARCHAR"/>
         <result column="user_type" property="userType" jdbcType="INTEGER"/>
         <result column="user_switch" property="userSwitch" jdbcType="INTEGER"/>
         <result column="group_id" property="groupId" jdbcType="INTEGER"/>
@@ -14,7 +14,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,password,user_type,user_switch,group_id,gmt_create,gmt_modified,data_status
+        id,user_id,user_password,user_type,user_switch,group_id,gmt_create,gmt_modified,data_status
     </sql>
 
     <update id="update" parameterType="com.nju.risk.manage.domain.UserDO">
@@ -50,7 +50,7 @@
             update `user`
             <set>
                 gmt_modified = now(),
-                password = #{item.password,jdbcType=VARCHAR},
+                user_password = #{item.password,jdbcType=VARCHAR},
                 user_type = #{item.userType,jdbcType=INTEGER},
                 user_switch = #{item.userSwitch,jdbcType=INTEGER},
                 group_id = #{item.groupId,jdbcType=INTEGER},
@@ -63,7 +63,7 @@
     </update>
 
     <insert id="insert" parameterType="com.nju.risk.manage.domain.UserDO">
-        <selectKey order="AFTER" resultType="long" keyProperty="data.id">
+        <selectKey order="AFTER" resultType="integer" keyProperty="id">
             select last_insert_id() as id
         </selectKey>
         insert into `user`(<include refid="Base_Column_List"/>)
@@ -76,12 +76,12 @@
         #{groupId,jdbcType=INTEGER},
         now(),
         now(),
-        #{dataStatus,jdbcType=INTEGER},
+        #{dataStatus,jdbcType=INTEGER})
     </insert>
-    <insert id="batchInsert" parameterType="com.nju.risk.manage.domain.UserDO">
-        <foreach collection="list" item="item" open="" close="" index="index" separator=";">
-            insert ignore into `user`(<include refid="Base_Column_List"/>)
-            values
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert ignore into `user` (<include refid="Base_Column_List"/>)
+        values
+        <foreach collection="list" item="item" separator=",">
             (
             #{item.id,jdbcType=INTEGER},
             #{item.userId,jdbcType=INTEGER},
@@ -91,38 +91,38 @@
             #{item.groupId,jdbcType=INTEGER},
             now(),
             now(),
-            #{item.dataStatus,jdbcType=INTEGER}, )
+            #{item.dataStatus,jdbcType=INTEGER})
         </foreach>
     </insert>
     <delete id="delete" parameterType="com.nju.risk.manage.domain.UserDO">
         delete from `user`
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <delete id="batchDeleteByIdList" parameterType="com.nju.risk.manage.domain.UserDO">
+    <delete id="batchDeleteByIdList" parameterType="java.util.List">
         delete from `user`
         <where>
             id in
             <foreach collection="list" open="(" close=")" separator="," item="item">
-                #{item.id,jdbcType=INTEGER}
+                #{item,jdbcType=INTEGER}
             </foreach>
         </where>
     </delete>
-    <delete id="batchDeleteByUserIdList" parameterType="com.nju.risk.manage.domain.UserDO">
+    <delete id="batchDeleteByUserIdList" parameterType="java.util.List">
         delete from `user`
         <where>
             user_id in
             <foreach collection="list" open="(" close=")" separator="," item="item">
-                #{item.userId,jdbcType=INTEGER}
+                #{item,jdbcType=INTEGER}
             </foreach>
         </where>
     </delete>
-    <select id="selectByUserIdList" resultMap="BaseResultMap" parameterType="map">
+    <select id="selectByUserIdList" resultMap="BaseResultMap" parameterType="java.util.List">
         select
         <include refid="Base_Column_List"/>
         from `user`
         <where>
             user_id in
-            <foreach collection="userIdList" open="(" close=")" separator="," item="item">
+            <foreach collection="list" open="(" close=")" separator="," item="item">
                 #{item,jdbcType=INTEGER}
             </foreach>
         </where>
