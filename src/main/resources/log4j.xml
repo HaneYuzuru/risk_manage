@@ -29,7 +29,7 @@
 
     <appender name="rootAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="encoding" value="UTF-8"/>
-        <param name="file" value="classpath:logs/root.log"/>
+        <param name="file" value="/opt/logs/root.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
