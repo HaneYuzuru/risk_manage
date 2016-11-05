@@ -22,37 +22,37 @@ import java.util.Objects;
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
-    @Autowired
-    private IUserService userService;
-
-    @RequestMapping
-    public String user() {
-        return "login";
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView Login(@RequestParam("userId") int userId,
-                              @RequestParam("password") String password) throws Exception {
-
-        ModelAndView result = new ModelAndView("dashBoard");
-
-        List<UserDO> userDOList = userService.getUserDOListByUserIds(Lists.newArrayList(userId));
-
-        String loginMessage = null;
-
-        if(userDOList.isEmpty()){
-            loginMessage = "用户不存在";
-        } else{
-            UserDO thisUser = userDOList.get(0);
-            if(Objects.equals(thisUser.getPassword(), password)){
-                loginMessage = "登录成功";
-            } else{
-                loginMessage = "密码错误";
-            }
-        }
-
-        result.addObject("loginMessage", loginMessage);
-
-        return result;
-    }
+//    @Autowired
+//    private IUserService userService;
+//
+//    @RequestMapping
+//    public String user() {
+//        return "login";
+//    }
+//
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    public ModelAndView Login(@RequestParam("userId") int userId,
+//                              @RequestParam("password") String password) throws Exception {
+//
+//        ModelAndView result = new ModelAndView("dashBoard");
+//
+//        List<UserDO> userDOList = userService.getUserDOListByUserIds(Lists.newArrayList(userId));
+//
+//        String loginMessage = null;
+//
+//        if(userDOList.isEmpty()){
+//            loginMessage = "用户不存在";
+//        } else{
+//            UserDO thisUser = userDOList.get(0);
+//            if(Objects.equals(thisUser.getPassword(), password)){
+//                loginMessage = "登录成功";
+//            } else{
+//                loginMessage = "密码错误";
+//            }
+//        }
+//
+//        result.addObject("loginMessage", loginMessage);
+//
+//        return result;
+//    }
 }
