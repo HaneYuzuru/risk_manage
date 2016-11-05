@@ -3,8 +3,10 @@ package com.nju.risk.manage.service.impl;
 import com.nju.risk.manage.dao.IUserDAO;
 import com.nju.risk.manage.domain.UserDO;
 import com.nju.risk.manage.service.IUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
  * @date 16/11/1
  */
 @Service
-public class UserServiceImpl implements IUserService{
+public class UserServiceImpl implements IUserService {
     @Autowired
     private IUserDAO userDAO;
 
@@ -26,7 +28,15 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public boolean checkUserName(String name) {
+        if (StringUtils.isEmpty(name)) {
+            return true;
+        }
+        List<UserDO> users = userDAO.selectByName(name);
 
-        return false;
+        if (CollectionUtils.isEmpty(users)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
