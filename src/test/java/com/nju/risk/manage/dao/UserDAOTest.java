@@ -28,7 +28,7 @@ public class UserDAOTest extends BaseDaoTestConfiguration {
         userDO.setDataStatus(1);
         boolean ret = userDAO.insert(userDO);
         Assert.assertTrue(ret);
-        List<UserDO> resultList = userDAO.selectByUserIdList(Lists.newArrayList(7));
+        List<UserDO> resultList = userDAO.selectByIdList(Lists.newArrayList(7));
         Assert.assertTrue(resultList.size() > 0);
     }
 
@@ -39,9 +39,9 @@ public class UserDAOTest extends BaseDaoTestConfiguration {
         int ret = userDAO.batchInsert(Lists.newArrayList(userDO1, userDO2));
         Assert.assertEquals(2, ret);
         int changeNum = userDAO.batchUpdate(Lists.newArrayList(userDO1, userDO2));
-        List<UserDO> resultList = userDAO.selectByUserIdList(Lists.newArrayList(8, 9));
+        List<UserDO> resultList = userDAO.selectByIdList(Lists.newArrayList(8, 9));
         Assert.assertEquals(2, resultList.size());
-        Assert.assertNotEquals(0, changeNum);
+        Assert.assertEquals(0, changeNum);
         int deleteNum = userDAO.batchDeleteByIdList(Lists.newArrayList(2, 3));
         Assert.assertEquals(2, deleteNum);
 

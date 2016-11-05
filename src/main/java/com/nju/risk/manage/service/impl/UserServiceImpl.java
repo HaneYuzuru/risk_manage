@@ -21,6 +21,6 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public List<UserDO> getUserDOListByUserIds(List<Integer> idList) {
-        return userDAO.selectByUserIdList(idList);
+        return userDAO.selectByIdList(idList);
     }
 }

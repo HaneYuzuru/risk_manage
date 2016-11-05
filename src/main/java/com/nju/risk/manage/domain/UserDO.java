@@ -19,9 +19,6 @@ public class UserDO extends BaseDO {
     //用户类型
     private Integer userType;
 
-    //数据有效性
-    private Integer dataStatus;
-
     public Integer getId() {
         return id;
     }
@@ -51,18 +48,6 @@ public class UserDO extends BaseDO {
         this.userType = userType;
     }
 
-    /**
-     * 数据有效性，0-有效，1-已删除
-     *
-     * @return
-     */
-    public Integer getDataStatus() {
-        return dataStatus;
-    }
-
-    public void setDataStatus(Integer dataStatus) {
-        this.dataStatus = dataStatus;
-    }
 
     public String getPassword() {
         return password;

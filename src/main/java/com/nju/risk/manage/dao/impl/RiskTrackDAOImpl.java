@@ -1,6 +1,7 @@
 package com.nju.risk.manage.dao.impl;
 
-import com.nju.risk.manage.dao.IUserDAO;
+import com.nju.risk.manage.dao.IRiskTrackDAO;
+import com.nju.risk.manage.domain.RiskTrackDO;
 import com.nju.risk.manage.domain.UserDO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author chenyina
- * @version V1.0
- * @Description:
- * @date 16/11/1
+ * author: winsky
+ * date: 2016/11/5
+ * description:
  */
 @Repository
-public class UserDAOImpl implements IUserDAO{
-
-    private final static String BASE = "com.nju.risk.manage.dao.IUserDAO.";
+public class RiskTrackDAOImpl implements IRiskTrackDAO {
+    private final static String BASE = "com.nju.risk.manage.dao.IRiskTrackDAO.";
 
     private final static String STATEMENT_INSERT = BASE + "insert";
 
@@ -34,42 +33,42 @@ public class UserDAOImpl implements IUserDAO{
 
     private final static String STATEMENT_SELECT_BY_ID_LIST = BASE + "selectByIdList";
 
-    private final static Integer PAGE_SIZE =20;
+    private final static Integer PAGE_SIZE = 20;
 
     @Autowired
     private SqlSession sqlSession;
 
     @Override
-    public boolean insert(UserDO userDO) {
-        int res = sqlSession.insert(STATEMENT_INSERT, userDO);
+    public boolean insert(RiskTrackDO riskTrackDO) {
+        int res = sqlSession.insert(STATEMENT_INSERT, riskTrackDO);
         return res > 0;
     }
 
     @Override
-    public int batchInsert(List<UserDO> userDOList) {
-        if(userDOList.isEmpty()){
+    public int batchInsert(List<RiskTrackDO> riskTrackDOList) {
+        if(riskTrackDOList.isEmpty()){
             return 0;
         }
-        return sqlSession.insert(STATEMENT_BATCH_INSERT, userDOList);
+        return sqlSession.insert(STATEMENT_BATCH_INSERT, riskTrackDOList);
     }
 
     @Override
-    public boolean update(UserDO userDO) {
-        int res = sqlSession.update(STATEMENT_UPDATE, userDO);
+    public boolean update(RiskTrackDO riskTrackDO) {
+        int res = sqlSession.update(STATEMENT_UPDATE, riskTrackDO);
         return res > 0;
     }
 
     @Override
-    public int batchUpdate(List<UserDO> userDOList) {
-        if(userDOList.isEmpty()){
+    public int batchUpdate(List<RiskTrackDO> riskTrackDOList) {
+        if(riskTrackDOList.isEmpty()){
             return 0;
         }
-        return sqlSession.update(STATEMENT_BATCH_UPDATE, userDOList);
+        return sqlSession.update(STATEMENT_BATCH_UPDATE, riskTrackDOList);
     }
 
     @Override
-    public boolean delete(Integer userId) {
-        int res = sqlSession.delete(STATEMENT_DELETE, userId);
+    public boolean delete(Integer id) {
+        int res = sqlSession.delete(STATEMENT_DELETE, id);
         return res > 0;
     }
 

@@ -24,5 +24,5 @@ public interface IUserDAO {
 
     public int batchDeleteByIdList(List<Integer> idList);
 
-    public List<UserDO> selectByUserIdList(List<Integer> userIdList);
+    public List<UserDO> selectByIdList(List<Integer> userIdList);
 }

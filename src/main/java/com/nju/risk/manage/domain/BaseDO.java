@@ -13,7 +13,8 @@ import java.util.Date;
 public class BaseDO implements Serializable {
     private Date gmtCreate;
     private Date gmtModified;
-
+    //数据有效性
+    private Integer dataStatus;
 
     public Date getGmtCreate() {
         return gmtCreate;
@@ -29,6 +30,19 @@ public class BaseDO implements Serializable {
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    /**
+     * 数据有效性，0-有效，1-已删除
+     *
+     * @return
+     */
+    public Integer getDataStatus() {
+        return dataStatus;
+    }
+
+    public void setDataStatus(Integer dataStatus) {
+        this.dataStatus = dataStatus;
     }
 
     @Override
