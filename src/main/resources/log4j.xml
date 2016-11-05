@@ -29,7 +29,7 @@
 
     <appender name="rootAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="encoding" value="UTF-8"/>
-        <param name="file" value="classpath:logs/root.log"/>
+        <param name="file" value="/opt/logs/root.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
@@ -38,7 +38,7 @@
 
     <appender name="errorAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="encoding" value="UTF-8"/>
-        <param name="file" value="classpath:logs/mobile/riskmanage/error.log"/>
+        <param name="file" value="/opt/logs/mobile/riskmanage/error.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
@@ -47,7 +47,7 @@
 
     <appender name="warnAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="encoding" value="UTF-8"/>
-        <param name="file" value="classpath:logs/mobile/riskmanage/warn.log"/>
+        <param name="file" value="/opt/logs/mobile/riskmanage/warn.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
@@ -56,7 +56,7 @@
 
     <appender name="serviceAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="encoding" value="UTF-8"/>
-        <param name="file" value="classpath:logs/mobile/riskmanage/service.log"/>
+        <param name="file" value="/opt/logs/mobile/riskmanage/service.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
@@ -65,7 +65,7 @@
 
     <appender name="controllerAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="encoding" value="UTF-8"/>
-        <param name="file" value="classpath:logs/mobile/riskmanage/controller.log"/>
+        <param name="file" value="/opt/logs/mobile/riskmanage/controller.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
