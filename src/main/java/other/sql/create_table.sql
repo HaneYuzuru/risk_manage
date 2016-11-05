@@ -1,16 +1,71 @@
 use risk_manage;
 set names utf8;
 
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : localhost_3306
+Source Server Version : 50542
+Source Host           : localhost:3306
+Source Database       : risk_manage
+
+Target Server Type    : MYSQL
+Target Server Version : 50542
+File Encoding         : 65001
+
+Date: 2016-11-05 12:28:58
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for risk
+-- ----------------------------
+DROP TABLE IF EXISTS `risk`;
+CREATE TABLE `risk` (
+  `id` bigint(20) NOT NULL COMMENT '风险id',
+  `name` varchar(400) NOT NULL COMMENT '风险名称',
+  `content` varchar(400) NOT NULL COMMENT '风险内容',
+  `possibility` tinyint(11) unsigned NOT NULL DEFAULT '0' COMMENT '可能性，0-低，1-中，2-高',
+  `impact` tinyint(11) unsigned NOT NULL DEFAULT '0' COMMENT '影响程度，0-低，1-中，2-高',
+  `trigger` varchar(400) NOT NULL COMMENT '触发器/阈值，文本形式',
+  `committer` bigint(11) NOT NULL DEFAULT '0' COMMENT '提交者，映射到user表中的id字段',
+  `followers` varchar(400) NOT NULL COMMENT '跟踪者id，多个跟踪者以,（英文下）相连',
+  `gmt_create` datetime NOT NULL COMMENT '创建时间',
+  `gmt_update` datetime NOT NULL COMMENT '修改时间',
+  `data_status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '数据有效性，0-有效，1-已删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for risk_track
+-- ----------------------------
+DROP TABLE IF EXISTS `risk_track`;
+CREATE TABLE `risk_track` (
+  `id` bigint(20) NOT NULL,
+  `risk_id` bigint(20) NOT NULL COMMENT '风险id',
+  `status` tinyint(11) unsigned NOT NULL DEFAULT '0' COMMENT '风险状态,0-风险状态，1-问题状态，2-解决状态',
+  `description` varchar(400) NOT NULL COMMENT '风险描述',
+  `gmt_create` datetime NOT NULL COMMENT '创建时间',
+  `gmt_update` datetime NOT NULL COMMENT '修改时间',
+  `data_status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '数据有效性，0-有效，1-已删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
-  `user_id` BIGINT UNSIGNED COMMENT '用户ID',
-  `user_password` VARCHAR(64) NOT NULL COMMENT '用户密码',
-  `user_type` TINYINT UNSIGNED NOT NULL COMMENT '用户类型（）',
-  `user_switch` TINYINT UNSIGNED NOT NULL COMMENT '用户状态（有效、暂停、无效）',
-  `group_id` SMALLINT COMMENT '所属用户组id',
+  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
+  `user_name` varchar(400) NOT NULL COMMENT '用户名',
+  `user_password` varchar(64) NOT NULL COMMENT '用户密码',
+  `user_type` tinyint(3) unsigned NOT NULL COMMENT '用户类型,0-普通工程师，1-项目经理',
   `gmt_create` datetime NOT NULL COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL COMMENT '修改时间',
-  `data_status` TINYINT UNSIGNED NOT NULL COMMENT '数据有效性',
-  UNIQUE INDEX `unq_user_id` (`user_id`),
-  INDEX `idx_user_type` (`user_type`)
-) ENGINE=InnoDB CHARACTER SET=utf8 COMMENT='用户信息表';
+  `data_status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '数据有效性，0-有效，1-已删除',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unq_user_id` (`user_id`),
+  KEY `idx_user_type` (`user_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表';
