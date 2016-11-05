@@ -8,9 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -23,8 +26,22 @@ public class LoginController {
     private IUserService userService;
 
     @RequestMapping
-    public String user() {
+    public String userView() {
         return "login";
+    }
+
+    @RequestMapping(value = "/register")
+    public String registerView() {
+        return "register";
+    }
+
+    @RequestMapping(value = "/testRegister", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> registerForm(@RequestParam("username") String username) throws Exception {
+        Map<String, Object> modelMap = new HashMap<String, Object>(2);
+        modelMap.put("total", "1");
+        modelMap.put("success", "true");
+        return modelMap;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)

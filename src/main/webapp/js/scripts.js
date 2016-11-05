@@ -31,7 +31,7 @@ jQuery(document).ready(function() {
 });
 
 $("#registerBtn").click(function(){
-	window.location.href="register";
+	window.location.href="login/register";
 })
 
     
