@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface IUserService {
     List<UserDO> getUserDOListByUserIds(List<Integer> idList);
+
+    boolean checkUserName(String name);
 }

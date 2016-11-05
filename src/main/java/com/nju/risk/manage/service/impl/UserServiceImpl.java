@@ -23,4 +23,10 @@ public class UserServiceImpl implements IUserService{
     public List<UserDO> getUserDOListByUserIds(List<Integer> idList) {
         return userDAO.selectByIdList(idList);
     }
+
+    @Override
+    public boolean checkUserName(String name) {
+
+        return false;
+    }
 }

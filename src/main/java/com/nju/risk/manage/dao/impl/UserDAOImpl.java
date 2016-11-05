@@ -1,7 +1,9 @@
 package com.nju.risk.manage.dao.impl;
 
+import com.google.common.collect.Lists;
 import com.nju.risk.manage.dao.IUserDAO;
 import com.nju.risk.manage.domain.UserDO;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,6 +35,8 @@ public class UserDAOImpl implements IUserDAO{
     private final static String STATEMENT_BATCH_DELETE_BY_ID_LIST = BASE + "batchDeleteByIdList";
 
     private final static String STATEMENT_SELECT_BY_ID_LIST = BASE + "selectByIdList";
+
+    private final static String STATEMENT_SELECT_BY_NAME = BASE + "selectByName";
 
     private final static Integer PAGE_SIZE =20;
 
@@ -87,5 +91,13 @@ public class UserDAOImpl implements IUserDAO{
             return new ArrayList<>();
         }
         return sqlSession.selectList(STATEMENT_SELECT_BY_ID_LIST, idList);
+    }
+
+    @Override
+    public List<UserDO> selectByName(String name) {
+        if(StringUtils.isEmpty(name)){
+            return Lists.newArrayList();
+        }
+        return sqlSession.selectList(STATEMENT_SELECT_BY_NAME,name);
     }
 }

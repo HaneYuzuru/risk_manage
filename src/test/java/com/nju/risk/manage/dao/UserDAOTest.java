@@ -28,7 +28,7 @@ public class UserDAOTest extends BaseDaoTestConfiguration {
         userDO.setDataStatus(1);
         boolean ret = userDAO.insert(userDO);
         Assert.assertTrue(ret);
-        List<UserDO> resultList = userDAO.selectByIdList(Lists.newArrayList(7));
+        List<UserDO> resultList = userDAO.selectByIdList(Lists.newArrayList(1));
         Assert.assertTrue(resultList.size() > 0);
     }
 
@@ -57,5 +57,12 @@ public class UserDAOTest extends BaseDaoTestConfiguration {
         userDO.setUserType(1);
         userDO.setDataStatus(1);
         return userDO;
+    }
+
+    @Test
+    public void testGetByName(){
+        String name = "nana";
+        List<UserDO> users=userDAO.selectByName(name);
+        System.out.println(users);
     }
 }

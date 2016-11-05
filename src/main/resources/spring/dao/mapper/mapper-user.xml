@@ -118,4 +118,10 @@
             </foreach>
         </where>
     </select>
+    <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        FROM `user`
+        WHERE `name` = #{name}
+    </select>
 </mapper>
