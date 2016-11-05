@@ -71,5 +71,4 @@
             <param name="ConversionPattern" value="%5p:%d{yy-MM-dd HH:mm:ss.SSS}[%C{1}#%M]--%L %m %n"/>
         </layout>
     </appender>
-
 </log4j:configuration>
