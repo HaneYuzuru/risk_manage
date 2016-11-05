@@ -39,4 +39,19 @@ public class UserServiceImpl implements IUserService {
             return false;
         }
     }
+
+    @Override
+    public boolean login(String name, String password) {
+
+        return false;
+    }
+
+    @Override
+    public boolean register(UserDO userDO) {
+        try {
+            return userDAO.insert(userDO);
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

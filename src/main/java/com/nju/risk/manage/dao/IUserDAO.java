@@ -27,4 +27,6 @@ public interface IUserDAO {
     public List<UserDO> selectByIdList(List<Integer> userIdList);
 
     public List<UserDO> selectByName(String name);
+
+    public UserDO login(String name, String password);
 }
