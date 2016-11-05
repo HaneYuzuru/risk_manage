@@ -32,8 +32,6 @@ public class UserDAOImpl implements IUserDAO{
 
     private final static String STATEMENT_BATCH_DELETE_BY_ID_LIST = BASE + "batchDeleteByIdList";
 
-    private final static String STATEMENT_BATCH_DELETE_BY_USER_ID_LIST = BASE + "batchDeleteByUserIdList";
-
     private final static String STATEMENT_SELECT_BY_USER_ID_LIST = BASE + "selectByUserIdList";
 
     private final static Integer PAGESIZE =1000;
@@ -81,14 +79,6 @@ public class UserDAOImpl implements IUserDAO{
             return 0;
         }
         return sqlSession.delete(STATEMENT_BATCH_DELETE_BY_ID_LIST, idList);
-    }
-
-    @Override
-    public int batchDeleteByUserIdList(List<Integer> userIdList) {
-        if(userIdList.isEmpty()){
-            return 0;
-        }
-        return sqlSession.delete(STATEMENT_BATCH_DELETE_BY_USER_ID_LIST, userIdList);
     }
 
     @Override

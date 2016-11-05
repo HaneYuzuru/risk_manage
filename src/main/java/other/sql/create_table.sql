@@ -1,21 +1,6 @@
 use risk_manage;
 set names utf8;
 
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : localhost_3306
-Source Server Version : 50542
-Source Host           : localhost:3306
-Source Database       : risk_manage
-
-Target Server Type    : MYSQL
-Target Server Version : 50542
-File Encoding         : 65001
-
-Date: 2016-11-05 12:28:58
-*/
-
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -58,14 +43,12 @@ CREATE TABLE `risk_track` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `user_id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
-  `user_name` varchar(400) NOT NULL COMMENT '用户名',
-  `user_password` varchar(64) NOT NULL COMMENT '用户密码',
-  `user_type` tinyint(3) unsigned NOT NULL COMMENT '用户类型,0-普通工程师，1-项目经理',
+  `name` varchar(400) NOT NULL COMMENT '用户名',
+  `password` varchar(64) NOT NULL COMMENT '用户密码',
+  `type` tinyint(3) unsigned NOT NULL COMMENT '用户类型,0-普通工程师，1-项目经理',
   `gmt_create` datetime NOT NULL COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL COMMENT '修改时间',
   `data_status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '数据有效性，0-有效，1-已删除',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unq_user_id` (`user_id`),
-  KEY `idx_user_type` (`user_type`)
+  KEY `idx_user_type` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表';
