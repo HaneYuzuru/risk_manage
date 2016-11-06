@@ -20,12 +20,12 @@ public class RiskVO {
     /**
      * 可能性
      */
-    private Integer possibility;
+    private String possibility;
 
     /**
      * 影响度
      */
-    private Integer impact;
+    private String impact;
 
     /**
      * 触发器/阈值
@@ -66,19 +66,19 @@ public class RiskVO {
         this.content = content;
     }
 
-    public Integer getPossibility() {
+    public String getPossibility() {
         return possibility;
     }
 
-    public void setPossibility(Integer possibility) {
+    public void setPossibility(String possibility) {
         this.possibility = possibility;
     }
 
-    public Integer getImpact() {
+    public String getImpact() {
         return impact;
     }
 
-    public void setImpact(Integer impact) {
+    public void setImpact(String impact) {
         this.impact = impact;
     }
 

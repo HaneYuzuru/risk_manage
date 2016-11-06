@@ -6,6 +6,8 @@ import com.nju.risk.manage.domain.RiskDO;
 import com.nju.risk.manage.domain.RiskQueryDO;
 import com.nju.risk.manage.domain.RiskVO;
 import com.nju.risk.manage.domain.UserDO;
+import com.nju.risk.manage.domain.domainEnum.ImpactEnum;
+import com.nju.risk.manage.domain.domainEnum.PossibilityEnum;
 import com.nju.risk.manage.service.IRiskService;
 import com.nju.risk.manage.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -132,9 +134,10 @@ public class RiskServiceImpl implements IRiskService {
             return null;
         }
         RiskVO riskVO = new RiskVO();
+        riskVO.setId(risk.getId());
         riskVO.setName(risk.getName());
-        riskVO.setPossibility(risk.getPossibility());
-        riskVO.setImpact(risk.getImpact());
+        riskVO.setPossibility(PossibilityEnum.fromValue(risk.getPossibility()).type());
+        riskVO.setImpact(ImpactEnum.fromValue(risk.getImpact()).type());
         riskVO.setContent(risk.getContent());
         riskVO.setTrigger(risk.getTrigger());
 
