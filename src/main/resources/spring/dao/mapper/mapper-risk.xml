@@ -225,4 +225,11 @@
             #{item,jdbcType=INTEGER}
         </foreach>
     </select>
+
+    <select id="searchByTime" resultMap="BaseResultMap" parameterType="com.nju.risk.manage.domain.RiskQueryDO">
+        select
+        <include refid="Base_Column_List"/>
+        from `risk`
+        WHERE gmt_create BETWEEN #{start} AND #{end}
+    </select>
 </mapper>

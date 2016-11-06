@@ -52,8 +52,17 @@ public interface IUserService {
 
     /**
      * 根据姓名模糊查找用户的信息
+     *
      * @param name
      * @return
      */
     List<UserDO> searchByName(String name);
+
+    /**
+     * 根据id获得用户信息
+     *
+     * @param id 用户id
+     * @return
+     */
+    UserDO getUserById(int id);
 }

@@ -4,9 +4,11 @@ import com.google.common.collect.Lists;
 import com.nju.risk.manage.dao.IRiskDAO;
 import com.nju.risk.manage.domain.RiskDO;
 import com.nju.risk.manage.domain.RiskQueryDO;
+import com.nju.risk.manage.domain.RiskVO;
 import com.nju.risk.manage.domain.UserDO;
 import com.nju.risk.manage.service.IRiskService;
 import com.nju.risk.manage.service.IUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -85,6 +87,23 @@ public class RiskServiceImpl implements IRiskService {
         return result;
     }
 
+    @Override
+    public List<RiskVO> searchByTime(String start, String end) {
+        RiskQueryDO riskQueryDO = new RiskQueryDO();
+        riskQueryDO.setStart(start);
+        riskQueryDO.setEnd(end);
+
+        List<RiskDO> riskDOs = riskDAO.searchByTime(riskQueryDO);
+        if (CollectionUtils.isEmpty(riskDOs)) {
+            return Lists.newArrayList();
+        }
+        List<RiskVO> riskVOs = Lists.newArrayList();
+        for (RiskDO riskDO : riskDOs) {
+            riskVOs.add(do2vo(riskDO));
+        }
+        return riskVOs;
+    }
+
     private List<Integer> genUserIds(List<UserDO> users) {
         List<Integer> result = Lists.newArrayList();
         if (CollectionUtils.isEmpty(users)) {
@@ -94,5 +113,53 @@ public class RiskServiceImpl implements IRiskService {
             result.add(user.getId());
         }
         return result;
+    }
+
+    private RiskVO do2vo(RiskDO risk) {
+        if (risk == null) {
+            return null;
+        }
+        RiskVO riskVO = new RiskVO();
+        riskVO.setName(risk.getName());
+        riskVO.setPossibility(risk.getPossibility());
+        riskVO.setImpact(risk.getImpact());
+        riskVO.setContent(risk.getContent());
+        riskVO.setTrigger(risk.getTrigger());
+
+        int committerId = risk.getCommitter();
+        String committer = getNameByUserId(String.valueOf(committerId));
+        riskVO.setCommitterName(committer);
+        String followers = risk.getFollowers();
+        riskVO.setFollowerNames(getNameByUserId(followers));
+
+        return riskVO;
+    }
+
+    /**
+     * 根据id获得用户名，若有多个，id和用户名均以英文,分隔
+     *
+     * @param id
+     * @return
+     */
+    private String getNameByUserId(String id) {
+        if (StringUtils.isEmpty(id)) {
+            return StringUtils.EMPTY;
+        }
+
+        String result = StringUtils.EMPTY;
+        String[] idStr = id.split(",");
+        for (int i = 0; i < idStr.length; i++) {
+            int idInt = Integer.parseInt(idStr[i]);
+            UserDO user = userService.getUserById(idInt);
+            if (user != null) {
+                result = result + "," + user.getName();
+            }
+        }
+
+        if (result.length() > 1) {
+            return result.substring(1);
+        } else {
+            return StringUtils.EMPTY;
+        }
     }
 }

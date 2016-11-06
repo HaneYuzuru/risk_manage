@@ -30,4 +30,6 @@ public interface IRiskDAO {
     public List<RiskDO> searchByCommitterIds(List<Integer> ids);
 
     public List<RiskDO> searchByFollowerIds(List<Integer> ids);
+
+    public List<RiskDO> searchByTime(RiskQueryDO riskQueryDO);
 }
