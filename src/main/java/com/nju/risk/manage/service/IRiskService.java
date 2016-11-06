@@ -23,6 +23,8 @@ public interface IRiskService {
 
     public boolean deleteRiskItem(int id);
 
+    public boolean deleteRiskItem(List<Integer> ids);
+
     public boolean updateRiskItem(RiskDO riskDO);
 
     /**

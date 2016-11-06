@@ -40,6 +40,17 @@ public class RiskServiceImpl implements IRiskService {
     }
 
     @Override
+    public boolean deleteRiskItem(List<Integer> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return false;
+        }
+        for (Integer id : ids) {
+            deleteRiskItem(id);
+        }
+        return true;
+    }
+
+    @Override
     public boolean updateRiskItem(RiskDO riskDO) {
         return riskDAO.update(riskDO);
     }
