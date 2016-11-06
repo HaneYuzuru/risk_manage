@@ -1,6 +1,5 @@
 package com.nju.risk.manage.service;
 
-import com.nju.risk.manage.domain.RiskDO;
 import com.nju.risk.manage.domain.RiskVO;
 import com.nju.risk.manage.util.BaseDaoTestConfiguration;
 import org.junit.Test;
@@ -20,7 +19,7 @@ public class RiskServiceTest extends BaseDaoTestConfiguration {
     @Test
     public void testSearch() {
         String name = "na";
-        List<RiskDO> risks = riskService.search(name, IRiskService.SEARCH_BY_COMMITTER, true);
+        List<RiskVO> risks = riskService.search(name, IRiskService.SEARCH_BY_COMMITTER, true);
         System.out.println(risks);
     }
 

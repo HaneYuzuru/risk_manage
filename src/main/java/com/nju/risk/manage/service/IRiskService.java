@@ -33,7 +33,7 @@ public interface IRiskService {
      * @param fuzzy   是否模糊查找
      * @return
      */
-    public List<RiskDO> search(Object keyword, int type, boolean fuzzy);
+    public List<RiskVO> search(Object keyword, int type, boolean fuzzy);
 
     /**
      * 获取某个时间段的风险
