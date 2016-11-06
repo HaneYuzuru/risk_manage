@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form role="form" action="" method="post" class="login-form">
+                        <form role="form" action="/login/testlogin" method="post" class="login-form">
                             <div class="form-group">
                                 <label class="sr-only" for="form-username">Username</label>
                                 <input type="text" id="userID" name="form-username" placeholder="用户名..." class="form-username form-control" id="form-username">
@@ -44,6 +44,7 @@
                             </div>
                             <button type="button" id="loginBtn" class="btn">登录</button>
                             <button type="button" class="btn" id="registerBtn" style="float:right">注册</button>
+                            <span id="tip" style="float:left;position:relative;top:1px;color:red;display: none;">用户名已存在</span>
                         </form>
                     </div>
                 </div>

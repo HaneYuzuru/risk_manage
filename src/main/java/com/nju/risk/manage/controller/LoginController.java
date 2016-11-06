@@ -64,29 +64,27 @@ public class LoginController {
         return result;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView Login(@RequestParam("userId") int userId,
-                              @RequestParam("password") String password) throws Exception {
+    @RequestMapping(value = "/testlogin", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> Login(@RequestParam("form-username") String username,
+                              @RequestParam("form-password") String password) throws Exception {
 
         ModelAndView result = new ModelAndView("dashBoard");
 
-        List<UserDO> userDOList = userService.getUserDOListByUserIds(Lists.newArrayList(userId));
+        Map<String, Object> modelMap = new HashMap<String, Object>(1);
 
-        String loginMessage = null;
+        int s=userService.login(username,password);
 
-        if(userDOList.isEmpty()){
-            loginMessage = "用户不存在";
-        } else{
-            UserDO thisUser = userDOList.get(0);
-            if(Objects.equals(thisUser.getPassword(), password)){
-                loginMessage = "登录成功";
-            } else{
-                loginMessage = "密码错误";
-            }
+        if(s==0){
+            modelMap.put("result", "true");
+        }
+        else if(s==1){
+            modelMap.put("result", "密码错误");
+        }
+        else{
+            modelMap.put("result", "用户名不存在");
         }
 
-        result.addObject("loginMessage", loginMessage);
-
-        return result;
+        return modelMap;
     }
 }
