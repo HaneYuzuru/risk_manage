@@ -43,6 +43,8 @@
                                 <span class="glyphicon glyphicon-search"></span> 查询
                             </button>
 
+                            <span id="errorTip" style="display: none;color:red;position:relative;left:20px;top:14px;">开始日期不能晚于结束日期!</span>
+
                         </div>
                     </form>
                 </nav>
@@ -93,15 +95,26 @@
                         <td>{{td.committer}}</td>
                         <td>{{td.followers}}</td>
                         <td>
-                            <button v-on:click="rerun($index,td.monitor_id)" type="button" class="btn btn-default btn-xs"
-                                    style="padding:1px 10px;margin-top:-5px;margin-bottom:-2px;">查看
+                        <#if type==0 !>
+                            <button v-on:click="rerun($index,td.monitor_id)" type="button"
+                                    class="btn btn-default btn-xs"
+                                    style="padding:1px 10px;font-size:15px;margin-top:-2px;margin-bottom:0px;">查看
                             </button>
-                            <button v-on:click="rerun($index,td.monitor_id)" type="button" class="btn btn-default btn-xs"
-                                    style="padding:1px 10px;margin-top:-5px;margin-bottom:-2px;">修改
+                        </#if>
+                        <#if type==1 !>
+                            <button v-on:click="rerun($index,td.monitor_id)" type="button"
+                                    class="btn btn-default btn-xs"
+                                    style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">查看
                             </button>
-                            <button v-on:click="rerun($index,td.monitor_id)" type="button" class="btn btn-default btn-xs"
-                                    style="padding:1px 10px;margin-top:-5px;margin-bottom:-2px;">删除
+                            <button v-on:click="rerun($index,td.monitor_id)" type="button"
+                                    class="btn btn-default btn-xs"
+                                    style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">修改
                             </button>
+                            <button v-on:click="rerun($index,td.monitor_id)" type="button"
+                                    class="btn btn-default btn-xs"
+                                    style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">删除
+                            </button>
+                        </#if>
                         </td>
                         <td style="display: none;">{{td.id}}</td>
                     </tr>
