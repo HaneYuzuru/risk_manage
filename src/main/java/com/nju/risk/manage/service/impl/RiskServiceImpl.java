@@ -30,7 +30,11 @@ public class RiskServiceImpl implements IRiskService {
     IUserService userService;
 
     @Override
-    public boolean addRiskItem(RiskDO riskDO) {
+    public boolean addRiskItem(RiskVO riskVO) {
+        RiskDO riskDO = vo2Do(riskVO);
+        if (riskDO == null) {
+            return false;
+        }
         return riskDAO.insert(riskDO);
     }
 
@@ -51,7 +55,11 @@ public class RiskServiceImpl implements IRiskService {
     }
 
     @Override
-    public boolean updateRiskItem(RiskDO riskDO) {
+    public boolean updateRiskItem(RiskVO riskVO) {
+        RiskDO riskDO = vo2Do(riskVO);
+        if (riskDO == null) {
+            return false;
+        }
         return riskDAO.update(riskDO);
     }
 
@@ -145,6 +153,9 @@ public class RiskServiceImpl implements IRiskService {
             return null;
         }
         RiskVO riskVO = new RiskVO();
+        riskVO.setGmtCreate(risk.getGmtCreate());
+        riskVO.setGmtModified(risk.getGmtModified());
+        riskVO.setDataStatus(risk.getDataStatus());
         riskVO.setId(risk.getId());
         riskVO.setName(risk.getName());
         riskVO.setPossibility(PossibilityEnum.fromValue(risk.getPossibility()).type());
@@ -159,6 +170,33 @@ public class RiskServiceImpl implements IRiskService {
         riskVO.setFollowerNames(getNameByUserId(followers));
 
         return riskVO;
+    }
+
+
+    private RiskDO vo2Do(RiskVO risk) {
+        if (risk == null) {
+            return null;
+        }
+        RiskDO riskDO = new RiskDO();
+        riskDO.setGmtCreate(risk.getGmtCreate());
+        riskDO.setGmtModified(risk.getGmtModified());
+        riskDO.setDataStatus(risk.getDataStatus());
+        riskDO.setId(risk.getId());
+        riskDO.setName(risk.getName());
+        riskDO.setPossibility(PossibilityEnum.fromType(risk.getPossibility()).value());
+        riskDO.setImpact(ImpactEnum.fromType(risk.getImpact()).value());
+        riskDO.setContent(risk.getContent());
+        riskDO.setTrigger(risk.getTrigger());
+
+        String committerName = risk.getCommitterName();
+        UserDO committer = userService.getUserByName(committerName);
+        if (committer != null) {
+            riskDO.setCommitter(committer.getId());
+        }
+        String followersName = risk.getFollowerNames();
+        riskDO.setFollowers(getUserIdByName(followersName));
+
+        return riskDO;
     }
 
     /**
@@ -187,5 +225,34 @@ public class RiskServiceImpl implements IRiskService {
         } else {
             return StringUtils.EMPTY;
         }
+    }
+
+    /**
+     * 根据用户名获得id，若有多个，id和用户名均以英文,分隔
+     *
+     * @param name
+     * @return
+     */
+    private String getUserIdByName(String name) {
+        if (StringUtils.isEmpty(name)) {
+            return StringUtils.EMPTY;
+        }
+
+        String[] names = name.split(",");
+        String result = StringUtils.EMPTY;
+
+        for (int i = 0; i < names.length; i++) {
+            UserDO user = userService.getUserByName(names[i]);
+            if (user != null) {
+                result = result + "," + user.getId();
+            }
+        }
+
+        if (result.length() > 1) {
+            return result.substring(1);
+        } else {
+            return StringUtils.EMPTY;
+        }
+
     }
 }

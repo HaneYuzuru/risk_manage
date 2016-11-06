@@ -1,6 +1,5 @@
 package com.nju.risk.manage.service;
 
-import com.nju.risk.manage.domain.RiskDO;
 import com.nju.risk.manage.domain.RiskVO;
 
 import java.util.List;
@@ -19,13 +18,13 @@ public interface IRiskService {
     public static final int SEARCH_BY_FOLLOWER = 5;
 
 
-    public boolean addRiskItem(RiskDO riskDO);
+    public boolean addRiskItem(RiskVO riskVO);
 
     public boolean deleteRiskItem(int id);
 
     public boolean deleteRiskItem(List<Integer> ids);
 
-    public boolean updateRiskItem(RiskDO riskDO);
+    public boolean updateRiskItem(RiskVO riskVO);
 
     /**
      * 查找风险项目

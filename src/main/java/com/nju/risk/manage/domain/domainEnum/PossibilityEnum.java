@@ -32,4 +32,13 @@ public enum PossibilityEnum {
         }
         return null;
     }
+
+    public static PossibilityEnum fromType(String type) {
+        for (PossibilityEnum possibility : PossibilityEnum.values()) {
+            if (possibility.type.equals(type)) {
+                return possibility;
+            }
+        }
+        return null;
+    }
 }

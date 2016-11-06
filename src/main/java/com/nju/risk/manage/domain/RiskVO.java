@@ -5,7 +5,7 @@ package com.nju.risk.manage.domain;
  * date: 2016/11/6
  * description:
  */
-public class RiskVO {
+public class RiskVO extends BaseVO {
     private Integer id;
     /**
      * 风险名称
@@ -36,6 +36,30 @@ public class RiskVO {
      * 提交者姓名
      */
     private String committerName;
+
+    public RiskVO() {
+    }
+
+    public RiskVO(String name, String content, String possibility, String impact, String trigger, String committerName, String followerNames) {
+        this.name = name;
+        this.content = content;
+        this.possibility = possibility;
+        this.impact = impact;
+        this.trigger = trigger;
+        this.committerName = committerName;
+        this.followerNames = followerNames;
+    }
+
+    public RiskVO(Integer id, String name, String content, String possibility, String impact, String trigger, String committerName, String followerNames) {
+        this.id = id;
+        this.name = name;
+        this.content = content;
+        this.possibility = possibility;
+        this.impact = impact;
+        this.trigger = trigger;
+        this.committerName = committerName;
+        this.followerNames = followerNames;
+    }
 
     /**
      * 跟踪者姓名，多个跟踪者以,（英文下）相连

@@ -2,6 +2,7 @@ package com.nju.risk.manage.service;
 
 import com.nju.risk.manage.domain.RiskVO;
 import com.nju.risk.manage.util.BaseDaoTestConfiguration;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,6 +31,13 @@ public class RiskServiceTest extends BaseDaoTestConfiguration {
         List<RiskVO> risks = riskService.searchByTime(start, end);
         System.out.println(risks);
 
+    }
+
+    @Test
+    public void testInsert() {
+        RiskVO riskVO = new RiskVO("风险", "风险内容", "高", "中", "阈值", "winsky", "nana,winsky");
+        boolean result = riskService.addRiskItem(riskVO);
+        Assert.assertTrue(result);
     }
 
 }
