@@ -1,6 +1,7 @@
 package com.nju.risk.manage.service;
 
 import com.nju.risk.manage.domain.RiskDO;
+import com.nju.risk.manage.domain.RiskVO;
 
 import java.util.List;
 
@@ -32,5 +33,14 @@ public interface IRiskService {
      * @param fuzzy   是否模糊查找
      * @return
      */
-    public List<RiskDO> search(Object keyword, int type, boolean fuzzy);
+    public List<RiskVO> search(Object keyword, int type, boolean fuzzy);
+
+    /**
+     * 获取某个时间段的风险
+     *
+     * @param start 起始时间 格式YYYY-MM-DD
+     * @param end   结束时间 格式YYYY-MM-DD
+     * @return
+     */
+    public List<RiskVO> searchByTime(String start, String end);
 }

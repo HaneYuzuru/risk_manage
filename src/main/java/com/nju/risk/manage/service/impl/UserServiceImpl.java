@@ -86,4 +86,14 @@ public class UserServiceImpl implements IUserService {
         }
         return userDAO.searchByName(name);
     }
+
+    @Override
+    public UserDO getUserById(int id) {
+        List<UserDO> users = userDAO.selectByIdList(Lists.newArrayList(id));
+        if (CollectionUtils.isEmpty(users)) {
+            return null;
+        } else {
+            return users.get(0);
+        }
+    }
 }

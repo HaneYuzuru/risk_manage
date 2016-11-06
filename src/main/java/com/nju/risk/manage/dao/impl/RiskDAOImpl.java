@@ -39,6 +39,8 @@ public class RiskDAOImpl implements IRiskDAO {
 
     private final static String STATEMENT_SEARCH_BY_FOLLOWER = BASE + "searchByFollowerIds";
 
+    private final static String STATEMENT_SEARCH_BY_TIME = BASE + "searchByTime";
+
     private final static Integer PAGE_SIZE = 20;
 
     @Autowired
@@ -107,5 +109,10 @@ public class RiskDAOImpl implements IRiskDAO {
     @Override
     public List<RiskDO> searchByFollowerIds(List<Integer> ids) {
         return sqlSession.selectList(STATEMENT_SEARCH_BY_FOLLOWER, ids);
+    }
+
+    @Override
+    public List<RiskDO> searchByTime(RiskQueryDO riskQueryDO) {
+        return sqlSession.selectList(STATEMENT_SEARCH_BY_TIME, riskQueryDO);
     }
 }

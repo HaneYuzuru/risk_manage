@@ -44,7 +44,17 @@ public class RiskQueryDO {
     /**
      * 跟踪者id，仅支持一个跟踪者搜索
      */
-    private String followerName= null;
+    private String followerName = null;
+
+    /**
+     * 起始时间 格式YYYY-MM-DD
+     */
+    private String start = null;
+
+    /**
+     * 结束时间 格式YYYY-MM-DD
+     */
+    private String end = null;
 
     public boolean getFuzzy() {
         return fuzzy;
@@ -118,5 +128,21 @@ public class RiskQueryDO {
 
     public void setFollowerName(String followerName) {
         this.followerName = followerName;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
     }
 }

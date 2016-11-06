@@ -152,56 +152,52 @@
         select
         <include refid="Base_Column_List"/>
         from `risk`
-        <where>
-            id in
-            <foreach collection="list" open="(" close=")" separator="," item="item">
-                #{item,jdbcType=INTEGER}
-            </foreach>
-        </where>
+        WHERE data_status =0 AND
+        id in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item,jdbcType=INTEGER}
+        </foreach>
     </select>
 
     <select id="search" resultMap="BaseResultMap" parameterType="com.nju.risk.manage.domain.RiskQueryDO">
         select
         <include refid="Base_Column_List"/>
         from `risk`
+        WHERE data_status =0 AND
         <choose>
             <when test="fuzzy==true">
-                <where>
-                    <if test="name!=null">
-                        `name` LIKE '%${name}%'
-                    </if>
-                    <if test="content!=null">
-                        `content` LIKE '%${content}%'
-                    </if>
-                    <if test="possibility!=-1">
-                        `possibility` = #{possibility}
-                    </if>
-                    <if test="impact!=-1">
-                        `impact` = #{impact}
-                    </if>
-                    <if test="trigger!=null">
-                        `trigger` LIKE '%${trigger}%'
-                    </if>
-                </where>
+                <if test="name!=null">
+                    `name` LIKE '%${name}%'
+                </if>
+                <if test="content!=null">
+                    `content` LIKE '%${content}%'
+                </if>
+                <if test="possibility!=-1">
+                    `possibility` = #{possibility}
+                </if>
+                <if test="impact!=-1">
+                    `impact` = #{impact}
+                </if>
+                <if test="trigger!=null">
+                    `trigger` LIKE '%${trigger}%'
+                </if>
             </when>
             <when test="fuzzy!=true">
-                <where>
-                    <if test="name!=null">
-                        `name` = #{name}
-                    </if>
-                    <if test="content!=null">
-                        `content` = #{content}
-                    </if>
-                    <if test="possibility!=-1">
-                        `possibility` = #{possibility}
-                    </if>
-                    <if test="impact!=-1">
-                        `impact` = #{impact}
-                    </if>
-                    <if test="trigger!=null">
-                        `trigger` = #{trigger}
-                    </if>
-                </where>
+                <if test="name!=null">
+                    `name` = #{name}
+                </if>
+                <if test="content!=null">
+                    `content` = #{content}
+                </if>
+                <if test="possibility!=-1">
+                    `possibility` = #{possibility}
+                </if>
+                <if test="impact!=-1">
+                    `impact` = #{impact}
+                </if>
+                <if test="trigger!=null">
+                    `trigger` = #{trigger}
+                </if>
             </when>
         </choose>
     </select>
@@ -214,6 +210,7 @@
         <foreach collection="list" open="(" close=")" separator="," item="item">
             #{item,jdbcType=INTEGER}
         </foreach>
+        AND data_status =0
     </select>
 
     <select id="searchByFollowerIds" resultMap="BaseResultMap" parameterType="java.util.List">
@@ -224,5 +221,13 @@
         <foreach collection="list" open="(" close=")" separator="," item="item">
             #{item,jdbcType=INTEGER}
         </foreach>
+        AND data_status =0
+    </select>
+
+    <select id="searchByTime" resultMap="BaseResultMap" parameterType="com.nju.risk.manage.domain.RiskQueryDO">
+        select
+        <include refid="Base_Column_List"/>
+        from `risk`
+        WHERE gmt_modified BETWEEN #{start} AND #{end} AND data_status =0
     </select>
 </mapper>
