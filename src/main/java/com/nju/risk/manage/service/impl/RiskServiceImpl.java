@@ -97,6 +97,10 @@ public class RiskServiceImpl implements IRiskService {
 
     @Override
     public List<RiskVO> searchByTime(String start, String end) {
+        if (StringUtils.isEmpty(start) || StringUtils.isEmpty(end)) {
+            return Lists.newArrayList();
+        }
+
         RiskQueryDO riskQueryDO = new RiskQueryDO();
         riskQueryDO.setStart(start);
         riskQueryDO.setEnd(end);
