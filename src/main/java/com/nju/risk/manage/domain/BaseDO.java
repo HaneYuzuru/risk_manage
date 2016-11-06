@@ -14,7 +14,7 @@ public class BaseDO implements Serializable {
     private Date gmtCreate;
     private Date gmtModified;
     //数据有效性
-    private Integer dataStatus;
+    private Integer dataStatus = 0;
 
     public Date getGmtCreate() {
         return gmtCreate;
