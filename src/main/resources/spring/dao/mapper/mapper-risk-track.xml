@@ -116,12 +116,11 @@
         select
         <include refid="Base_Column_List"/>
         from `risk_track`
-        <where>
-            id in
-            <foreach collection="list" open="(" close=")" separator="," item="item">
-                #{item,jdbcType=INTEGER}
-            </foreach>
-        </where>
+        where data_status =0 AND
+        id in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item,jdbcType=INTEGER}
+        </foreach>
     </select>
 
 </mapper>

@@ -111,25 +111,24 @@
         select
         <include refid="Base_Column_List"/>
         from `user`
-        <where>
-            id in
-            <foreach collection="list" open="(" close=")" separator="," item="item">
-                #{item,jdbcType=INTEGER}
-            </foreach>
-        </where>
+        WHERE data_status =0 AND
+          id in
+          <foreach collection="list" open="(" close=")" separator="," item="item">
+              #{item,jdbcType=INTEGER}
+          </foreach>
     </select>
     <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
         FROM `user`
-        WHERE `name` = #{name}
+        WHERE `name` = #{name} AND data_status =0
     </select>
 
     <select id="searchByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
         FROM `user`
-        WHERE `name` LIKE '%${_parameter}%'
+        WHERE `name` LIKE '%${_parameter}%' AND data_status =0
     </select>
 
 </mapper>
