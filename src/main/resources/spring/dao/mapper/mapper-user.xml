@@ -124,4 +124,12 @@
         FROM `user`
         WHERE `name` = #{name}
     </select>
+
+    <select id="searchByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        FROM `user`
+        WHERE `name` LIKE '%${_parameter}%'
+    </select>
+
 </mapper>

@@ -1,5 +1,6 @@
 package com.nju.risk.manage.service.impl;
 
+import com.google.common.collect.Lists;
 import com.nju.risk.manage.dao.IUserDAO;
 import com.nju.risk.manage.domain.UserDO;
 import com.nju.risk.manage.service.IUserService;
@@ -76,5 +77,13 @@ public class UserServiceImpl implements IUserService {
         }
 
         return users.get(0);
+    }
+
+    @Override
+    public List<UserDO> searchByName(String name) {
+        if (StringUtils.isEmpty(name)) {
+            return Lists.newArrayList();
+        }
+        return userDAO.searchByName(name);
     }
 }

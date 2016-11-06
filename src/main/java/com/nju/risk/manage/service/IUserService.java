@@ -43,10 +43,17 @@ public interface IUserService {
     boolean register(UserDO userDO);
 
     /**
-     * 根据用户名获取用户信息
+     * 根据用户名精确获取用户信息
      *
      * @param name
      * @return null则表示没有找到该用户名的用户
      */
     UserDO getUserByName(String name);
+
+    /**
+     * 根据姓名模糊查找用户的信息
+     * @param name
+     * @return
+     */
+    List<UserDO> searchByName(String name);
 }

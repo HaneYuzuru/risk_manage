@@ -26,7 +26,21 @@ public interface IUserDAO {
 
     public List<UserDO> selectByIdList(List<Integer> userIdList);
 
+    /**
+     * 精确查找
+     *
+     * @param name
+     * @return
+     */
     public List<UserDO> selectByName(String name);
 
     public UserDO login(String name, String password);
+
+    /**
+     * 模糊查找
+     *
+     * @param name
+     * @return
+     */
+    public List<UserDO> searchByName(String name);
 }

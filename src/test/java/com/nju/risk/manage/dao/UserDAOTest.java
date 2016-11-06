@@ -61,8 +61,8 @@ public class UserDAOTest extends BaseDaoTestConfiguration {
 
     @Test
     public void testGetByName(){
-        String name = "nana";
-        List<UserDO> users=userDAO.selectByName(name);
+        String name = "na";
+        List<UserDO> users=userDAO.searchByName(name);
         System.out.println(users);
     }
 
