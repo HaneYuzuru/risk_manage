@@ -159,4 +159,70 @@
             </foreach>
         </where>
     </select>
+
+    <select id="search" resultMap="BaseResultMap" parameterType="com.nju.risk.manage.domain.RiskQueryDO">
+        select
+        <include refid="Base_Column_List"/>
+        from `risk`
+        <choose>
+            <when test="fuzzy==true">
+                <where>
+                    <if test="name!=null">
+                        `name` LIKE '%${name}%'
+                    </if>
+                    <if test="content!=null">
+                        `content` LIKE '%${content}%'
+                    </if>
+                    <if test="possibility!=-1">
+                        `possibility` = #{possibility}
+                    </if>
+                    <if test="impact!=-1">
+                        `impact` = #{impact}
+                    </if>
+                    <if test="trigger!=null">
+                        `trigger` LIKE '%${trigger}%'
+                    </if>
+                </where>
+            </when>
+            <when test="fuzzy!=true">
+                <where>
+                    <if test="name!=null">
+                        `name` = #{name}
+                    </if>
+                    <if test="content!=null">
+                        `content` = #{content}
+                    </if>
+                    <if test="possibility!=-1">
+                        `possibility` = #{possibility}
+                    </if>
+                    <if test="impact!=-1">
+                        `impact` = #{impact}
+                    </if>
+                    <if test="trigger!=null">
+                        `trigger` = #{trigger}
+                    </if>
+                </where>
+            </when>
+        </choose>
+    </select>
+
+    <select id="searchByCommitterIds" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from `risk`
+        WHERE committer in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </select>
+
+    <select id="searchByFollowerIds" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from `risk`
+        WHERE committer in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </select>
 </mapper>

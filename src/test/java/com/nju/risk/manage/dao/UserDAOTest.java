@@ -65,4 +65,14 @@ public class UserDAOTest extends BaseDaoTestConfiguration {
         List<UserDO> users=userDAO.selectByName(name);
         System.out.println(users);
     }
+
+    @Test
+    public void testRegister(){
+        UserDO userDO = new UserDO();
+        userDO.setName("nana");
+        userDO.setPassword("nana");
+        userDO.setUserType(1);
+        userDO.setDataStatus(1);
+        userDAO.insert(userDO);
+    }
 }

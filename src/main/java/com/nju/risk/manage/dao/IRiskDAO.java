@@ -1,7 +1,7 @@
 package com.nju.risk.manage.dao;
 
 import com.nju.risk.manage.domain.RiskDO;
-import com.nju.risk.manage.domain.UserDO;
+import com.nju.risk.manage.domain.RiskQueryDO;
 
 import java.util.List;
 
@@ -23,5 +23,11 @@ public interface IRiskDAO {
 
     public int batchDeleteByIdList(List<Integer> idList);
 
-    public List<UserDO> selectByIdList(List<Integer> idList);
+    public List<RiskDO> selectByIdList(List<Integer> idList);
+
+    public List<RiskDO> search(RiskQueryDO riskQueryDO);
+
+    public List<RiskDO> searchByCommitterIds(List<Integer> ids);
+
+    public List<RiskDO> searchByFollowerIds(List<Integer> ids);
 }

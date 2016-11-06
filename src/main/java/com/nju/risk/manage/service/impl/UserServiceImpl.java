@@ -41,17 +41,40 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public boolean login(String name, String password) {
+    public int login(String name, String password) {
+        if (StringUtils.isEmpty(name)) {
+            return IUserService.LOGIN_INVALID_NAME;
+        }
 
-        return false;
+        List<UserDO> users = userDAO.selectByName(name);
+        if (CollectionUtils.isEmpty(users)) {
+            return IUserService.LOGIN_INVALID_NAME;
+        }
+
+        UserDO user = users.get(0);
+        String expect = user.getPassword();
+        if (expect.equals(password)) {
+            return IUserService.LOGIN_SUCCESS;
+        } else {
+            return IUserService.LOGIN_INVALID_PASSWORD;
+        }
     }
 
     @Override
     public boolean register(UserDO userDO) {
-        try {
-            return userDAO.insert(userDO);
-        } catch (Exception e) {
-            return false;
+        return userDAO.insert(userDO);
+    }
+
+    @Override
+    public UserDO getUserByName(String name) {
+        if (StringUtils.isEmpty(name)) {
+            return null;
         }
+        List<UserDO> users = userDAO.selectByName(name);
+        if (CollectionUtils.isEmpty(users)) {
+            return null;
+        }
+
+        return users.get(0);
     }
 }

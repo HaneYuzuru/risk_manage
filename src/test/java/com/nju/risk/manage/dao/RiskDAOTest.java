@@ -2,7 +2,7 @@ package com.nju.risk.manage.dao;
 
 import com.google.common.collect.Lists;
 import com.nju.risk.manage.domain.RiskDO;
-import com.nju.risk.manage.domain.UserDO;
+import com.nju.risk.manage.domain.RiskQueryDO;
 import com.nju.risk.manage.util.BaseDaoTestConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,12 +32,12 @@ public class RiskDAOTest extends BaseDaoTestConfiguration {
         riskDO.setDataStatus(1);
         boolean ret = riskDAO.insert(riskDO);
         Assert.assertTrue(ret);
-        List<UserDO> resultList = riskDAO.selectByIdList(Lists.newArrayList(1));
+        List<RiskDO> resultList = riskDAO.selectByIdList(Lists.newArrayList(1));
         Assert.assertTrue(resultList.size() > 0);
     }
 
     @Test
-    public void batchTest() throws Exception{
+    public void batchTest() throws Exception {
         RiskDO riskDO = new RiskDO();
         riskDO.setName("风险");
         riskDO.setContent("这个风险很大的");
@@ -62,10 +62,20 @@ public class RiskDAOTest extends BaseDaoTestConfiguration {
         int ret = riskDAO.batchInsert(Lists.newArrayList(riskDO, riskDO2));
         Assert.assertEquals(2, ret);
         int changeNum = riskDAO.batchUpdate(Lists.newArrayList(riskDO, riskDO2));
-        List<UserDO> resultList = riskDAO.selectByIdList(Lists.newArrayList(2, 3));
+        List<RiskDO> resultList = riskDAO.selectByIdList(Lists.newArrayList(2, 3));
         Assert.assertEquals(2, resultList.size());
         Assert.assertEquals(0, changeNum);
         int deleteNum = riskDAO.batchDeleteByIdList(Lists.newArrayList(2, 3));
         Assert.assertEquals(2, deleteNum);
+    }
+
+    @Test
+    public void testSearch() {
+        String keyword = "风";
+        RiskQueryDO riskQueryDO = new RiskQueryDO();
+        riskQueryDO.setFuzzy(true);
+        riskQueryDO.setName(keyword);
+        List<RiskDO> result = riskDAO.search(riskQueryDO);
+        System.out.println(result.size());
     }
 }

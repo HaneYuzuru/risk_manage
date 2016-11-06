@@ -1,7 +1,6 @@
 package com.nju.risk.manage.dao;
 
 import com.nju.risk.manage.domain.RiskTrackDO;
-import com.nju.risk.manage.domain.UserDO;
 
 import java.util.List;
 
@@ -23,5 +22,5 @@ public interface IRiskTrackDAO {
 
     public int batchDeleteByIdList(List<Integer> idList);
 
-    public List<UserDO> selectByIdList(List<Integer> idList);
+    public List<RiskTrackDO> selectByIdList(List<Integer> idList);
 }

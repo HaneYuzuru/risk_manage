@@ -81,7 +81,7 @@ public class RiskTrackDAOImpl implements IRiskTrackDAO {
     }
 
     @Override
-    public List<UserDO> selectByIdList(List<Integer> idList) {
+    public List<RiskTrackDO> selectByIdList(List<Integer> idList) {
         if(idList.isEmpty()){
             return new ArrayList<>();
         }
