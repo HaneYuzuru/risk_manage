@@ -36,7 +36,7 @@
 .nav-pills{
 	font-family:微软雅黑;
 	font-size:16px;
-	padding-top:17px
+	padding-top:13px
 }
 
 .nav-pills > li > a{
@@ -216,49 +216,3 @@
 	height:566px;
 	
 }
-
-
-/*气泡框*/
-.org_box{
-    height:30px;
-    line-height:30px; 
-    padding-left:7px;
-    margin-bottom:30px; 
-    background:#CCDDFF; 
-    position:fixed; 
-    top:60px;
-    border-radius:20px;
-    z-index:9990;
-}
-.org_bot_cor{
-    width:0; 
-    height:0; 
-    font-size:0; 
-    border-width:15px; 
-    border-style:solid; 
-    border-color:transparent transparent #CCDDFF; 
-    _border-color:#CCDDFF white white; 
-    overflow:hidden; 
-    position:absolute; 
-    left:60px; 
-    top:-30px;
-}
-
-@media ( min-width :768px){
-	  .org_box{
-	     left:500px;
-	 }
-}
-
-@media ( min-width :1024px){
-	 .org_box{
-	     left:520px;
-	 }
-}
-
-@media ( min-width :1124px){
-	 .org_box{
-	     left:640px;
-	 }
-}
-
