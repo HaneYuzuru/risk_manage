@@ -1,6 +1,4 @@
 package com.nju.risk.manage.controller;
-import com.nju.risk.manage.domain.UserDO;
-import com.nju.risk.manage.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +15,19 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/risk")
-public class RiskController {
-    @Autowired
-    private IUserService userService;
-
+public class RiskController extends BaseController{
     @RequestMapping
-    public String riskView() {
-        return "home";
+    public ModelAndView riskView() {
+        ModelAndView result;
+        if(checkLogin()=="login"){
+            result = new ModelAndView("login");
+        }
+        else{
+            result = new ModelAndView("home");
+            result.addObject("username", username);
+            result.addObject("type", type);
+        }
+        return result;
     }
 
 

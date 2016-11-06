@@ -19,37 +19,24 @@ import javax.servlet.http.HttpSession;
 public class BaseController {
     public static final String USER_NAME_SESSION = "userName";//session中存放的登陆用户的用户名
 
-    private String name;//登陆用户的用户名
-    private Integer type;//登陆用户的角色
+    protected String username;//登陆用户的用户名
+    protected Integer type;//登陆用户的角色
     @Autowired
     IUserService userService;
+    @Autowired
+    protected HttpSession session;
 
     @RequestMapping(value = "/getUserInfo")
-    public String checkLogin(HttpSession session) {
+    public String checkLogin() {
         String name = (String) session.getAttribute(USER_NAME_SESSION);
         if (StringUtils.isEmpty(name)) {
             return "login";
         }
         UserDO user = userService.getUserByName(name);
-        this.setName(user.getName());
-        this.setType(user.getUserType());
+        this.username=user.getName();
+        this.type=user.getUserType();
 
         return "success";
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
 }

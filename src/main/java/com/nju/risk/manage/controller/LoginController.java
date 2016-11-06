@@ -1,8 +1,6 @@
 package com.nju.risk.manage.controller;
 
 import com.nju.risk.manage.domain.UserDO;
-import com.nju.risk.manage.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,13 +16,20 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/login")
-public class LoginController {
-    @Autowired
-    private IUserService userService;
+public class LoginController extends BaseController{
 
     @RequestMapping
-    public String userView() {
-        return "login";
+    public ModelAndView userView() {
+        ModelAndView result;
+        if(checkLogin()=="login"){
+            result = new ModelAndView("login");
+        }
+        else{
+            result = new ModelAndView("home");
+            result.addObject("username", username);
+            result.addObject("type", type);
+        }
+        return result;
     }
 
     @RequestMapping(value = "/register")
@@ -56,7 +61,9 @@ public class LoginController {
 
         userService.register(user);
 
+        session.setAttribute(USER_NAME_SESSION,username);
         result.addObject("username", username);
+        result.addObject("type", type);
 
         return result;
     }
@@ -73,6 +80,7 @@ public class LoginController {
         int s=userService.login(username,password);
 
         if(s==0){
+            session.setAttribute(USER_NAME_SESSION,username);
             modelMap.put("result", "true");
         }
         else if(s==1){
