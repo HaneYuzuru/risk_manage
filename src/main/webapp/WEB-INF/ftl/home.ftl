@@ -16,30 +16,30 @@
 <body>
 <#include "header.ftl"/>
 <link rel="stylesheet" href="css/dateRange.css">
-<div class="body" style="min-height:510px;">
+<div class="body" style="min-height:510px;" id="app">
     <div class="container-fluid">
         <div class="row" style="margin-top:-55px;">
             <div class="col-sm-12 col-md-12 main">
                 <!-- page inner nav -->
-                <nav class="navbar navbar-default" id="app-navbar" style="top:60px;">
+                <nav class="navbar navbar-default" id="app-navbar" style="top:10px;">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
                             <label class="col-sm-2 control-label" style="top:7px;">开始日期</label>
 
                             <div class="col-sm-1">
-                                <div class="ta_date" style="margin-top:12px;margin-left:-15px;width:93px;">
+                                <div class="ta_date" style="margin-top:12px;margin-left:-15px;width:110px;">
                                     <span class="date_title form-control-input" style="border-right:0px;" id="date_begin" v-model="start"></span>
                                 </div>
                             </div>
                             <label class="col-sm-1 control-label" style="top:7px;margin-left:-20px;">结束日期</label>
 
                             <div class="col-sm-1">
-                                <div class="ta_date" style="margin-top:12px;margin-left:-15px;width:93px;">
+                                <div class="ta_date" style="margin-top:12px;margin-left:-15px;width:110px;">
                                     <span class="date_title form-control-input" style="border-right:0px;" id="date_end" v-model="end"></span>
                                 </div>
                             </div>
 
-                            <button type="button" class="col-sm-1 btn btn-sm btn-default" style="background-color:#E6E6E6;padding:3px 3px;margin-left:40px;top:11px;">
+                            <button v-on:click="search()" type="button" class="col-sm-1 btn btn-sm btn-default" style="background-color:#E6E6E6;padding:3px 3px;margin-left:40px;top:11px;">
                                 <span class="glyphicon glyphicon-search"></span> 查询
                             </button>
 
@@ -55,7 +55,7 @@
             <!--/.main -->
         </div>
         <!--/.row -->
-        <div class="row" style="margin-top:50px;">
+        <div class="row">
             <div class="col-sm-12 col-md-12 main" style="padding-bottom: 0px;">
                 <button type="button" class="btn btn-default btn-sm" id="batchBtn">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 增加
@@ -66,7 +66,7 @@
                 <span id="ltip" style="display:none;color:red;position:relative;left:5px;top:2px;">您未选择任何风险</span>
             </div>
         </div>
-        <div class="row" id="app" >
+        <div class="row" >
             <div class="col-sm-12 col-md-12 main" style="padding-top:10px;">
                 <table class="table table-bordered table-striped">
                     <thead>

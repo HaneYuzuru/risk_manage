@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
 <link rel="stylesheet" href="css/header.css">
 <header class="header">
-    <nav class="navbar navbar-custom navbar-fixed-top">
+    <nav class="navbar navbar-custom">
         <div class="container">
             <div class="row">
                 <div class="hidden-xs hidden-sm col-md-3 col-lg-3 logo-custom">
