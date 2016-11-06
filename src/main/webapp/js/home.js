@@ -25,7 +25,7 @@ var vm = new Vue({
 //				}
 //			},
     methods: {
-        rerun: function (index, monitor_id) {
+        search: function (index, monitor_id) {
             var button = $('#trs').children().eq(index).children().eq(9).children().eq(0);
             button.prop('disabled', true);
             button.html('重跑中<span class="dotting"></span>');

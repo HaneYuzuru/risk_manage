@@ -27,14 +27,14 @@
                             <label class="col-sm-2 control-label" style="top:7px;">开始日期</label>
 
                             <div class="col-sm-1">
-                                <div class="ta_date" style="margin-top:12px;margin-left:-15px;width:93px;">
+                                <div class="ta_date" style="margin-top:12px;margin-left:-15px;width:100px;">
                                     <span class="date_title form-control-input" style="border-right:0px;" id="date_begin" v-model="start"></span>
                                 </div>
                             </div>
                             <label class="col-sm-1 control-label" style="top:7px;margin-left:-20px;">结束日期</label>
 
                             <div class="col-sm-1">
-                                <div class="ta_date" style="margin-top:12px;margin-left:-15px;width:93px;">
+                                <div class="ta_date" style="margin-top:12px;margin-left:-15px;width:100px;">
                                     <span class="date_title form-control-input" style="border-right:0px;" id="date_end" v-model="end"></span>
                                 </div>
                             </div>
