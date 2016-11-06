@@ -6,7 +6,6 @@ var vm = new Vue({
     ready: function () {
         $.post("/risk/getRisks", {"beginDate": getTheDate(-5), "endDate": getTheDate(0)},
             function(result){
-                console.log(result);
                 vm.$set('tds', result.list);
             }, "json");
     },
@@ -25,28 +24,11 @@ var vm = new Vue({
 //				}
 //			},
     methods: {
-        search: function (index, monitor_id) {
-            var button = $('#trs').children().eq(index).children().eq(9).children().eq(0);
-            button.prop('disabled', true);
-            button.html('重跑中<span class="dotting"></span>');
-            $.ajax({
-                url: "http://m.o2.qq.com/Api/rerunMonitor",
-                // The name of the callback parameter, as specified by the YQL service
-                jsonp: "callback",
-                // Tell jQuery we're expecting JSONP
-                dataType: "jsonp",
-                // Tell YQL what we want and that we want JSON
-                data: {
-                    monitorID: monitor_id
-                },
-                // Work with the response
-                success: function (response) {
-                    console.log(response); // server response
-                    vm.isupdate = (vm.isupdate == 0 ? 1 : 0);
-                    button.html('重跑');
-                    button.prop('disabled', false);
-                }
-            });
+        search: function () {
+            $.post("/risk/getRisks", {"beginDate": $("#date_begin").text(), "endDate": $("#date_end").text()},
+                function(result){
+                    vm.$set('tds', result.list);
+                }, "json");
         }
     }
 })
