@@ -20,7 +20,6 @@ import java.util.List;
  */
 @Repository
 public class UserDAOImpl implements IUserDAO {
-
     private final static String BASE = "com.nju.risk.manage.dao.IUserDAO.";
 
     private final static String STATEMENT_INSERT = BASE + "insert";
@@ -38,6 +37,8 @@ public class UserDAOImpl implements IUserDAO {
     private final static String STATEMENT_SELECT_BY_ID_LIST = BASE + "selectByIdList";
 
     private final static String STATEMENT_SELECT_BY_NAME = BASE + "selectByName";
+
+    private final static String STATEMENT_SEARCH_BY_NAME = BASE + "searchByName";
 
     private final static Integer PAGE_SIZE = 20;
 
@@ -121,5 +122,13 @@ public class UserDAOImpl implements IUserDAO {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public List<UserDO> searchByName(String name) {
+        if (StringUtils.isEmpty(name)) {
+            return Lists.newArrayList();
+        }
+        return sqlSession.selectList(STATEMENT_SEARCH_BY_NAME, name);
     }
 }

@@ -4,9 +4,12 @@ import com.google.common.collect.Lists;
 import com.nju.risk.manage.dao.IRiskDAO;
 import com.nju.risk.manage.domain.RiskDO;
 import com.nju.risk.manage.domain.RiskQueryDO;
+import com.nju.risk.manage.domain.UserDO;
 import com.nju.risk.manage.service.IRiskService;
+import com.nju.risk.manage.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -19,6 +22,8 @@ import java.util.List;
 public class RiskServiceImpl implements IRiskService {
     @Autowired
     IRiskDAO riskDAO;
+    @Autowired
+    IUserService userService;
 
     @Override
     public boolean addRiskItem(RiskDO riskDO) {
@@ -46,24 +51,48 @@ public class RiskServiceImpl implements IRiskService {
         switch (type) {
             case IRiskService.SEARCH_BY_NAME:
                 riskQueryDO.setName(String.valueOf(keyword));
+                result = riskDAO.search(riskQueryDO);
                 break;
             case IRiskService.SEARCH_BY_CONTENT:
                 riskQueryDO.setContent(String.valueOf(keyword));
+                result = riskDAO.search(riskQueryDO);
                 break;
             case IRiskService.SEARCH_BY_POSSIBILITY:
                 riskQueryDO.setPossibility(Integer.parseInt(keyword.toString()));
+                result = riskDAO.search(riskQueryDO);
                 break;
             case IRiskService.SEARCH_BY_COMMITTER:
-                // 提交者不进行模糊查找
+                // 提交者，先模糊查找找到id，再根据id去找记录
+                String committer = keyword.toString();
+                List<UserDO> committers = userService.searchByName(committer);
+                if (!CollectionUtils.isEmpty(committers)) {
+                    result = riskDAO.searchByCommitterIds(genUserIds(committers));
+                }
                 break;
             case IRiskService.SEARCH_BY_FOLLOWER:
-                // 跟踪者不进行模糊查找
+                // 跟踪者，先模糊查找找到id，再根据id去找记录
+                String follower = keyword.toString();
+                List<UserDO> followers = userService.searchByName(follower);
+                if (!CollectionUtils.isEmpty(followers)) {
+                    result = riskDAO.searchByFollowerIds(genUserIds(followers));
+                }
                 break;
             case IRiskService.SEARCH_BY_IMPACT:
                 riskQueryDO.setImpact(Integer.parseInt(keyword.toString()));
+                result = riskDAO.search(riskQueryDO);
                 break;
         }
-        result = riskDAO.search(riskQueryDO);
+        return result;
+    }
+
+    private List<Integer> genUserIds(List<UserDO> users) {
+        List<Integer> result = Lists.newArrayList();
+        if (CollectionUtils.isEmpty(users)) {
+            return result;
+        }
+        for (UserDO user : users) {
+            result.add(user.getId());
+        }
         return result;
     }
 }
