@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form role="form" action="" method="post" class="registration-form">
+                        <form role="form" action="/login/submitRegister" method="post" class="registration-form">
                             <div class="form-group">
                                 <label class="sr-only" for="form-username">用户名</label>
                                 <input type="text" name="form-firstname" placeholder="用户名..."
@@ -56,7 +56,7 @@
                                 <label class="checkbox-inline">
                                     <input type="radio" name="optionsRadiosinline" id="optionsRadios2" value="1">&nbsp;&nbsp;项目经理
                                 </label>
-                                <span id="tip" style="float:right;position:relative;top:1px;color:red;">用户名已存在</span>
+                                <span id="tip" style="float:right;position:relative;top:1px;color:red;display: none;">用户名已存在</span>
                             </div>
                             <button type="button" id="registerBtn" class="btn">注册</button>
                             <button type="button" class="btn" id="backBtn" style="float:right">返回</button>

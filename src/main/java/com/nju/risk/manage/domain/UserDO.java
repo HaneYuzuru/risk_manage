@@ -19,6 +19,14 @@ public class UserDO extends BaseDO {
     //用户类型
     private Integer userType;
 
+    public UserDO(){}
+
+    public UserDO(String name, String password, Integer userType) {
+        this.name = name;
+        this.password = password;
+        this.userType = userType;
+    }
+
     public Integer getId() {
         return id;
     }

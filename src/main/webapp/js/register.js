@@ -33,16 +33,27 @@ jQuery(document).ready(function() {
                 timeout: 5000,    //超时时间
                 dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
                 success: function (res) {
-                    console.log(res)
+                    if(res['result']==false){
+                        $('#tip').text("用户名已存在");
+                        $('#tip').show();
+                        return false;
+                    }
+                    else{
+                        $('#tip').hide();
+                        if($('#form-password').val()!=$('#form-repeat-password').val()){
+                            $('#tip').text("两次密码输入不一致");
+                            $('#tip').show();
+                            return false;
+                        }
+                        else{
+                            $(".registration-form").submit();
+                        }
+                    }
                 }
             })
-            return false;
-        }
-        else{
-            return false;
         }
         $.ajaxSettings.async=true;
-        $(".registration-form").submit();
+
     });
 
 

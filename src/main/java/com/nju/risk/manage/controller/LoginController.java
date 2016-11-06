@@ -37,11 +37,31 @@ public class LoginController {
 
     @RequestMapping(value = "/testRegister", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> registerForm(@RequestParam("username") String username) throws Exception {
-        Map<String, Object> modelMap = new HashMap<String, Object>(2);
-        modelMap.put("total", "1");
-        modelMap.put("success", "true");
+    public Map<String, Object> testregisterForm(@RequestParam("username") String username) throws Exception {
+        Map<String, Object> modelMap = new HashMap<String, Object>(1);
+        if(userService.checkUserName(username)==true){
+            modelMap.put("result", "true");
+        }
+        else{
+            modelMap.put("result", "false");
+        }
         return modelMap;
+    }
+
+    @RequestMapping(value = "/submitRegister", method = RequestMethod.POST)
+    public ModelAndView registerForm(@RequestParam("form-firstname") String username,
+                              @RequestParam("form-password") String password,
+                              @RequestParam("optionsRadiosinline") int type) throws Exception {
+
+        ModelAndView result = new ModelAndView("dashBoard");
+
+        UserDO user=new UserDO(username,password,type);
+
+        userService.register(user);
+
+        result.addObject("loginMessage", username);
+
+        return result;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
