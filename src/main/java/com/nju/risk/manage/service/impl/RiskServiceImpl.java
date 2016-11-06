@@ -132,6 +132,7 @@ public class RiskServiceImpl implements IRiskService {
             return null;
         }
         RiskVO riskVO = new RiskVO();
+        riskVO.setId(risk.getId());
         riskVO.setName(risk.getName());
         riskVO.setPossibility(risk.getPossibility());
         riskVO.setImpact(risk.getImpact());
