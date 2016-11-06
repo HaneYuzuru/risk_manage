@@ -20,7 +20,7 @@ CREATE TABLE `risk` (
   `gmt_modified` datetime NOT NULL COMMENT '修改时间',
   `data_status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '数据有效性，0-有效，1-已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for risk_track
@@ -35,7 +35,7 @@ CREATE TABLE `risk_track` (
   `gmt_modified` datetime NOT NULL COMMENT '修改时间',
   `data_status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '数据有效性，0-有效，1-已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user
@@ -51,4 +51,4 @@ CREATE TABLE `user` (
   `data_status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '数据有效性，0-有效，1-已删除',
   PRIMARY KEY (`id`),
   KEY `idx_user_type` (`type`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表';

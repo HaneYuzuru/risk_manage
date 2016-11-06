@@ -1,6 +1,5 @@
 package com.nju.risk.manage.controller;
 
-import com.google.common.collect.Lists;
 import com.nju.risk.manage.domain.UserDO;
 import com.nju.risk.manage.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by huanghanqian on 16/11/5.
@@ -53,21 +50,21 @@ public class LoginController {
                               @RequestParam("form-password") String password,
                               @RequestParam("optionsRadiosinline") int type) throws Exception {
 
-        ModelAndView result = new ModelAndView("dashBoard");
+        ModelAndView result = new ModelAndView("home");
 
         UserDO user=new UserDO(username,password,type);
 
         userService.register(user);
 
-        result.addObject("loginMessage", username);
+        result.addObject("username", username);
 
         return result;
     }
 
     @RequestMapping(value = "/testlogin", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> Login(@RequestParam("form-username") String username,
-                              @RequestParam("form-password") String password) throws Exception {
+    public Map<String, Object> Login(@RequestParam("username") String username,
+                              @RequestParam("password") String password) throws Exception {
 
         ModelAndView result = new ModelAndView("dashBoard");
 

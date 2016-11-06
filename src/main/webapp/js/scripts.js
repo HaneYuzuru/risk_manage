@@ -36,17 +36,12 @@ jQuery(document).ready(function() {
 				timeout: 5000,    //超时时间
 				dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 				success: function (res) {
-					if(res['result']==0){
+					if(res['result']=="true"){
 						$('#tip').hide();
-						window.location.href="";
+						window.location.href="risk";
 					}
 					else{
-						if(res['result']==1){
-							$('#tip').text("密码错误");
-						}
-						else{
-							$('#tip').text("用户名不存在");
-						}
+						$('#tip').text(res['result']);
 						$('#tip').show();
 					}
 				}
@@ -63,39 +58,5 @@ $("#registerBtn").click(function(){
 	window.location.href="login/register";
 })
 
-    
-    $("#loginBtn").click(function(){
-    	 var userID=$("#userID").val();
-         var password=$("#password").val();    	
-         if(userID==""||userID==null||password==""||password==null){
-        	alert("请输入完整的登录信息！");
-         }
-         else{
-    	     $.ajax({
-    	            url:'api/testLogin',
-    	            data:{
-    	                 userID : userID ,
-    	                 password: password
-    	            },
-    	            type:'POST',
-    	            dataType:'json',
-    	            async: false,
-    	            success:function(data) {
-    	                 if(data.loginResult=="success"){
-    	              	   window.location.href="home"; 
-    	                 }
-    	                 else if(data.loginResult=="notExists"){
-    	              	   alert("用户名不存在！");
-    	                 }
-    	                 else{
-    	              	   alert("密码错误！");
-    	                 }
-    	            },
-    	            error:function(){
-    	               alert("登录失败");
-    	            }
-    	             
-    	     });
-         }	
-    })
+
     
