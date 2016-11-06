@@ -1,80 +1,62 @@
 /**
  * Created by huanghanqian on 16/11/6.
  */
-// var vm = new Vue({
-//     el: '#app',
-//     ready: function () {
-//         $.getJSON("/main/getMonitor", {"beginDate": getTheDate(-2), "endDate": getTheDate(0)}, function (result) {
-//             vm.$set('tds', result);
-//         });
-//     },
-//     data: {
-//         start: getTheDate(-2),
-//         end: getTheDate(0),
-//         isupdate: 0
-//     },
-// //			computed: {
-// //				// 一个计算属性的 getter
-// //				tds: function () {
-// //					var myr="";
-// //					$.getJSON("/main/getMonitor", {"beginDate": getTheDate(-2),"endDate": getTheDate(0)}, function (result) {
-// //						myr= result;
-// //					});
-// //					return myr;
-// //				}
-// //			},
-//     methods: {
-//         rerun: function (index, monitor_id) {
-//             var button = $('#trs').children().eq(index).children().eq(9).children().eq(0);
-//             button.prop('disabled', true);
-//             button.html('重跑中<span class="dotting"></span>');
-//             $.ajax({
-//                 url: "http://m.o2.qq.com/Api/rerunMonitor",
-//                 // The name of the callback parameter, as specified by the YQL service
-//                 jsonp: "callback",
-//                 // Tell jQuery we're expecting JSONP
-//                 dataType: "jsonp",
-//                 // Tell YQL what we want and that we want JSON
-//                 data: {
-//                     monitorID: monitor_id
-//                 },
-//                 // Work with the response
-//                 success: function (response) {
-//                     console.log(response); // server response
-//                     vm.isupdate = (vm.isupdate == 0 ? 1 : 0);
-//                     button.html('重跑');
-//                     button.prop('disabled', false);
-//                 }
-//             });
-//         }
-//     }
-// })
-//
-// vm.$watch('start', function (val) {
-//     $.getJSON("/main/getMonitor", {"beginDate": val, "endDate": this.end}, function (result) {
-//         vm.tds = result;
-//     });
-// })
-//
-// vm.$watch('end', function (val) {
-//     $.getJSON("/main/getMonitor", {"beginDate": this.start, "endDate": val}, function (result) {
-//         vm.tds = result;
-//     });
-// })
-//
-// vm.$watch('isupdate', function (val) {
-//     $.getJSON("/main/getMonitor", {"beginDate": this.start, "endDate": this.end}, function (result) {
-//         vm.tds = result;
-//     });
-// })
-//
-// vm.$watch('tds',function(val){
-//     vm.$nextTick(function() {
-//         initTableCheckbox();
-//     });
-// })
+var vm = new Vue({
+    el: '#app',
+    ready: function () {
+        $.post("/risk/getRisks", {"beginDate": getTheDate(-5), "endDate": getTheDate(0)},
+            function(result){
+                console.log(result);
+                vm.$set('tds', result.list);
+            }, "json");
+    },
+    data: {
+        start: getTheDate(-5),
+        end: getTheDate(0)
+    },
+//			computed: {
+//				// 一个计算属性的 getter
+//				tds: function () {
+//					var myr="";
+//					$.getJSON("/main/getMonitor", {"beginDate": getTheDate(-2),"endDate": getTheDate(0)}, function (result) {
+//						myr= result;
+//					});
+//					return myr;
+//				}
+//			},
+    methods: {
+        rerun: function (index, monitor_id) {
+            var button = $('#trs').children().eq(index).children().eq(9).children().eq(0);
+            button.prop('disabled', true);
+            button.html('重跑中<span class="dotting"></span>');
+            $.ajax({
+                url: "http://m.o2.qq.com/Api/rerunMonitor",
+                // The name of the callback parameter, as specified by the YQL service
+                jsonp: "callback",
+                // Tell jQuery we're expecting JSONP
+                dataType: "jsonp",
+                // Tell YQL what we want and that we want JSON
+                data: {
+                    monitorID: monitor_id
+                },
+                // Work with the response
+                success: function (response) {
+                    console.log(response); // server response
+                    vm.isupdate = (vm.isupdate == 0 ? 1 : 0);
+                    button.html('重跑');
+                    button.prop('disabled', false);
+                }
+            });
+        }
+    }
+})
 
-initTableCheckbox();
+
+vm.$watch('tds',function(val){
+    vm.$nextTick(function() {
+        initTableCheckbox();
+    });
+})
 
 var dateRange_begin = new pickerDateRange('date_begin', {
     isTodayValid: true,

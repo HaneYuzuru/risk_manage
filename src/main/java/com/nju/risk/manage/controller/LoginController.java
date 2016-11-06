@@ -20,21 +20,18 @@ public class LoginController extends BaseController{
 
     @RequestMapping
     public ModelAndView userView() {
-        ModelAndView result;
-        if(checkLogin()=="login"){
-            result = new ModelAndView("login");
-        }
-        else{
-            result = new ModelAndView("home");
-            result.addObject("username", username);
-            result.addObject("type", type);
-        }
-        return result;
+        return turnToPage("home");
     }
 
     @RequestMapping(value = "/register")
     public String registerView() {
         return "register";
+    }
+
+    @RequestMapping(value = "/out")
+    public String logout() {
+        session.removeAttribute(USER_NAME_SESSION);
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/testRegister", method = RequestMethod.POST)
@@ -55,7 +52,7 @@ public class LoginController extends BaseController{
                               @RequestParam("form-password") String password,
                               @RequestParam("optionsRadiosinline") int type) throws Exception {
 
-        ModelAndView result = new ModelAndView("home");
+        ModelAndView result = new ModelAndView("redirect:/risk");
 
         UserDO user=new UserDO(username,password,type);
 
@@ -72,8 +69,6 @@ public class LoginController extends BaseController{
     @ResponseBody
     public Map<String, Object> Login(@RequestParam("username") String username,
                               @RequestParam("password") String password) throws Exception {
-
-        ModelAndView result = new ModelAndView("dashBoard");
 
         Map<String, Object> modelMap = new HashMap<String, Object>(1);
 

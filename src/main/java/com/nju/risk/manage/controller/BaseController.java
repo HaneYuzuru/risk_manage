@@ -6,8 +6,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * author: winsky
@@ -37,6 +40,28 @@ public class BaseController {
         this.type=user.getUserType();
 
         return "success";
+    }
+
+    @RequestMapping(value = "/gotoPage")
+    public ModelAndView turnToPage(String view) {
+        ModelAndView result;
+        if(checkLogin().equals("login")){
+            result = new ModelAndView("login");
+        }
+        else{
+            result = new ModelAndView(view);
+            result.addObject("username", username);
+            result.addObject("type", type);
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/getDate")
+    public String getDateString(int offset ){
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE,  offset);
+        String date = new SimpleDateFormat("yyyy-MM-dd ").format(cal.getTime());
+        return date;
     }
 
 }

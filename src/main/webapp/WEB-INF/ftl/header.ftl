@@ -21,7 +21,7 @@
                 <div class="btn-group">
                     <button type="button" class="btn dropdown-toggle btn-custom" data-toggle="dropdown"><span id="username">${username!}</span> <span class="caret"></span></button>
                     <ul class="dropdown-menu pull-right th" role="menu">
-                        <li><a href="login">注销用户</a></li>
+                        <li><a href="login/out">注销用户</a></li>
                     </ul>
                 </div>
             </div>
