@@ -10,8 +10,7 @@ var vm = new Vue({
             }, "json");
     },
     data: {
-        start: getTheDate(-5),
-        end: getTheDate(0)
+        isUpdate: 0
     },
 //			computed: {
 //				// 一个计算属性的 getter
@@ -38,6 +37,13 @@ vm.$watch('tds',function(val){
     vm.$nextTick(function() {
         initTableCheckbox();
     });
+})
+
+vm.$watch('isUpdate',function(val){
+    $.post("/risk/getRisks", {"beginDate": $("#date_begin").text(), "endDate": $("#date_end").text()},
+        function(result){
+            vm.$set('tds', result.list);
+        }, "json");
 })
 
 var dateRange_begin = new pickerDateRange('date_begin', {
@@ -112,7 +118,48 @@ function initTableCheckbox() {
     });
 }
 
-$("#batchBtn").unbind().bind("click", function () {
-
+$("#submitRisk").unbind().bind("click", function () {
+    var name=$('#riskname').val();
+    var content=$('#content').val();
+    var trigger=$('#trigger').val();
+    if(name==null||name==""){
+        $('#empTip').text("风险名不能为空");
+        $('#empTip').show();
+    }
+    else if(content==null||content==""){
+        $('#empTip').text("风险内容不能为空");
+        $('#empTip').show();
+    }
+    else if(trigger==null||trigger==""){
+        $('#empTip').text("触发条件不能为空");
+        $('#empTip').show();
+    }
+    else{
+        $('#empTip').hide();
+        $.post("/risk/add", {"name": name,"content":content,"possibility":$('input:radio[name="optionsRadiosinline"]:checked').val(),"impact":$('input:radio[name="optionsRadiosinline1"]:checked').val(),"trigger":trigger,"followers":$("#options").val()},
+            function(result){
+                if(result['result']=="true"){
+                    vm.isUpdate=(vm.isUpdate==0?1:0);
+                }
+                else{
+                    alert(result['result']);
+                }
+            }, "json");
+    }
 });
+
+$.post("/user/searchByName", {"name": ""},
+    function(result){
+        var list= result.list;
+        var htm="";
+        for(var i=0;i<list.length;i++){
+            htm+='<option value="'+list[i]['id']+'">'+list[i]['name']+'</option>';
+        }
+        $('#options').html(htm);
+        var height=31;
+        if(list.length!=0){
+            height=list.length*18+13;
+        }
+        $('#options').css("height",height+"px");
+    }, "json");
 

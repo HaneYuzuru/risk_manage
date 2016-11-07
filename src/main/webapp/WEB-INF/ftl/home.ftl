@@ -55,6 +55,7 @@
             <!--/.main -->
         </div>
         <!--/.row -->
+    <#if type==1 !>
         <div class="row">
             <div class="col-sm-12 col-md-12 main" style="padding-bottom: 0px;">
                 <button type="button" class="btn btn-default btn-sm" id="batchBtn" data-toggle="modal" data-target="#myModal" >
@@ -66,6 +67,8 @@
                 <span id="ltip" style="display:none;color:red;position:relative;left:5px;top:2px;">您未选择任何风险</span>
             </div>
         </div>
+    </#if>
+
         <div class="row" >
             <div class="col-sm-12 col-md-12 main" style="padding-top:10px;">
                 <table class="table table-bordered table-striped">
@@ -145,57 +148,65 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form">
+                <form class="form-horizontal" role="form" id="addForm">
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label" style="margin-left:-10px;">风险名</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="firstname"
+                            <input type="text" class="form-control" id="riskname" name="name"
                                    placeholder="风险名...">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">风险内容</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" rows="3" cols="20"></textarea>
+                            <textarea class="form-control" rows="3" cols="20" name="content" id="content"></textarea>
                         </div>
                     </div>
                     <div class="form-group" style="margin-top:-5px;">
-                        <label for="content" class="col-sm-2 control-label" >可能性</label>
+                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">可能性</label>
                         <div class="col-sm-10">
                             <label class="checkbox-inline" style="margin-left:-20px;">
                                 <input type="radio" name="optionsRadiosinline" id="optionsRadios3"
-                                       value="option1" checked> 选项 1
+                                       value="高" checked> 高
                             </label>
                             <label class="checkbox-inline">
                                 <input type="radio" name="optionsRadiosinline" id="optionsRadios4"
-                                       value="option2"> 选项 2
+                                       value="中"> 中
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="optionsRadiosinline" id="optionsRadios4"
+                                       value="低"> 低
                             </label>
                         </div>
                     </div>
                     <div class="form-group" style="margin-top:-5px;">
-                        <label for="content" class="col-sm-2 control-label">影响程度</label>
+                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">影响程度</label>
                         <div class="col-sm-10">
                             <label class="checkbox-inline" style="margin-left:-20px;">
-                                <input type="radio" name="optionsRadiosinline" id="optionsRadios3"
-                                       value="option1" checked> 选项 1
+                                <input type="radio" name="optionsRadiosinline1" id="optionsRadios3"
+                                       value="高" checked> 高
                             </label>
                             <label class="checkbox-inline">
-                                <input type="radio" name="optionsRadiosinline" id="optionsRadios4"
-                                       value="option2"> 选项 2
+                                <input type="radio" name="optionsRadiosinline1" id="optionsRadios4"
+                                       value="中"> 中
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="optionsRadiosinline1" id="optionsRadios4"
+                                       value="低"> 低
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label" style="margin-left:-10px;">触发器</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="firstname"
+                            <input type="text" class="form-control" id="trigger" name="trigger"
                                    placeholder="触发条件...">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label" style="margin-left:-10px;">跟踪者</label>
                         <div class="col-sm-10">
-                            <select multiple class="form-control" style="height:103px;">
+                            <select multiple class="form-control" style="height:103px;" id="options" name="followers">
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -207,10 +218,11 @@
                 </form>
             </div>
             <div class="modal-footer">
+                <span id="empTip" style="float:left;color:red;margin-left:10px;display: none;">不能为空</span>
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" id="submitRisk">
                     提交风险
                 </button>
             </div>
