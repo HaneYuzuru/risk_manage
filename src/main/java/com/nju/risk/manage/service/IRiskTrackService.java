@@ -1,6 +1,5 @@
 package com.nju.risk.manage.service;
 
-import com.nju.risk.manage.domain.RiskTrackDO;
 import com.nju.risk.manage.domain.RiskTrackVO;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 
@@ -12,13 +11,13 @@ import java.util.List;
  * description:
  */
 public interface IRiskTrackService {
-    public boolean addRiskTrackItem(RiskTrackDO riskTrackDO);
+    public boolean addRiskTrackItem(RiskTrackVO riskTrackVO);
 
     public boolean deleteRiskTrackItem(int id);
 
     public boolean deleteRiskTrackItem(List<Integer> ids);
 
-    public boolean updateRiskTrackItem(RiskTrackDO riskTrackDO);
+    public boolean updateRiskTrackItem(RiskTrackVO riskTrackVO);
 
     public List<RiskTrackVO> searchByRiskId(int id);
 
@@ -29,7 +28,7 @@ public interface IRiskTrackService {
      * @param end   结束时间 格式YYYY-MM-DD
      * @return
      */
-    // public List<RiskTrackVO> searchByTime(String start, String end);
+    public List<RiskTrackVO> searchByTime(String start, String end);
 
     /**
      * 获取某个风险的状态，默认是风险状态
@@ -38,6 +37,4 @@ public interface IRiskTrackService {
      * @return
      */
     public RiskStatusEnum getRiskStatus(int riskId);
-
-    public boolean add(RiskTrackVO riskTrackVO);
 }

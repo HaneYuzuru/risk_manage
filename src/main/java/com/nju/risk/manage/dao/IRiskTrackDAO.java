@@ -1,6 +1,7 @@
 package com.nju.risk.manage.dao;
 
 import com.nju.risk.manage.domain.RiskTrackDO;
+import com.nju.risk.manage.domain.RiskTrackQueryDO;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface IRiskTrackDAO {
     public List<RiskTrackDO> selectByIdList(List<Integer> idList);
 
     public List<RiskTrackDO> selectByRiskIdList(List<Integer> riskIdList);
+
+    public List<RiskTrackDO> searchByTime(RiskTrackQueryDO riskTrackQueryDO);
 }

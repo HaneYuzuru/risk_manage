@@ -1,22 +1,17 @@
 package com.nju.risk.manage.service.impl;
 
-import com.nju.risk.manage.dao.IRiskTrackDAO;
-import com.nju.risk.manage.domain.RiskTrackDO;
-import com.nju.risk.manage.domain.RiskTrackVO;
-import com.nju.risk.manage.service.IRiskTrackService;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.ArrayList;
-import java.util.List;
 import com.google.common.collect.Lists;
 import com.nju.risk.manage.dao.IRiskTrackDAO;
-import com.nju.risk.manage.domain.RiskTrackDO;
-import com.nju.risk.manage.domain.RiskTrackVO;
+import com.nju.risk.manage.domain.*;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 import com.nju.risk.manage.service.IRiskTrackService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zzj on 16/11/6.
@@ -30,7 +25,9 @@ public class RiskTrackServiceImpl implements IRiskTrackService {
     IRiskTrackDAO riskTrackDAO;
 
     @Override
-    public boolean addRiskTrackItem(RiskTrackDO riskTrackDO) { return riskTrackDAO.insert(riskTrackDO); }
+    public boolean addRiskTrackItem(RiskTrackVO riskTrackVO) {
+        return riskTrackDAO.insert(vo2do(riskTrackVO));
+    }
 
     @Override
     public boolean deleteRiskTrackItem(int id) {
@@ -38,39 +35,52 @@ public class RiskTrackServiceImpl implements IRiskTrackService {
     }
 
     @Override
-    public boolean updateRiskTrackItem(RiskTrackDO riskTrackDO) {
-        return riskTrackDAO.update(riskTrackDO);
+    public boolean updateRiskTrackItem(RiskTrackVO riskTrackVO) {
+        return riskTrackDAO.update(vo2do(riskTrackVO));
     }
 
-    public boolean deleteRiskTrackItem(List<Integer> ids){
+    public boolean deleteRiskTrackItem(List<Integer> ids) {
         return riskTrackDAO.batchDeleteByIdList(ids) > 0;
     }
 
-    public List<RiskTrackVO> searchByRiskId(int id){
+    public List<RiskTrackVO> searchByRiskId(int id) {
         List<Integer> ids = new ArrayList<Integer>();
         ids.add(id);
         List<RiskTrackDO> obtained = riskTrackDAO.selectByIdList(ids);
         List<RiskTrackVO> result = new ArrayList<RiskTrackVO>();
-        for (RiskTrackDO trackDO: obtained) {
+        for (RiskTrackDO trackDO : obtained) {
             result.add(do2vo(trackDO));
         }
 
         return result;
     }
 
-    private RiskTrackVO do2vo(RiskTrackDO DO) {
-        RiskTrackVO VO = new RiskTrackVO();
-        VO.setDescription(DO.getDescription());
-        VO.setId(DO.getId());
-        VO.setRiskId(DO.getRiskId());
-        VO.setStatus(RiskStatusEnum.fromValue(DO.getStatus()).type());
+    @Override
+    public List<RiskTrackVO> searchByTime(String start, String end) {
+        if (StringUtils.isEmpty(start) || StringUtils.isEmpty(end)) {
+            return Lists.newArrayList();
+        }
 
-        return VO;
+        start = start + " 00:00:00";
+        end = end + " 23:59:59";
+
+        RiskTrackQueryDO riskTrackQueryDO = new RiskTrackQueryDO();
+        riskTrackQueryDO.setStart(start);
+        riskTrackQueryDO.setEnd(end);
+
+        List<RiskTrackDO> riskTrackDOs = riskTrackDAO.searchByTime(riskTrackQueryDO);
+        if (CollectionUtils.isEmpty(riskTrackDOs)) {
+            return Lists.newArrayList();
+        }
+        List<RiskTrackVO> riskTrackVOs = Lists.newArrayList();
+        for (RiskTrackDO riskTrackDO : riskTrackDOs) {
+            riskTrackVOs.add(do2vo(riskTrackDO));
+        }
+        return riskTrackVOs;
     }
 
     public List<RiskTrackDO> getRiskByRiskId(int riskId) {
-        // return riskTrackDAO.searchByRiskId(Lists.newArrayList(riskId));
-        return Lists.newArrayList();
+        return riskTrackDAO.selectByRiskIdList(Lists.newArrayList(riskId));
     }
 
     @Override
@@ -95,14 +105,6 @@ public class RiskTrackServiceImpl implements IRiskTrackService {
         return RiskStatusEnum.fromValue(status);
     }
 
-    @Override
-    public boolean add(RiskTrackVO riskTrackVO) {
-        if (riskTrackVO == null) {
-            return false;
-        }
-        return riskTrackDAO.insert(vo2do(riskTrackVO));
-    }
-
     private RiskTrackDO vo2do(RiskTrackVO riskTrackVO) {
         if (riskTrackVO == null) {
             return null;
@@ -114,5 +116,19 @@ public class RiskTrackServiceImpl implements IRiskTrackService {
         riskTrackDO.setStatus(RiskStatusEnum.fromType(riskTrackVO.getStatus()).value());
         riskTrackDO.setRiskId(riskTrackVO.getRiskId());
         return riskTrackDO;
+    }
+
+    private RiskTrackVO do2vo(RiskTrackDO riskTrackDO) {
+        if (riskTrackDO == null) {
+            return null;
+        }
+
+        RiskTrackVO riskTrackVO = new RiskTrackVO();
+        riskTrackVO.setId(riskTrackDO.getId());
+        riskTrackVO.setStatus(RiskStatusEnum.fromValue(riskTrackDO.getStatus()).type());
+        riskTrackVO.setDescription(riskTrackDO.getDescription());
+        riskTrackVO.setRiskId(riskTrackDO.getRiskId());
+
+        return riskTrackVO;
     }
 }

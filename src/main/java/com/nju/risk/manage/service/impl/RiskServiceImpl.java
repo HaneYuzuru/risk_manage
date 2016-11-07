@@ -47,7 +47,7 @@ public class RiskServiceImpl implements IRiskService {
             riskTrackVO.setStatus(RiskStatusEnum.RISK.type());
             riskTrackVO.setRiskId(newId);
             riskTrackVO.setDescription(DEFAULT_RISK_TRACK_DESCRIPTION);
-            riskTrackService.add(riskTrackVO);
+            riskTrackService.addRiskTrackItem(riskTrackVO);
             return newId;
         }
         return 0;
