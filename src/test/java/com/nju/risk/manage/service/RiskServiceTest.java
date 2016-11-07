@@ -1,6 +1,7 @@
 package com.nju.risk.manage.service;
 
 import com.nju.risk.manage.domain.RiskVO;
+import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 import com.nju.risk.manage.util.BaseDaoTestConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,7 +36,7 @@ public class RiskServiceTest extends BaseDaoTestConfiguration {
 
     @Test
     public void testInsert() {
-        RiskVO riskVO = new RiskVO("风险", "风险内容", "高", "中", "阈值", "winsky", "nana,winsky");
+        RiskVO riskVO = new RiskVO("风险", "风险内容", "高", "中", "阈值", "winsky", "nana,winsky", RiskStatusEnum.RISK.type());
         boolean result = riskService.addRiskItem(riskVO);
         Assert.assertTrue(result);
     }
