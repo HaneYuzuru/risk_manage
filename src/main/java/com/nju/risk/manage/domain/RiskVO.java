@@ -5,7 +5,7 @@ package com.nju.risk.manage.domain;
  * date: 2016/11/6
  * description:
  */
-public class RiskVO {
+public class RiskVO extends BaseVO {
     private Integer id;
     /**
      * 风险名称
@@ -20,12 +20,12 @@ public class RiskVO {
     /**
      * 可能性
      */
-    private Integer possibility;
+    private String possibility;
 
     /**
      * 影响度
      */
-    private Integer impact;
+    private String impact;
 
     /**
      * 触发器/阈值
@@ -36,6 +36,37 @@ public class RiskVO {
      * 提交者姓名
      */
     private String committerName;
+
+    /**
+     * 风险状态
+     */
+    private String status;
+
+    public RiskVO() {
+    }
+
+    public RiskVO(String name, String content, String possibility, String impact, String trigger, String committerName, String followerNames, String status) {
+        this.name = name;
+        this.content = content;
+        this.possibility = possibility;
+        this.impact = impact;
+        this.trigger = trigger;
+        this.committerName = committerName;
+        this.followerNames = followerNames;
+        this.status = status;
+    }
+
+    public RiskVO(Integer id, String name, String content, String possibility, String impact, String trigger, String committerName, String followerNames, String status) {
+        this.id = id;
+        this.name = name;
+        this.content = content;
+        this.possibility = possibility;
+        this.impact = impact;
+        this.trigger = trigger;
+        this.committerName = committerName;
+        this.followerNames = followerNames;
+        this.status = status;
+    }
 
     /**
      * 跟踪者姓名，多个跟踪者以,（英文下）相连
@@ -66,19 +97,19 @@ public class RiskVO {
         this.content = content;
     }
 
-    public Integer getPossibility() {
+    public String getPossibility() {
         return possibility;
     }
 
-    public void setPossibility(Integer possibility) {
+    public void setPossibility(String possibility) {
         this.possibility = possibility;
     }
 
-    public Integer getImpact() {
+    public String getImpact() {
         return impact;
     }
 
-    public void setImpact(Integer impact) {
+    public void setImpact(String impact) {
         this.impact = impact;
     }
 
@@ -104,5 +135,13 @@ public class RiskVO {
 
     public void setFollowerNames(String followerNames) {
         this.followerNames = followerNames;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

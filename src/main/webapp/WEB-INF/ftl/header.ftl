@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
 <link rel="stylesheet" href="css/header.css">
 <header class="header">
-    <nav class="navbar navbar-custom navbar-fixed-top">
+    <nav class="navbar navbar-custom">
         <div class="container">
             <div class="row">
                 <div class="hidden-xs hidden-sm col-md-3 col-lg-3 logo-custom">
@@ -21,7 +21,7 @@
                 <div class="btn-group">
                     <button type="button" class="btn dropdown-toggle btn-custom" data-toggle="dropdown"><span id="username">${username!}</span> <span class="caret"></span></button>
                     <ul class="dropdown-menu pull-right th" role="menu">
-                        <li><a href="login">注销用户</a></li>
+                        <li><a href="login/out">注销用户</a></li>
                     </ul>
                 </div>
             </div>

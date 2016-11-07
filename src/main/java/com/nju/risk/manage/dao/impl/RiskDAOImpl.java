@@ -47,9 +47,13 @@ public class RiskDAOImpl implements IRiskDAO {
     private SqlSession sqlSession;
 
     @Override
-    public boolean insert(RiskDO riskDO) {
+    public int insert(RiskDO riskDO) {
         int res = sqlSession.insert(STATEMENT_INSERT, riskDO);
-        return res > 0;
+        if (res > 0) {
+            return riskDO.getId();
+        } else {
+            return 0;
+        }
     }
 
     @Override

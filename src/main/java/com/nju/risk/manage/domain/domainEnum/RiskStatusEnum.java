@@ -32,4 +32,13 @@ public enum RiskStatusEnum {
         }
         return null;
     }
+
+    public static RiskStatusEnum fromType(String type) {
+        for (RiskStatusEnum riskStatus : RiskStatusEnum.values()) {
+            if (riskStatus.type.equals(type)) {
+                return riskStatus;
+            }
+        }
+        return null;
+    }
 }

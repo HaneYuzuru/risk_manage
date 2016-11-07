@@ -15,7 +15,7 @@
         id,risk_id,status,description,gmt_create,gmt_modified,data_status
     </sql>
 
-    <insert id="insert" parameterType="com.nju.risk.manage.domain.RiskTrackDO">
+    <insert id="insert" parameterType="com.nju.risk.manage.domain.RiskTrackDO" useGeneratedKeys="true" keyProperty="id">
         <selectKey order="AFTER" resultType="integer" keyProperty="id">
             select last_insert_id() as id
         </selectKey>

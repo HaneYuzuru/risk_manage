@@ -1,6 +1,5 @@
 package com.nju.risk.manage.service;
 
-import com.nju.risk.manage.domain.RiskDO;
 import com.nju.risk.manage.domain.RiskVO;
 
 import java.util.List;
@@ -19,11 +18,19 @@ public interface IRiskService {
     public static final int SEARCH_BY_FOLLOWER = 5;
 
 
-    public boolean addRiskItem(RiskDO riskDO);
+    /**
+     * 新增风险
+     *
+     * @param riskVO
+     * @return 0 增加失败，>0 新增成功，为新增对象的自增id
+     */
+    public int addRiskItem(RiskVO riskVO);
 
     public boolean deleteRiskItem(int id);
 
-    public boolean updateRiskItem(RiskDO riskDO);
+    public boolean deleteRiskItem(List<Integer> ids);
+
+    public boolean updateRiskItem(RiskVO riskVO);
 
     /**
      * 查找风险项目

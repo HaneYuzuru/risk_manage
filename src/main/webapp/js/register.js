@@ -33,7 +33,8 @@ jQuery(document).ready(function() {
                 timeout: 5000,    //超时时间
                 dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
                 success: function (res) {
-                    if(res['result']==false){
+                    console.log(res);
+                    if(res['result']=="false"){
                         $('#tip').text("用户名已存在");
                         $('#tip').show();
                         return false;

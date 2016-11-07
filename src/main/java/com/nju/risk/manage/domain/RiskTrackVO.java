@@ -14,7 +14,7 @@ public class RiskTrackVO {
     /**
      * 风险状态,0-风险状态，1-问题状态，2-解决状态
      */
-    private Integer status;
+    private String status;
 
     /**
      * 风险描述
@@ -42,11 +42,11 @@ public class RiskTrackVO {
      *
      * @return
      */
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

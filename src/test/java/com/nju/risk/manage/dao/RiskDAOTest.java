@@ -30,8 +30,8 @@ public class RiskDAOTest extends BaseDaoTestConfiguration {
         riskDO.setCommitter(1);
         riskDO.setFollowers("2,3");
         riskDO.setDataStatus(1);
-        boolean ret = riskDAO.insert(riskDO);
-        Assert.assertTrue(ret);
+        int ret = riskDAO.insert(riskDO);
+        Assert.assertNotEquals(0,ret);
         List<RiskDO> resultList = riskDAO.selectByIdList(Lists.newArrayList(1));
         Assert.assertTrue(resultList.size() > 0);
     }

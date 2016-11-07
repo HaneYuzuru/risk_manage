@@ -126,7 +126,7 @@ public class UserDAOImpl implements IUserDAO {
 
     @Override
     public List<UserDO> searchByName(String name) {
-        if (StringUtils.isEmpty(name)) {
+        if (name==null) {
             return Lists.newArrayList();
         }
         return sqlSession.selectList(STATEMENT_SEARCH_BY_NAME, name);

@@ -81,7 +81,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<UserDO> searchByName(String name) {
-        if (StringUtils.isEmpty(name)) {
+        if (name == null) {
             return Lists.newArrayList();
         }
         return userDAO.searchByName(name);

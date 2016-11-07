@@ -2,12 +2,14 @@ package com.nju.risk.manage.service.impl;
 
 import com.google.common.collect.Lists;
 import com.nju.risk.manage.dao.IRiskDAO;
-import com.nju.risk.manage.domain.RiskDO;
-import com.nju.risk.manage.domain.RiskQueryDO;
-import com.nju.risk.manage.domain.RiskVO;
-import com.nju.risk.manage.domain.UserDO;
+import com.nju.risk.manage.domain.*;
+import com.nju.risk.manage.domain.domainEnum.ImpactEnum;
+import com.nju.risk.manage.domain.domainEnum.PossibilityEnum;
+import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 import com.nju.risk.manage.service.IRiskService;
+import com.nju.risk.manage.service.IRiskTrackService;
 import com.nju.risk.manage.service.IUserService;
+import com.nju.risk.manage.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,14 +24,33 @@ import java.util.List;
  */
 @Service
 public class RiskServiceImpl implements IRiskService {
+    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private final static String DEFAULT_RISK_TRACK_DESCRIPTION = "用户新增风险项，系统自动创建该风险的跟踪记录";
+
     @Autowired
     IRiskDAO riskDAO;
     @Autowired
     IUserService userService;
+    @Autowired
+    IRiskTrackService riskTrackService;
 
     @Override
-    public boolean addRiskItem(RiskDO riskDO) {
-        return riskDAO.insert(riskDO);
+    public int addRiskItem(RiskVO riskVO) {
+        RiskDO riskDO = vo2Do(riskVO);
+        if (riskDO == null) {
+            return 0;
+        }
+        int newId = riskDAO.insert(riskDO);
+
+        if (newId > 0) {
+            RiskTrackVO riskTrackVO = new RiskTrackVO();
+            riskTrackVO.setStatus(RiskStatusEnum.RISK.type());
+            riskTrackVO.setRiskId(newId);
+            riskTrackVO.setDescription(DEFAULT_RISK_TRACK_DESCRIPTION);
+            riskTrackService.add(riskTrackVO);
+            return newId;
+        }
+        return 0;
     }
 
     @Override
@@ -38,7 +59,22 @@ public class RiskServiceImpl implements IRiskService {
     }
 
     @Override
-    public boolean updateRiskItem(RiskDO riskDO) {
+    public boolean deleteRiskItem(List<Integer> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return false;
+        }
+        for (Integer id : ids) {
+            deleteRiskItem(id);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateRiskItem(RiskVO riskVO) {
+        RiskDO riskDO = vo2Do(riskVO);
+        if (riskDO == null) {
+            return false;
+        }
         return riskDAO.update(riskDO);
     }
 
@@ -101,6 +137,9 @@ public class RiskServiceImpl implements IRiskService {
             return Lists.newArrayList();
         }
 
+        start = start + " 00:00:00";
+        end = end + " 23:59:59";
+
         RiskQueryDO riskQueryDO = new RiskQueryDO();
         riskQueryDO.setStart(start);
         riskQueryDO.setEnd(end);
@@ -132,9 +171,13 @@ public class RiskServiceImpl implements IRiskService {
             return null;
         }
         RiskVO riskVO = new RiskVO();
+        riskVO.setGmtCreate(DateUtil.formatDate(DATE_FORMAT, risk.getGmtCreate()));
+        riskVO.setGmtModified(DateUtil.formatDate(DATE_FORMAT, risk.getGmtModified()));
+        riskVO.setDataStatus(risk.getDataStatus());
+        riskVO.setId(risk.getId());
         riskVO.setName(risk.getName());
-        riskVO.setPossibility(risk.getPossibility());
-        riskVO.setImpact(risk.getImpact());
+        riskVO.setPossibility(PossibilityEnum.fromValue(risk.getPossibility()).type());
+        riskVO.setImpact(ImpactEnum.fromValue(risk.getImpact()).type());
         riskVO.setContent(risk.getContent());
         riskVO.setTrigger(risk.getTrigger());
 
@@ -144,7 +187,36 @@ public class RiskServiceImpl implements IRiskService {
         String followers = risk.getFollowers();
         riskVO.setFollowerNames(getNameByUserId(followers));
 
+        //设置风险当前的状态
+        RiskStatusEnum riskStatus = riskTrackService.getRiskStatus(risk.getId());
+        riskVO.setStatus(riskStatus.type());
+
         return riskVO;
+    }
+
+
+    private RiskDO vo2Do(RiskVO risk) {
+        if (risk == null) {
+            return null;
+        }
+        RiskDO riskDO = new RiskDO();
+        riskDO.setDataStatus(risk.getDataStatus());
+        riskDO.setId(risk.getId());
+        riskDO.setName(risk.getName());
+        riskDO.setPossibility(PossibilityEnum.fromType(risk.getPossibility()).value());
+        riskDO.setImpact(ImpactEnum.fromType(risk.getImpact()).value());
+        riskDO.setContent(risk.getContent());
+        riskDO.setTrigger(risk.getTrigger());
+
+        String committerName = risk.getCommitterName();
+        UserDO committer = userService.getUserByName(committerName);
+        if (committer != null) {
+            riskDO.setCommitter(committer.getId());
+        }
+        String followersName = risk.getFollowerNames();
+        riskDO.setFollowers(getUserIdByName(followersName));
+
+        return riskDO;
     }
 
     /**
@@ -173,5 +245,34 @@ public class RiskServiceImpl implements IRiskService {
         } else {
             return StringUtils.EMPTY;
         }
+    }
+
+    /**
+     * 根据用户名获得id，若有多个，id和用户名均以英文,分隔
+     *
+     * @param name
+     * @return
+     */
+    private String getUserIdByName(String name) {
+        if (StringUtils.isEmpty(name)) {
+            return StringUtils.EMPTY;
+        }
+
+        String[] names = name.split(",");
+        String result = StringUtils.EMPTY;
+
+        for (int i = 0; i < names.length; i++) {
+            UserDO user = userService.getUserByName(names[i]);
+            if (user != null) {
+                result = result + "," + user.getId();
+            }
+        }
+
+        if (result.length() > 1) {
+            return result.substring(1);
+        } else {
+            return StringUtils.EMPTY;
+        }
+
     }
 }

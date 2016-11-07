@@ -32,4 +32,13 @@ public enum ImpactEnum {
         }
         return null;
     }
+
+    public static ImpactEnum fromType(String type) {
+        for (ImpactEnum impact : ImpactEnum.values()) {
+            if (impact.type.equals(type)) {
+                return impact;
+            }
+        }
+        return null;
+    }
 }

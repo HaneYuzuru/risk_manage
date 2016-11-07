@@ -32,4 +32,13 @@ public enum UserTypeEnum {
         }
         return null;
     }
+
+    public static UserTypeEnum fromType(String type) {
+        for (UserTypeEnum userType : UserTypeEnum.values()) {
+            if (userType.type.equals(type)) {
+                return userType;
+            }
+        }
+        return null;
+    }
 }

@@ -1,80 +1,50 @@
 /**
  * Created by huanghanqian on 16/11/6.
  */
-// var vm = new Vue({
-//     el: '#app',
-//     ready: function () {
-//         $.getJSON("/main/getMonitor", {"beginDate": getTheDate(-2), "endDate": getTheDate(0)}, function (result) {
-//             vm.$set('tds', result);
-//         });
-//     },
-//     data: {
-//         start: getTheDate(-2),
-//         end: getTheDate(0),
-//         isupdate: 0
-//     },
-// //			computed: {
-// //				// 一个计算属性的 getter
-// //				tds: function () {
-// //					var myr="";
-// //					$.getJSON("/main/getMonitor", {"beginDate": getTheDate(-2),"endDate": getTheDate(0)}, function (result) {
-// //						myr= result;
-// //					});
-// //					return myr;
-// //				}
-// //			},
-//     methods: {
-//         rerun: function (index, monitor_id) {
-//             var button = $('#trs').children().eq(index).children().eq(9).children().eq(0);
-//             button.prop('disabled', true);
-//             button.html('重跑中<span class="dotting"></span>');
-//             $.ajax({
-//                 url: "http://m.o2.qq.com/Api/rerunMonitor",
-//                 // The name of the callback parameter, as specified by the YQL service
-//                 jsonp: "callback",
-//                 // Tell jQuery we're expecting JSONP
-//                 dataType: "jsonp",
-//                 // Tell YQL what we want and that we want JSON
-//                 data: {
-//                     monitorID: monitor_id
-//                 },
-//                 // Work with the response
-//                 success: function (response) {
-//                     console.log(response); // server response
-//                     vm.isupdate = (vm.isupdate == 0 ? 1 : 0);
-//                     button.html('重跑');
-//                     button.prop('disabled', false);
-//                 }
-//             });
-//         }
-//     }
-// })
-//
-// vm.$watch('start', function (val) {
-//     $.getJSON("/main/getMonitor", {"beginDate": val, "endDate": this.end}, function (result) {
-//         vm.tds = result;
-//     });
-// })
-//
-// vm.$watch('end', function (val) {
-//     $.getJSON("/main/getMonitor", {"beginDate": this.start, "endDate": val}, function (result) {
-//         vm.tds = result;
-//     });
-// })
-//
-// vm.$watch('isupdate', function (val) {
-//     $.getJSON("/main/getMonitor", {"beginDate": this.start, "endDate": this.end}, function (result) {
-//         vm.tds = result;
-//     });
-// })
-//
-// vm.$watch('tds',function(val){
-//     vm.$nextTick(function() {
-//         initTableCheckbox();
-//     });
-// })
+var vm = new Vue({
+    el: '#app',
+    ready: function () {
+        $.post("/risk/getRisks", {"beginDate": getTheDate(-5), "endDate": getTheDate(0)},
+            function(result){
+                vm.$set('tds', result.list);
+            }, "json");
+    },
+    data: {
+        isUpdate: 0
+    },
+//			computed: {
+//				// 一个计算属性的 getter
+//				tds: function () {
+//					var myr="";
+//					$.getJSON("/main/getMonitor", {"beginDate": getTheDate(-2),"endDate": getTheDate(0)}, function (result) {
+//						myr= result;
+//					});
+//					return myr;
+//				}
+//			},
+    methods: {
+        search: function () {
+            $.post("/risk/getRisks", {"beginDate": $("#date_begin").text(), "endDate": $("#date_end").text()},
+                function(result){
+                    vm.$set('tds', result.list);
+                }, "json");
+        }
+    }
+})
 
-initTableCheckbox();
+
+vm.$watch('tds',function(val){
+    vm.$nextTick(function() {
+        initTableCheckbox();
+    });
+})
+
+vm.$watch('isUpdate',function(val){
+    $.post("/risk/getRisks", {"beginDate": $("#date_begin").text(), "endDate": $("#date_end").text()},
+        function(result){
+            vm.$set('tds', result.list);
+        }, "json");
+})
 
 var dateRange_begin = new pickerDateRange('date_begin', {
     isTodayValid: true,
@@ -148,7 +118,48 @@ function initTableCheckbox() {
     });
 }
 
-$("#batchBtn").unbind().bind("click", function () {
-
+$("#submitRisk").unbind().bind("click", function () {
+    var name=$('#riskname').val();
+    var content=$('#content').val();
+    var trigger=$('#trigger').val();
+    if(name==null||name==""){
+        $('#empTip').text("风险名不能为空");
+        $('#empTip').show();
+    }
+    else if(content==null||content==""){
+        $('#empTip').text("风险内容不能为空");
+        $('#empTip').show();
+    }
+    else if(trigger==null||trigger==""){
+        $('#empTip').text("触发条件不能为空");
+        $('#empTip').show();
+    }
+    else{
+        $('#empTip').hide();
+        $.post("/risk/add", {"name": name,"content":content,"possibility":$('input:radio[name="optionsRadiosinline"]:checked').val(),"impact":$('input:radio[name="optionsRadiosinline1"]:checked').val(),"trigger":trigger,"followers":$("#options").val()},
+            function(result){
+                if(result['result']=="true"){
+                    vm.isUpdate=(vm.isUpdate==0?1:0);
+                }
+                else{
+                    alert(result['result']);
+                }
+            }, "json");
+    }
 });
+
+$.post("/user/searchByName", {"name": ""},
+    function(result){
+        var list= result.list;
+        var htm="";
+        for(var i=0;i<list.length;i++){
+            htm+='<option value="'+list[i]['id']+'">'+list[i]['name']+'</option>';
+        }
+        $('#options').html(htm);
+        var height=31;
+        if(list.length!=0){
+            height=list.length*18+13;
+        }
+        $('#options').css("height",height+"px");
+    }, "json");
 

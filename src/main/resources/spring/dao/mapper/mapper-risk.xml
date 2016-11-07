@@ -19,7 +19,7 @@
         id,`name`,content,possibility,impact,`trigger`,committer,followers,gmt_create,gmt_modified,data_status
     </sql>
 
-    <insert id="insert" parameterType="com.nju.risk.manage.domain.RiskDO">
+    <insert id="insert" parameterType="com.nju.risk.manage.domain.RiskDO" useGeneratedKeys="true" keyProperty="id">
         <selectKey order="AFTER" resultType="integer" keyProperty="id">
             select last_insert_id() as id
         </selectKey>
@@ -228,6 +228,6 @@
         select
         <include refid="Base_Column_List"/>
         from `risk`
-        WHERE gmt_modified BETWEEN #{start} AND #{end} AND data_status =0
+        WHERE gmt_modified BETWEEN #{start} AND #{end} AND data_status =0 ORDER BY gmt_modified DESC
     </select>
 </mapper>

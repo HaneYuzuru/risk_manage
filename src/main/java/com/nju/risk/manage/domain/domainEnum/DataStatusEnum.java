@@ -32,4 +32,13 @@ public enum DataStatusEnum {
         }
         return null;
     }
+
+    public static DataStatusEnum fromType(String type) {
+        for (DataStatusEnum dataStatus : DataStatusEnum.values()) {
+            if (dataStatus.type.equals(type)) {
+                return dataStatus;
+            }
+        }
+        return null;
+    }
 }
