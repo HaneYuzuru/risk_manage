@@ -58,7 +58,7 @@
     <#if type==1 !>
         <div class="row">
             <div class="col-sm-12 col-md-12 main" style="padding-bottom: 0px;">
-                <button type="button" class="btn btn-default btn-sm" id="batchBtn" data-toggle="modal" data-target="#myModal" >
+                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" >
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 增加
                 </button>
                 <button type="button" class="btn btn-default btn-sm" id="batchBtn">
@@ -81,6 +81,7 @@
                         <th>可能性</th>
                         <th>影响程度</th>
                         <th>触发器</th>
+                        <th>风险状态</th>
                         <th>提交者</th>
                         <th>跟踪者</th>
                         <th>操作</th>
@@ -89,31 +90,32 @@
                     <tbody id="trs">
                     <tr v-for="td in tds">
                         <td><input type="checkbox" name="checkItem" /></td>
-                        <td>{{td.gmt_create}}</td>
+                        <td>{{td.gmtModified}}</td>
                         <td>{{td.name}}</td>
                         <td>{{td.content}}</td>
                         <td>{{td.possibility}}</td>
                         <td>{{td.impact}}</td>
                         <td>{{td.trigger}}</td>
-                        <td>{{td.committer}}</td>
-                        <td>{{td.followers}}</td>
+                        <td>{{td.status}}</td>
+                        <td>{{td.committerName}}</td>
+                        <td>{{td.followerNames}}</td>
                         <td>
                         <#if type==0 !>
                             <button v-on:click="rerun($index,td.monitor_id)" type="button"
                                     class="btn btn-default btn-xs"
-                                    style="padding:1px 10px;font-size:15px;margin-top:-2px;margin-bottom:0px;">查看
+                                    style="padding:1px 10px;font-size:15px;margin-top:-2px;margin-bottom:0px;">跟踪
                             </button>
                         </#if>
                         <#if type==1 !>
                             <button v-on:click="rerun($index,td.monitor_id)" type="button"
                                     class="btn btn-default btn-xs"
-                                    style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">查看
+                                    style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">跟踪
                             </button>
-                            <button v-on:click="rerun($index,td.monitor_id)" type="button"
+                            <button v-on:click="modify($index)" type="button"
                                     class="btn btn-default btn-xs"
                                     style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">修改
                             </button>
-                            <button v-on:click="rerun($index,td.monitor_id)" type="button"
+                            <button v-on:click="delete($index)" type="button"
                                     class="btn btn-default btn-xs"
                                     style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">删除
                             </button>
@@ -135,7 +137,7 @@
 </div>
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
+           aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -229,6 +231,104 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" >
+                    修改风险
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label" style="margin-left:-10px;">风险名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="modifyname"
+                                   placeholder="风险名...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">风险内容</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="3" cols="20" id="modifycontent"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top:-5px;">
+                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">可能性</label>
+                        <div class="col-sm-10">
+                            <label class="checkbox-inline" style="margin-left:-20px;">
+                                <input type="radio" name="modifyoptionsRadiosinline"
+                                       value="高" checked> 高
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="modifyoptionsRadiosinline"
+                                       value="中"> 中
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="modifyoptionsRadiosinline"
+                                       value="低"> 低
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top:-5px;">
+                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">影响程度</label>
+                        <div class="col-sm-10">
+                            <label class="checkbox-inline" style="margin-left:-20px;">
+                                <input type="radio" name="modifyoptionsRadiosinline1"
+                                       value="高" checked> 高
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="modifyoptionsRadiosinline1"
+                                       value="中"> 中
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="modifyoptionsRadiosinline1"
+                                       value="低"> 低
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label" style="margin-left:-10px;">触发器</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="modifytrigger"
+                                   placeholder="触发条件...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label" style="margin-left:-10px;">跟踪者</label>
+                        <div class="col-sm-10">
+                            <select multiple class="form-control" style="height:103px;" id="modifyoptions">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <span id="empTip2" style="float:left;color:red;margin-left:10px;display: none;">不能为空</span>
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <input type="hidden" id="modifyID" value=""/>
+                <button type="button" class="btn btn-primary" id="modifyRisk">
+                    修改风险
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 <#include "footer.ftl"/>
 <script src="js/vue.min.js"></script>
 <script src="js/dateRange.js"></script>
