@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/user")
-public class UserController {
+public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
 
