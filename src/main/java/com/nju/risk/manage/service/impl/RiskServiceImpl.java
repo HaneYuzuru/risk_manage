@@ -2,13 +2,17 @@ package com.nju.risk.manage.service.impl;
 
 import com.google.common.collect.Lists;
 import com.nju.risk.manage.dao.IRiskDAO;
-import com.nju.risk.manage.domain.*;
+import com.nju.risk.manage.domain.RiskDO;
+import com.nju.risk.manage.domain.RiskQueryDO;
+import com.nju.risk.manage.domain.RiskVO;
+import com.nju.risk.manage.domain.UserDO;
 import com.nju.risk.manage.domain.domainEnum.ImpactEnum;
 import com.nju.risk.manage.domain.domainEnum.PossibilityEnum;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 import com.nju.risk.manage.service.IRiskService;
 import com.nju.risk.manage.service.IRiskTrackService;
 import com.nju.risk.manage.service.IUserService;
+import com.nju.risk.manage.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +27,8 @@ import java.util.List;
  */
 @Service
 public class RiskServiceImpl implements IRiskService {
+    private final static String DATE_FORMAT = "yyyy-MM-dd";
+
     @Autowired
     IRiskDAO riskDAO;
     @Autowired
@@ -157,8 +163,8 @@ public class RiskServiceImpl implements IRiskService {
             return null;
         }
         RiskVO riskVO = new RiskVO();
-        riskVO.setGmtCreate(risk.getGmtCreate());
-        riskVO.setGmtModified(risk.getGmtModified());
+        riskVO.setGmtCreate(DateUtil.formatDate(DATE_FORMAT, risk.getGmtCreate()));
+        riskVO.setGmtModified(DateUtil.formatDate(DATE_FORMAT, risk.getGmtModified()));
         riskVO.setDataStatus(risk.getDataStatus());
         riskVO.setId(risk.getId());
         riskVO.setName(risk.getName());
@@ -186,8 +192,6 @@ public class RiskServiceImpl implements IRiskService {
             return null;
         }
         RiskDO riskDO = new RiskDO();
-        riskDO.setGmtCreate(risk.getGmtCreate());
-        riskDO.setGmtModified(risk.getGmtModified());
         riskDO.setDataStatus(risk.getDataStatus());
         riskDO.setId(risk.getId());
         riskDO.setName(risk.getName());
