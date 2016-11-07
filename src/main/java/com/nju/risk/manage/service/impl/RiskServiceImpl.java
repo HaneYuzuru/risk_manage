@@ -2,13 +2,12 @@ package com.nju.risk.manage.service.impl;
 
 import com.google.common.collect.Lists;
 import com.nju.risk.manage.dao.IRiskDAO;
-import com.nju.risk.manage.domain.RiskDO;
-import com.nju.risk.manage.domain.RiskQueryDO;
-import com.nju.risk.manage.domain.RiskVO;
-import com.nju.risk.manage.domain.UserDO;
+import com.nju.risk.manage.domain.*;
 import com.nju.risk.manage.domain.domainEnum.ImpactEnum;
 import com.nju.risk.manage.domain.domainEnum.PossibilityEnum;
+import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 import com.nju.risk.manage.service.IRiskService;
+import com.nju.risk.manage.service.IRiskTrackService;
 import com.nju.risk.manage.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,8 @@ public class RiskServiceImpl implements IRiskService {
     IRiskDAO riskDAO;
     @Autowired
     IUserService userService;
+    @Autowired
+    IRiskTrackService riskTrackService;
 
     @Override
     public boolean addRiskItem(RiskVO riskVO) {
@@ -170,7 +171,8 @@ public class RiskServiceImpl implements IRiskService {
         riskVO.setFollowerNames(getNameByUserId(followers));
 
         //设置风险当前的状态
-
+        RiskStatusEnum riskStatus = riskTrackService.getRiskStatus(risk.getId());
+        riskVO.setStatus(riskStatus.type());
 
         return riskVO;
     }
