@@ -93,4 +93,18 @@ public class RiskController extends BaseController {
         }
         return modelMap;
     }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> delete(@RequestParam("ids") List<Integer> ids) throws Exception {
+        boolean result = iRiskService.deleteRiskItem(ids);
+
+        Map<String, Object> modelMap = new HashMap<String, Object>(1);
+        if (result) {
+            modelMap.put("result", "true");
+        } else {
+            modelMap.put("result", "删除风险失败");
+        }
+        return modelMap;
+    }
 }
