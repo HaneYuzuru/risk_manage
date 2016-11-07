@@ -123,6 +123,9 @@ public class RiskServiceImpl implements IRiskService {
             return Lists.newArrayList();
         }
 
+        start = start + " 00:00:00";
+        end = end + " 23:59:59";
+
         RiskQueryDO riskQueryDO = new RiskQueryDO();
         riskQueryDO.setStart(start);
         riskQueryDO.setEnd(end);

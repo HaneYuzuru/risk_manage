@@ -27,10 +27,10 @@ public class RiskServiceTest extends BaseDaoTestConfiguration {
 
     @Test
     public void testSearchByTime() {
-        String start = "2016-03-03";
-        String end = "2016-10-03";
+        String start = "2016-11-05";
+        String end = "2016-11-06";
         List<RiskVO> risks = riskService.searchByTime(start, end);
-        System.out.println(risks);
+        System.out.println(risks.size());
 
     }
 
