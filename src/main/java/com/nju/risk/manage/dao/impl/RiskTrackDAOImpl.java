@@ -2,7 +2,6 @@ package com.nju.risk.manage.dao.impl;
 
 import com.nju.risk.manage.dao.IRiskTrackDAO;
 import com.nju.risk.manage.domain.RiskTrackDO;
-import com.nju.risk.manage.domain.UserDO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -32,6 +31,8 @@ public class RiskTrackDAOImpl implements IRiskTrackDAO {
     private final static String STATEMENT_BATCH_DELETE_BY_ID_LIST = BASE + "batchDeleteByIdList";
 
     private final static String STATEMENT_SELECT_BY_ID_LIST = BASE + "selectByIdList";
+
+    private final static String STATEMENT_SELECT_BY_RISK_ID_LIST = BASE + "selectByRiskIdList";
 
     private final static Integer PAGE_SIZE = 20;
 
@@ -86,5 +87,13 @@ public class RiskTrackDAOImpl implements IRiskTrackDAO {
             return new ArrayList<>();
         }
         return sqlSession.selectList(STATEMENT_SELECT_BY_ID_LIST, idList);
+    }
+
+    @Override
+    public List<RiskTrackDO> selectByRiskIdList(List<Integer> idList){
+        if(idList.isEmpty()){
+            return new ArrayList<>();
+        }
+        return sqlSession.selectList(STATEMENT_SELECT_BY_RISK_ID_LIST, idList);
     }
 }

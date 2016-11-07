@@ -23,4 +23,6 @@ public interface IRiskTrackDAO {
     public int batchDeleteByIdList(List<Integer> idList);
 
     public List<RiskTrackDO> selectByIdList(List<Integer> idList);
+
+    public List<RiskTrackDO> selectByRiskIdList(List<Integer> riskIdList);
 }
