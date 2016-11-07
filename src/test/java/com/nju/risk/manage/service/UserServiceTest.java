@@ -22,4 +22,11 @@ public class UserServiceTest extends BaseDaoTestConfiguration {
         Assert.assertEquals(IUserService.LOGIN_SUCCESS, result);
     }
 
+    @Test
+    public void testSearch(){
+        String name = "";
+        int size=userService.searchByName(name).size();
+        System.out.println(size);
+    }
+
 }
