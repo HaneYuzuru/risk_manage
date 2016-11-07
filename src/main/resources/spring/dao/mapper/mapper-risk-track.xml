@@ -123,4 +123,14 @@
         </foreach>
     </select>
 
+    <select id="selectByRiskIdList" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from `risk_track`
+        where data_status =0 AND
+        risk_id in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </select>
 </mapper>
