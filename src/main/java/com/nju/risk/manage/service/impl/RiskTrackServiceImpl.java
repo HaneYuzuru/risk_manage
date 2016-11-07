@@ -6,6 +6,7 @@ import com.nju.risk.manage.domain.RiskTrackDO;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 import com.nju.risk.manage.service.IRiskTrackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * date: 2016/11/7
  * description:
  */
+@Service
 public class RiskTrackServiceImpl implements IRiskTrackService {
     @Autowired
     IRiskTrackDAO riskTrackDAO;
