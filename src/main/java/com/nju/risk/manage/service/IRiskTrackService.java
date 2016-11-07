@@ -1,6 +1,7 @@
 package com.nju.risk.manage.service;
 
 import com.nju.risk.manage.domain.RiskTrackDO;
+import com.nju.risk.manage.domain.RiskTrackVO;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface IRiskTrackService {
      * @return
      */
     public RiskStatusEnum getRiskStatus(int riskId);
+
+    public boolean add(RiskTrackVO riskTrackVO);
 }

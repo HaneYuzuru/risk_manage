@@ -2,10 +2,7 @@ package com.nju.risk.manage.service.impl;
 
 import com.google.common.collect.Lists;
 import com.nju.risk.manage.dao.IRiskDAO;
-import com.nju.risk.manage.domain.RiskDO;
-import com.nju.risk.manage.domain.RiskQueryDO;
-import com.nju.risk.manage.domain.RiskVO;
-import com.nju.risk.manage.domain.UserDO;
+import com.nju.risk.manage.domain.*;
 import com.nju.risk.manage.domain.domainEnum.ImpactEnum;
 import com.nju.risk.manage.domain.domainEnum.PossibilityEnum;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
@@ -28,6 +25,7 @@ import java.util.List;
 @Service
 public class RiskServiceImpl implements IRiskService {
     private final static String DATE_FORMAT = "yyyy-MM-dd";
+    private final static String DEFAULT_RISK_TRACK_DESCRIPTION = "用户新增风险项，系统自动创建该风险的跟踪记录";
 
     @Autowired
     IRiskDAO riskDAO;
@@ -37,12 +35,22 @@ public class RiskServiceImpl implements IRiskService {
     IRiskTrackService riskTrackService;
 
     @Override
-    public boolean addRiskItem(RiskVO riskVO) {
+    public int addRiskItem(RiskVO riskVO) {
         RiskDO riskDO = vo2Do(riskVO);
         if (riskDO == null) {
-            return false;
+            return 0;
         }
-        return riskDAO.insert(riskDO);
+        int newId = riskDAO.insert(riskDO);
+
+        if (newId > 0) {
+            RiskTrackVO riskTrackVO = new RiskTrackVO();
+            riskTrackVO.setStatus(RiskStatusEnum.RISK.type());
+            riskTrackVO.setRiskId(newId);
+            riskTrackVO.setDescription(DEFAULT_RISK_TRACK_DESCRIPTION);
+            riskTrackService.add(riskTrackVO);
+            return newId;
+        }
+        return 0;
     }
 
     @Override

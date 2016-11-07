@@ -58,7 +58,7 @@
         </foreach>
     </update>
 
-    <insert id="insert" parameterType="com.nju.risk.manage.domain.UserDO">
+    <insert id="insert" parameterType="com.nju.risk.manage.domain.UserDO" useGeneratedKeys="true" keyProperty="id">
         <selectKey order="AFTER" resultType="integer" keyProperty="id">
             select last_insert_id() as id
         </selectKey>

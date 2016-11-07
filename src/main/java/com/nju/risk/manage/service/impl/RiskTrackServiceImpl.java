@@ -3,6 +3,7 @@ package com.nju.risk.manage.service.impl;
 import com.google.common.collect.Lists;
 import com.nju.risk.manage.dao.IRiskTrackDAO;
 import com.nju.risk.manage.domain.RiskTrackDO;
+import com.nju.risk.manage.domain.RiskTrackVO;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 import com.nju.risk.manage.service.IRiskTrackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import java.util.List;
  */
 @Service
 public class RiskTrackServiceImpl implements IRiskTrackService {
+    private final static String DATE_FORMAT = "yyyy-MM-dd";
+
     @Autowired
     IRiskTrackDAO riskTrackDAO;
 
@@ -47,5 +50,26 @@ public class RiskTrackServiceImpl implements IRiskTrackService {
             }
         }
         return RiskStatusEnum.fromValue(status);
+    }
+
+    @Override
+    public boolean add(RiskTrackVO riskTrackVO) {
+        if (riskTrackVO == null) {
+            return false;
+        }
+        return riskTrackDAO.insert(vo2do(riskTrackVO));
+    }
+
+    private RiskTrackDO vo2do(RiskTrackVO riskTrackVO) {
+        if (riskTrackVO == null) {
+            return null;
+        }
+
+        RiskTrackDO riskTrackDO = new RiskTrackDO();
+        riskTrackDO.setId(riskTrackVO.getId());
+        riskTrackDO.setDescription(riskTrackVO.getDescription());
+        riskTrackDO.setStatus(RiskStatusEnum.fromType(riskTrackVO.getStatus()).value());
+        riskTrackDO.setRiskId(riskTrackVO.getRiskId());
+        return riskTrackDO;
     }
 }
