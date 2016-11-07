@@ -41,8 +41,8 @@ public class RiskController extends BaseController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(@RequestParam("name") String name,
-                      @RequestParam("content") String content, @RequestParam("possibility") String possibility, @RequestParam("impact") String impact, @RequestParam("trigger") String trigger, @RequestParam("followers") String followers) throws Exception {
+    public Map<String, Object> add(@RequestParam("name") String name,
+                                   @RequestParam("content") String content, @RequestParam("possibility") String possibility, @RequestParam("impact") String impact, @RequestParam("trigger") String trigger, @RequestParam("followers") String followers) throws Exception {
         RiskVO riskVO = new RiskVO();
         riskVO.setContent(content);
         riskVO.setName(name);
@@ -56,10 +56,13 @@ public class RiskController extends BaseController {
         }
         riskVO.setFollowerNames(followers);
         boolean result = iRiskService.addRiskItem(riskVO);
+
+        Map<String, Object> modelMap = new HashMap<String, Object>(1);
         if (result) {
-            return "";
+            modelMap.put("result", "true");
         } else {
-            return "";
+            modelMap.put("result", "创建风险失败，请仔细检查信息");
         }
+        return modelMap;
     }
 }
