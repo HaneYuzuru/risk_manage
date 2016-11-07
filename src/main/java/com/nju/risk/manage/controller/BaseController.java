@@ -24,6 +24,7 @@ public class BaseController {
 
     protected String username;//登陆用户的用户名
     protected Integer type;//登陆用户的角色
+    protected Integer userId;//当前登录用户的id
     @Autowired
     IUserService userService;
     @Autowired
@@ -38,6 +39,7 @@ public class BaseController {
         UserDO user = userService.getUserByName(name);
         this.username=user.getName();
         this.type=user.getUserType();
+        this.userId=user.getId();
 
         return "success";
     }

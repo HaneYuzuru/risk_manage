@@ -37,10 +37,15 @@ public class RiskVO extends BaseVO {
      */
     private String committerName;
 
+    /**
+     * 风险状态
+     */
+    private String status;
+
     public RiskVO() {
     }
 
-    public RiskVO(String name, String content, String possibility, String impact, String trigger, String committerName, String followerNames) {
+    public RiskVO(String name, String content, String possibility, String impact, String trigger, String committerName, String followerNames, String status) {
         this.name = name;
         this.content = content;
         this.possibility = possibility;
@@ -48,9 +53,10 @@ public class RiskVO extends BaseVO {
         this.trigger = trigger;
         this.committerName = committerName;
         this.followerNames = followerNames;
+        this.status = status;
     }
 
-    public RiskVO(Integer id, String name, String content, String possibility, String impact, String trigger, String committerName, String followerNames) {
+    public RiskVO(Integer id, String name, String content, String possibility, String impact, String trigger, String committerName, String followerNames, String status) {
         this.id = id;
         this.name = name;
         this.content = content;
@@ -59,6 +65,7 @@ public class RiskVO extends BaseVO {
         this.trigger = trigger;
         this.committerName = committerName;
         this.followerNames = followerNames;
+        this.status = status;
     }
 
     /**
@@ -128,5 +135,13 @@ public class RiskVO extends BaseVO {
 
     public void setFollowerNames(String followerNames) {
         this.followerNames = followerNames;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

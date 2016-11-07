@@ -169,6 +169,9 @@ public class RiskServiceImpl implements IRiskService {
         String followers = risk.getFollowers();
         riskVO.setFollowerNames(getNameByUserId(followers));
 
+        //设置风险当前的状态
+
+
         return riskVO;
     }
 

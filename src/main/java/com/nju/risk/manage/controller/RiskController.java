@@ -1,4 +1,5 @@
 package com.nju.risk.manage.controller;
+
 import com.nju.risk.manage.domain.RiskVO;
 import com.nju.risk.manage.service.IRiskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/risk")
-public class RiskController extends BaseController{
+public class RiskController extends BaseController {
     @Autowired
     IRiskService iRiskService;
 
@@ -33,10 +34,32 @@ public class RiskController extends BaseController{
                                      @RequestParam("endDate") String endDate) throws Exception {
 
         Map<String, Object> modelMap = new HashMap<String, Object>(1);
-        List<RiskVO> list=iRiskService.searchByTime(beginDate,endDate);
+        List<RiskVO> list = iRiskService.searchByTime(beginDate, endDate);
         modelMap.put("list", list);
         return modelMap;
     }
 
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
+    public String add(@RequestParam("name") String name,
+                      @RequestParam("content") String content, @RequestParam("possibility") String possibility, @RequestParam("impact") String impact, @RequestParam("trigger") String trigger, @RequestParam("followers") String followers) throws Exception {
+        RiskVO riskVO = new RiskVO();
+        riskVO.setContent(content);
+        riskVO.setName(name);
+        riskVO.setPossibility(possibility);
+        riskVO.setImpact(impact);
+        riskVO.setTrigger(trigger);
+        riskVO.setCommitterName(username);
 
+        if (followers == null) {
+            followers = "";
+        }
+        riskVO.setFollowerNames(followers);
+        boolean result = iRiskService.addRiskItem(riskVO);
+        if (result) {
+            return "";
+        } else {
+            return "";
+        }
+    }
 }
