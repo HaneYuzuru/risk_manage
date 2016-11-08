@@ -11,6 +11,7 @@ node {
         sh "${mvnHome}/bin/mvn -B clean package -Dmaven.test.skip=true "
     }
     stage('deploy') {
+        sh "sudo su || true"
         sh "docker stop my || true"
         sh "docker rm my || true"
         sh "docker run --name my -p 11111:8080 -d tomcat"
