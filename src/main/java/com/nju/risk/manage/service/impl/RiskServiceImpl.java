@@ -38,7 +38,10 @@ public class RiskServiceImpl implements IRiskService {
     @Override
     public int addRiskItem(RiskVO riskVO) {
         RiskDO riskDO = vo2Do(riskVO);
-        int committerId = riskDO.getCommitter();
+        Integer committerId = riskDO.getCommitter();
+        if (committerId == null) {
+            return 0;
+        }
         UserDO userDO = userService.getUserById(committerId);
         if (userDO.getUserType() != UserTypeEnum.MANAGER.value()) {
             return 0;
