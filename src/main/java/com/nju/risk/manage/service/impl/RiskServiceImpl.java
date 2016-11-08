@@ -9,6 +9,7 @@ import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 import com.nju.risk.manage.service.IRiskService;
 import com.nju.risk.manage.service.IRiskTrackService;
 import com.nju.risk.manage.service.IUserService;
+import com.nju.risk.manage.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ import java.util.List;
  */
 @Service
 public class RiskServiceImpl implements IRiskService {
+    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private final static String DEFAULT_RISK_TRACK_DESCRIPTION = "用户新增风险项，系统自动创建该风险的跟踪记录";
+
     @Autowired
     IRiskDAO riskDAO;
     @Autowired
@@ -31,12 +35,22 @@ public class RiskServiceImpl implements IRiskService {
     IRiskTrackService riskTrackService;
 
     @Override
-    public boolean addRiskItem(RiskVO riskVO) {
+    public int addRiskItem(RiskVO riskVO) {
         RiskDO riskDO = vo2Do(riskVO);
         if (riskDO == null) {
-            return false;
+            return 0;
         }
-        return riskDAO.insert(riskDO);
+        int newId = riskDAO.insert(riskDO);
+
+        if (newId > 0) {
+            RiskTrackVO riskTrackVO = new RiskTrackVO();
+            riskTrackVO.setStatus(RiskStatusEnum.RISK.type());
+            riskTrackVO.setRiskId(newId);
+            riskTrackVO.setDescription(DEFAULT_RISK_TRACK_DESCRIPTION);
+            riskTrackService.addRiskTrackItem(riskTrackVO);
+            return newId;
+        }
+        return 0;
     }
 
     @Override
@@ -123,6 +137,9 @@ public class RiskServiceImpl implements IRiskService {
             return Lists.newArrayList();
         }
 
+        start = start + " 00:00:00";
+        end = end + " 23:59:59";
+
         RiskQueryDO riskQueryDO = new RiskQueryDO();
         riskQueryDO.setStart(start);
         riskQueryDO.setEnd(end);
@@ -154,8 +171,8 @@ public class RiskServiceImpl implements IRiskService {
             return null;
         }
         RiskVO riskVO = new RiskVO();
-        riskVO.setGmtCreate(risk.getGmtCreate());
-        riskVO.setGmtModified(risk.getGmtModified());
+        riskVO.setGmtCreate(DateUtil.formatDate(DATE_FORMAT, risk.getGmtCreate()));
+        riskVO.setGmtModified(DateUtil.formatDate(DATE_FORMAT, risk.getGmtModified()));
         riskVO.setDataStatus(risk.getDataStatus());
         riskVO.setId(risk.getId());
         riskVO.setName(risk.getName());
@@ -183,8 +200,6 @@ public class RiskServiceImpl implements IRiskService {
             return null;
         }
         RiskDO riskDO = new RiskDO();
-        riskDO.setGmtCreate(risk.getGmtCreate());
-        riskDO.setGmtModified(risk.getGmtModified());
         riskDO.setDataStatus(risk.getDataStatus());
         riskDO.setId(risk.getId());
         riskDO.setName(risk.getName());

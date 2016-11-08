@@ -1,6 +1,6 @@
 package com.nju.risk.manage.service;
 
-import com.nju.risk.manage.domain.RiskTrackDO;
+import com.nju.risk.manage.domain.RiskTrackVO;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 
 import java.util.List;
@@ -11,7 +11,24 @@ import java.util.List;
  * description:
  */
 public interface IRiskTrackService {
-    public List<RiskTrackDO> getRiskByRiskId(int riskId);
+    public boolean addRiskTrackItem(RiskTrackVO riskTrackVO);
+
+    public boolean deleteRiskTrackItem(int id);
+
+    public boolean deleteRiskTrackItem(List<Integer> ids);
+
+    public boolean updateRiskTrackItem(RiskTrackVO riskTrackVO);
+
+    public List<RiskTrackVO> searchByRiskId(int id);
+
+    /**
+     * 获取某个时间段的风险
+     *
+     * @param start 起始时间 格式YYYY-MM-DD
+     * @param end   结束时间 格式YYYY-MM-DD
+     * @return
+     */
+    public List<RiskTrackVO> searchByTime(String start, String end);
 
     /**
      * 获取某个风险的状态，默认是风险状态

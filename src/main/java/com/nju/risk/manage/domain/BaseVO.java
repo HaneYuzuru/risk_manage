@@ -2,32 +2,30 @@ package com.nju.risk.manage.domain;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-import java.util.Date;
-
 /**
  * author: winsky
  * date: 2016/11/6
  * description:
  */
 public class BaseVO {
-    private Date gmtCreate;
-    private Date gmtModified;
+    private String gmtCreate;
+    private String gmtModified;
     //数据有效性
     private Integer dataStatus = 0;
 
-    public Date getGmtCreate() {
+    public String getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
+    public void setGmtCreate(String gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified() {
+    public String getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
+    public void setGmtModified(String gmtModified) {
         this.gmtModified = gmtModified;
     }
 

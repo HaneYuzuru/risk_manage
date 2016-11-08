@@ -18,7 +18,13 @@ public interface IRiskService {
     public static final int SEARCH_BY_FOLLOWER = 5;
 
 
-    public boolean addRiskItem(RiskVO riskVO);
+    /**
+     * 新增风险
+     *
+     * @param riskVO
+     * @return 0 增加失败，>0 新增成功，为新增对象的自增id
+     */
+    public int addRiskItem(RiskVO riskVO);
 
     public boolean deleteRiskItem(int id);
 

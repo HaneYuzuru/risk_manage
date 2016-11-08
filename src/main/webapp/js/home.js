@@ -10,8 +10,7 @@ var vm = new Vue({
             }, "json");
     },
     data: {
-        start: getTheDate(-5),
-        end: getTheDate(0)
+        isUpdate: 0
     },
 //			computed: {
 //				// 一个计算属性的 getter
@@ -29,6 +28,31 @@ var vm = new Vue({
                 function(result){
                     vm.$set('tds', result.list);
                 }, "json");
+        },
+        modify: function(index) {
+            var risk=vm.tds[index];
+            $('#modifyID').val(risk.id);
+            $('#modifyname').val(risk.name);
+            $('#modifycontent').val(risk.content);
+            $("input[type=radio][name=modifyoptionsRadiosinline][value="+risk.possibility+"]").attr("checked",'checked');
+            $("input[type=radio][name=modifyoptionsRadiosinline1][value="+risk.impact+"]").attr("checked",'checked');
+            $('#modifytrigger').val(risk.trigger);
+            $('#modifyoptions').val(risk.followerNames.split(","));
+            $('#modifyModal').modal();
+        },
+        delete:function(index){
+            if(confirm("确定要删除该风险吗?")==true){
+                var riskid=vm.tds[index].id;
+                $.post("/risk/delete", {"idStr":riskid},
+                    function(result){
+                        if(result['result']=="true"){
+                            vm.isUpdate=(vm.isUpdate==0?1:0);
+                        }
+                        else{
+                            alert(result['result']);
+                        }
+                    }, "json");
+            }
         }
     }
 })
@@ -38,6 +62,13 @@ vm.$watch('tds',function(val){
     vm.$nextTick(function() {
         initTableCheckbox();
     });
+})
+
+vm.$watch('isUpdate',function(val){
+    $.post("/risk/getRisks", {"beginDate": $("#date_begin").text(), "endDate": $("#date_end").text()},
+        function(result){
+            vm.$set('tds', result.list);
+        }, "json");
 })
 
 var dateRange_begin = new pickerDateRange('date_begin', {
@@ -112,7 +143,116 @@ function initTableCheckbox() {
     });
 }
 
-$("#batchBtn").unbind().bind("click", function () {
-
+$("#submitRisk").unbind().bind("click", function () {
+    var name=$('#riskname').val();
+    var content=$('#content').val();
+    var trigger=$('#trigger').val();
+    if(name==null||name==""){
+        $('#empTip').text("风险名不能为空");
+        $('#empTip').show();
+    }
+    else if(content==null||content==""){
+        $('#empTip').text("风险内容不能为空");
+        $('#empTip').show();
+    }
+    else if(trigger==null||trigger==""){
+        $('#empTip').text("触发条件不能为空");
+        $('#empTip').show();
+    }
+    else{
+        $('#empTip').hide();
+        var ids=$("#options").val();
+        var followers=ids.join();
+        $.post("/risk/add", {"name": name,"content":content,"possibility":$('input:radio[name="optionsRadiosinline"]:checked').val(),"impact":$('input:radio[name="optionsRadiosinline1"]:checked').val(),"trigger":trigger,"followers":followers},
+            function(result){
+                if(result['result']=="true"){
+                    vm.isUpdate=(vm.isUpdate==0?1:0);
+                }
+                else{
+                    alert(result['result']);
+                }
+                $('#myModal').modal('hide');
+            }, "json");
+    }
 });
 
+$("#modifyRisk").unbind().bind("click", function () {
+    var name=$('#modifyname').val();
+    var content=$('#modifycontent').val();
+    var trigger=$('#modifytrigger').val();
+    if(name==null||name==""){
+        $('#empTip2').text("风险名不能为空");
+        $('#empTip2').show();
+    }
+    else if(content==null||content==""){
+        $('#empTip2').text("风险内容不能为空");
+        $('#empTip2').show();
+    }
+    else if(trigger==null||trigger==""){
+        $('#empTip2').text("触发条件不能为空");
+        $('#empTip2').show();
+    }
+    else{
+        $('#empTip2').hide();
+        var id=$("#modifyID").val();
+        var ids=$("#modifyoptions").val();
+        var followers=ids.join();
+        $.post("/risk/update", {"id":id,"name": name,"content":content,"possibility":$('input:radio[name="modifyoptionsRadiosinline"]:checked').val(),"impact":$('input:radio[name="modifyoptionsRadiosinline1"]:checked').val(),"trigger":trigger,"followers":followers},
+            function(result){
+                if(result['result']=="true"){
+                    vm.isUpdate=(vm.isUpdate==0?1:0);
+                }
+                else{
+                    alert(result['result']);
+                }
+                $('#modifyModal').modal('hide');
+            }, "json");
+    }
+});
+
+
+
+$.post("/user/searchByName", {"name": ""},
+    function(result){
+        var list= result.list;
+        var htm="";
+        for(var i=0;i<list.length;i++){
+            htm+='<option value="'+list[i]['name']+'">'+list[i]['name']+'</option>';
+        }
+        $('#options').html(htm);
+        $('#modifyoptions').html(htm);
+        var height=31;
+        if(list.length!=0){
+            height=list.length*18+13;
+        }
+        $('#options').css("height",height+"px");
+        $('#modifyoptions').css("height",height+"px");
+    }, "json");
+
+
+$("#batchBtn").unbind().bind("click", function () {
+    $("#ltip").hide();
+    var trs=$('table tbody tr').find('input:checked').parent().parent();
+    if(trs.length==0){
+        $("#ltip").show();
+    }
+    else{
+        $("#ltip").hide();
+        var ids=new Array();
+        for(var i=0;i<trs.length;i++){
+            var id=trs.eq(i).children().eq(11).text();
+            ids.push(id);
+        }
+        if(confirm("确定要批量删除这些风险吗?")==true){
+            $.post("/risk/delete", {"idStr":ids.join()},
+                function(result){
+                    if(result['result']=="true"){
+                        vm.isUpdate=(vm.isUpdate==0?1:0);
+                    }
+                    else{
+                        alert(result['result']);
+                    }
+                }, "json");
+        }
+    }
+});

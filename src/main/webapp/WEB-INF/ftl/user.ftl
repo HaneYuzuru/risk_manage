@@ -137,7 +137,7 @@
 </div>
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-           aria-labelledby="myModalLabel" aria-hidden="true">
+     aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -332,6 +332,6 @@
 <#include "footer.ftl"/>
 <script src="js/vue.min.js"></script>
 <script src="js/dateRange.js"></script>
-<script src="js/home.js"></script>
+<script src="js/user.js"></script>
 </body>
 </html>

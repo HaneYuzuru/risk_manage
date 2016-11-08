@@ -11,7 +11,7 @@ import java.util.List;
  * description:
  */
 public interface IRiskDAO {
-    public boolean insert(RiskDO riskDO);
+    public int insert(RiskDO riskDO);
 
     public int batchInsert(List<RiskDO> riskDOList);
 
