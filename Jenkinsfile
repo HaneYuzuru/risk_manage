@@ -8,7 +8,7 @@ node {
     }
     stage('build') {
         def mvnHome = tool 'M3'
-        sh "${mvnHome}/bin/mvn -B clean package"
+        sh "${mvnHome}/bin/mvn -B clean package -Dmaven.test.skip=true "
     }
     stage('deploy') {
         sh "docker stop my || true"
