@@ -155,6 +155,17 @@ public class RiskServiceImpl implements IRiskService {
         return riskVOs;
     }
 
+    @Override
+    public RiskVO getById(int riskId) {
+        List<RiskDO> riskDOs = riskDAO.selectByIdList(Lists.<Integer>newArrayList(riskId));
+        if (CollectionUtils.isEmpty(riskDOs)) {
+            return null;
+        }
+
+        RiskDO riskDO = riskDOs.get(0);
+        return do2vo(riskDO);
+    }
+
     private List<Integer> genUserIds(List<UserDO> users) {
         List<Integer> result = Lists.newArrayList();
         if (CollectionUtils.isEmpty(users)) {

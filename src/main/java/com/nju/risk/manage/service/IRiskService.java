@@ -50,4 +50,12 @@ public interface IRiskService {
      * @return
      */
     public List<RiskVO> searchByTime(String start, String end);
+
+    /**
+     * 获取风险VO
+     *
+     * @param riskId 风险id
+     * @return 如果查询不到该id的数据，返回null
+     */
+    public RiskVO getById(int riskId);
 }

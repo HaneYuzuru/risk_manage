@@ -32,8 +32,6 @@ public class RiskDAOTest extends BaseDaoTestConfiguration {
         riskDO.setDataStatus(1);
         int ret = riskDAO.insert(riskDO);
         Assert.assertNotEquals(0,ret);
-        List<RiskDO> resultList = riskDAO.selectByIdList(Lists.newArrayList(1));
-        Assert.assertTrue(resultList.size() > 0);
     }
 
     @Test
@@ -62,11 +60,7 @@ public class RiskDAOTest extends BaseDaoTestConfiguration {
         int ret = riskDAO.batchInsert(Lists.newArrayList(riskDO, riskDO2));
         Assert.assertEquals(2, ret);
         int changeNum = riskDAO.batchUpdate(Lists.newArrayList(riskDO, riskDO2));
-        List<RiskDO> resultList = riskDAO.selectByIdList(Lists.newArrayList(2, 3));
-        Assert.assertEquals(2, resultList.size());
         Assert.assertEquals(0, changeNum);
-        int deleteNum = riskDAO.batchDeleteByIdList(Lists.newArrayList(2, 3));
-        Assert.assertEquals(2, deleteNum);
     }
 
     @Test

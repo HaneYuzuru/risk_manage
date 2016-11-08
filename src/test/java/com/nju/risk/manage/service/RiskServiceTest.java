@@ -22,7 +22,7 @@ public class RiskServiceTest extends BaseDaoTestConfiguration {
     public void testSearch() {
         String name = "na";
         List<RiskVO> risks = riskService.search(name, IRiskService.SEARCH_BY_COMMITTER, true);
-        System.out.println(risks);
+        Assert.assertNotEquals(0, risks.size());
     }
 
     @Test
@@ -30,7 +30,7 @@ public class RiskServiceTest extends BaseDaoTestConfiguration {
         String start = "2016-11-05";
         String end = "2016-11-06";
         List<RiskVO> risks = riskService.searchByTime(start, end);
-        System.out.println(risks.size());
+        Assert.assertNotEquals(0, risks.size());
 
     }
 

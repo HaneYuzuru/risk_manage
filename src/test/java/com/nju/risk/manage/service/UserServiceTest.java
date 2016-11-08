@@ -23,10 +23,10 @@ public class UserServiceTest extends BaseDaoTestConfiguration {
     }
 
     @Test
-    public void testSearch(){
+    public void testSearch() {
         String name = "";
-        int size=userService.searchByName(name).size();
-        System.out.println(size);
+        int size = userService.searchByName(name).size();
+        Assert.assertNotEquals(0, size);
     }
 
 }
