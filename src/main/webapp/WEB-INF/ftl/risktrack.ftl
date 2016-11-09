@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="css/dateRange.css">
 <div class="body" style="min-height:510px;" id="app">
     <div class="container-fluid">
-        <input type="hidden" id="riskID" value="${riskID!}" />
+        <input type="hidden" id="riskID" value="${riskID2!}" />
         <div class="row" style="margin-top:-45px;">
             <div class="col-sm-12 col-md-12 main">
                 <div class="form-group" style="background-color:#666666;font-size:17px;color:white;border-radius:10px;padding:10px 20px;height:46px;">
