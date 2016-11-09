@@ -24,7 +24,7 @@ jQuery(document).ready(function() {
         });
         if (isEmpty == false) {
             $.ajax({
-                url: 'login/testRegister',
+                url: '/risk_manage-release-1.0-SNAPSHOT/login/testRegister',
                 type: 'POST', //GET
                 async: false,    //或false,是否异步
                 data: {

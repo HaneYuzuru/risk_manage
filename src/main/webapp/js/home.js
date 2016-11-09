@@ -6,7 +6,7 @@ $('#fengxian').addClass('active');
 var vm = new Vue({
     el: '#app',
     ready: function () {
-        $.post("risk/getRisks", {"beginDate": getTheDate(-5), "endDate": getTheDate(0)},
+        $.post("/risk_manage-release-1.0-SNAPSHOT/risk/getRisks", {"beginDate": getTheDate(-5), "endDate": getTheDate(0)},
             function(result){
                 vm.$set('tds', result.list);
             }, "json");
@@ -26,7 +26,7 @@ var vm = new Vue({
 //			},
     methods: {
         search: function () {
-            $.post("risk/getRisks", {"beginDate": $("#date_begin").text(), "endDate": $("#date_end").text()},
+            $.post("/risk_manage-release-1.0-SNAPSHOT/risk/getRisks", {"beginDate": $("#date_begin").text(), "endDate": $("#date_end").text()},
                 function(result){
                     vm.$set('tds', result.list);
                 }, "json");
@@ -45,7 +45,7 @@ var vm = new Vue({
         delete:function(index){
             if(confirm("确定要删除该风险吗?")==true){
                 var riskid=vm.tds[index].id;
-                $.post("risk/delete", {"idStr":riskid},
+                $.post("/risk_manage-release-1.0-SNAPSHOT/risk/delete", {"idStr":riskid},
                     function(result){
                         if(result['result']=="true"){
                             vm.isUpdate=(vm.isUpdate==0?1:0);
@@ -72,7 +72,7 @@ vm.$watch('tds',function(val){
 })
 
 vm.$watch('isUpdate',function(val){
-    $.post("risk/getRisks", {"beginDate": $("#date_begin").text(), "endDate": $("#date_end").text()},
+    $.post("/risk_manage-release-1.0-SNAPSHOT/risk/getRisks", {"beginDate": $("#date_begin").text(), "endDate": $("#date_end").text()},
         function(result){
             vm.$set('tds', result.list);
         }, "json");
@@ -174,7 +174,7 @@ $("#submitRisk").unbind().bind("click", function () {
         if(ids!=null){
             followers=ids.join();
         }
-        $.post("risk/add", {"name": name,"content":content,"possibility":$('input:radio[name="optionsRadiosinline"]:checked').val(),"impact":$('input:radio[name="optionsRadiosinline1"]:checked').val(),"trigger":trigger,"followers":followers},
+        $.post("/risk_manage-release-1.0-SNAPSHOT/risk/add", {"name": name,"content":content,"possibility":$('input:radio[name="optionsRadiosinline"]:checked').val(),"impact":$('input:radio[name="optionsRadiosinline1"]:checked').val(),"trigger":trigger,"followers":followers},
             function(result){
                 if(result['result']=="true"){
                     vm.isUpdate=(vm.isUpdate==0?1:0);
@@ -214,7 +214,7 @@ $("#modifyRisk").unbind().bind("click", function () {
         var id=$("#modifyID").val();
         var ids=$("#modifyoptions").val();
         var followers=ids.join();
-        $.post("risk/update", {"id":id,"name": name,"content":content,"possibility":$('input:radio[name="modifyoptionsRadiosinline"]:checked').val(),"impact":$('input:radio[name="modifyoptionsRadiosinline1"]:checked').val(),"trigger":trigger,"followers":followers},
+        $.post("/risk_manage-release-1.0-SNAPSHOT/risk/update", {"id":id,"name": name,"content":content,"possibility":$('input:radio[name="modifyoptionsRadiosinline"]:checked').val(),"impact":$('input:radio[name="modifyoptionsRadiosinline1"]:checked').val(),"trigger":trigger,"followers":followers},
             function(result){
                 if(result['result']=="true"){
                     vm.isUpdate=(vm.isUpdate==0?1:0);
@@ -229,7 +229,7 @@ $("#modifyRisk").unbind().bind("click", function () {
 
 
 
-$.post("user/searchByName", {"name": ""},
+$.post("/risk_manage-release-1.0-SNAPSHOT/user/searchByName", {"name": ""},
     function(result){
         var list= result.list;
         var htm="";
@@ -261,7 +261,7 @@ $("#batchBtn").unbind().bind("click", function () {
             ids.push(id);
         }
         if(confirm("确定要批量删除这些风险吗?")==true){
-            $.post("risk/delete", {"idStr":ids.join()},
+            $.post("/risk_manage-release-1.0-SNAPSHOT/risk/delete", {"idStr":ids.join()},
                 function(result){
                     if(result['result']=="true"){
                         vm.isUpdate=(vm.isUpdate==0?1:0);

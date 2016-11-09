@@ -8,7 +8,7 @@ $('#backBtn').unbind().bind("click",function(){
 var vm = new Vue({
     el: '#app',
     ready: function () {
-        $.post("riskTrack/getRisktracks", {"beginDate": getTheDate(-5), "endDate": getTheDate(0),"riskID":$('#riskID').val()},
+        $.post("/risk_manage-release-1.0-SNAPSHOT/riskTrack/getRisktracks", {"beginDate": getTheDate(-5), "endDate": getTheDate(0),"riskID":$('#riskID').val()},
             function(result){
                 vm.$set('tds', result.list);
             }, "json");
@@ -28,7 +28,7 @@ var vm = new Vue({
 //			},
     methods: {
         search: function () {
-            $.post("riskTrack/getRisktracks", {"beginDate": $("#date_begin").text(), "endDate": $("#date_end").text(),"riskID":$('#riskID').val()},
+            $.post("/risk_manage-release-1.0-SNAPSHOT/riskTrack/getRisktracks", {"beginDate": $("#date_begin").text(), "endDate": $("#date_end").text(),"riskID":$('#riskID').val()},
                 function(result){
                     vm.$set('tds', result.list);
                 }, "json");
@@ -62,7 +62,7 @@ vm.$watch('tds',function(val){
 })
 
 vm.$watch('isUpdate',function(val){
-    $.post("riskTrack/getRisktracks", {"beginDate": getTheDate(-5), "endDate": getTheDate(0),"riskID":$('#riskID').val()},
+    $.post("/risk_manage-release-1.0-SNAPSHOT/riskTrack/getRisktracks", {"beginDate": getTheDate(-5), "endDate": getTheDate(0),"riskID":$('#riskID').val()},
         function(result){
             vm.$set('tds', result.list);
         }, "json");
@@ -116,7 +116,7 @@ $("#submitRisk").unbind().bind("click", function () {
     }
     else{
         $('#empTip').hide();
-        $.post("riskTrack/add", {"riskId":$('#riskID').val(),"description":content,"status":$('input:radio[name="optionsRadiosinline"]:checked').val()},
+        $.post("/risk_manage-release-1.0-SNAPSHOT/riskTrack/add", {"riskId":$('#riskID').val(),"description":content,"status":$('input:radio[name="optionsRadiosinline"]:checked').val()},
             function(result){
                 if(result['result']=="true"){
                     vm.isUpdate=(vm.isUpdate==0?1:0);
@@ -140,7 +140,7 @@ $("#modifyRisk").unbind().bind("click", function () {
     else{
         $('#empTip2').hide();
         var id=$('#modifyID').val();
-        $.post("riskTrack/update", {"id":id,"description":content},
+        $.post("/risk_manage-release-1.0-SNAPSHOT/riskTrack/update", {"id":id,"description":content},
             function(result){
                 if(result['result']=="true"){
                     vm.isUpdate=(vm.isUpdate==0?1:0);
