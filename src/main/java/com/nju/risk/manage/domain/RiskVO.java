@@ -42,6 +42,9 @@ public class RiskVO extends BaseVO {
      */
     private String status;
 
+    /**
+     * 无参构造默认的VO，属性通过set方法设置
+     */
     public RiskVO() {
     }
 

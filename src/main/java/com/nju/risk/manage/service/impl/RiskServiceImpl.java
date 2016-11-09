@@ -128,6 +128,8 @@ public class RiskServiceImpl implements IRiskService {
                 riskQueryDO.setImpact(Integer.parseInt(keyword.toString()));
                 riskDOs = riskDAO.search(riskQueryDO);
                 break;
+            default:
+                riskDOs = Lists.newArrayList();
         }
 
         if (!CollectionUtils.isEmpty(riskDOs)) {
@@ -144,12 +146,12 @@ public class RiskServiceImpl implements IRiskService {
             return Lists.newArrayList();
         }
 
-        start = start + " 00:00:00";
-        end = end + " 23:59:59";
+        String startTime = start + " 00:00:00";
+        String endTime = end + " 23:59:59";
 
         RiskQueryDO riskQueryDO = new RiskQueryDO();
-        riskQueryDO.setStart(start);
-        riskQueryDO.setEnd(end);
+        riskQueryDO.setStart(startTime);
+        riskQueryDO.setEnd(endTime);
 
         List<RiskDO> riskDOs = riskDAO.searchByTime(riskQueryDO);
         if (CollectionUtils.isEmpty(riskDOs)) {

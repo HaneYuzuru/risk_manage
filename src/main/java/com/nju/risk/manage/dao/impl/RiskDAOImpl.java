@@ -41,8 +41,6 @@ public class RiskDAOImpl implements IRiskDAO {
 
     private final static String STATEMENT_SEARCH_BY_TIME = BASE + "searchByTime";
 
-    private final static Integer PAGE_SIZE = 20;
-
     @Autowired
     private SqlSession sqlSession;
 

@@ -40,8 +40,6 @@ public class UserDAOImpl implements IUserDAO {
 
     private final static String STATEMENT_SEARCH_BY_NAME = BASE + "searchByName";
 
-    private final static Integer PAGE_SIZE = 20;
-
     @Autowired
     private SqlSession sqlSession;
 

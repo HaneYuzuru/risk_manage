@@ -18,9 +18,6 @@ import java.util.List;
  */
 @Service
 public class RiskTrackServiceImpl implements IRiskTrackService {
-
-    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
     @Autowired
     IRiskTrackDAO riskTrackDAO;
 
@@ -44,10 +41,10 @@ public class RiskTrackServiceImpl implements IRiskTrackService {
     }
 
     public List<RiskTrackVO> searchByRiskId(int id) {
-        List<Integer> ids = new ArrayList<Integer>();
+        List<Integer> ids = new ArrayList<>();
         ids.add(id);
         List<RiskTrackDO> obtained = riskTrackDAO.selectByIdList(ids);
-        List<RiskTrackVO> result = new ArrayList<RiskTrackVO>();
+        List<RiskTrackVO> result = new ArrayList<>();
         for (RiskTrackDO trackDO : obtained) {
             result.add(do2vo(trackDO));
         }
@@ -61,12 +58,12 @@ public class RiskTrackServiceImpl implements IRiskTrackService {
             return Lists.newArrayList();
         }
 
-        start = start + " 00:00:00";
-        end = end + " 23:59:59";
+        String startTime = start + " 00:00:00";
+        String endTime = end + " 23:59:59";
 
         RiskTrackQueryDO riskTrackQueryDO = new RiskTrackQueryDO();
-        riskTrackQueryDO.setStart(start);
-        riskTrackQueryDO.setEnd(end);
+        riskTrackQueryDO.setStart(startTime);
+        riskTrackQueryDO.setEnd(endTime);
 
         List<RiskTrackDO> riskTrackDOs = riskTrackDAO.searchByTime(riskTrackQueryDO);
         if (CollectionUtils.isEmpty(riskTrackDOs)) {
