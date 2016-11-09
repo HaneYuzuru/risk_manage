@@ -35,10 +35,10 @@ public class RiskTrackController extends BaseController {
 
     @RequestMapping(value = "/add")
     @ResponseBody
-    public Map<String, Object> add(@RequestParam("riskId") int riskId, @RequestParam("description") String description) {
+    public Map<String, Object> add(@RequestParam("riskId") int riskId, @RequestParam("status") int status, @RequestParam("description") String description) {
         RiskTrackVO riskTrackVO = new RiskTrackVO();
         riskTrackVO.setRiskId(riskId);
-        riskTrackVO.setStatus(RiskStatusEnum.RISK.toString());
+        riskTrackVO.setStatus(RiskStatusEnum.fromValue(status).type());
         riskTrackVO.setDescription(description);
 
         Map<String, Object> modelMap = new HashMap<String, Object>(1);
