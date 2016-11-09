@@ -79,7 +79,7 @@
             </div>
         </div>
 
-        <div class="row" >
+        <div class="row" style="margin-bottom:20px;">
             <div class="col-sm-12 col-md-12 main" style="padding-top:10px;">
                 <table class="table table-bordered table-striped">
                     <thead>
@@ -186,70 +186,27 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label" style="margin-left:-10px;">风险名</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="modifyname"
-                                   placeholder="风险名...">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">风险内容</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" rows="3" cols="20" id="modifycontent"></textarea>
-                        </div>
-                    </div>
                     <div class="form-group" style="margin-top:-5px;">
-                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">可能性</label>
+                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">风险状态</label>
                         <div class="col-sm-10">
                             <label class="checkbox-inline" style="margin-left:-20px;">
                                 <input type="radio" name="modifyoptionsRadiosinline"
-                                       value="高" checked> 高
+                                       value="0" checked> 风险状态
                             </label>
                             <label class="checkbox-inline">
                                 <input type="radio" name="modifyoptionsRadiosinline"
-                                       value="中"> 中
+                                       value="1"> 问题状态
                             </label>
                             <label class="checkbox-inline">
                                 <input type="radio" name="modifyoptionsRadiosinline"
-                                       value="低"> 低
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin-top:-5px;">
-                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">影响程度</label>
-                        <div class="col-sm-10">
-                            <label class="checkbox-inline" style="margin-left:-20px;">
-                                <input type="radio" name="modifyoptionsRadiosinline1"
-                                       value="高" checked> 高
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="radio" name="modifyoptionsRadiosinline1"
-                                       value="中"> 中
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="radio" name="modifyoptionsRadiosinline1"
-                                       value="低"> 低
+                                       value="2"> 解决状态
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label" style="margin-left:-10px;">触发器</label>
+                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">描述信息</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="modifytrigger"
-                                   placeholder="触发条件...">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label" style="margin-left:-10px;">跟踪者</label>
-                        <div class="col-sm-10">
-                            <select multiple class="form-control" style="height:103px;" id="modifyoptions">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            <textarea class="form-control" rows="3" cols="20" name="modifycontent" id="modifycontent"></textarea>
                         </div>
                     </div>
                 </form>
@@ -261,7 +218,7 @@
                 </button>
                 <input type="hidden" id="modifyID" value=""/>
                 <button type="button" class="btn btn-primary" id="modifyRisk">
-                    修改风险
+                    修改跟踪
                 </button>
             </div>
         </div><!-- /.modal-content -->
