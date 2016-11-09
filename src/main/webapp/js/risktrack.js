@@ -139,8 +139,8 @@ $("#modifyRisk").unbind().bind("click", function () {
     }
     else{
         $('#empTip2').hide();
-        var id=$('#riskID').val();
-        $.post("/risk/update", {"id":id,"content":content},
+        var id=$('#modifyID').val();
+        $.post("/riskTrack/update", {"id":id,"description":content},
             function(result){
                 if(result['result']=="true"){
                     vm.isUpdate=(vm.isUpdate==0?1:0);

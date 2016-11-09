@@ -92,7 +92,7 @@
                     </thead>
                     <tbody id="trs">
                     <tr v-for="td in tds">
-                        <td>{{td.riskId}}</td>
+                        <td>{{td.gmtCreate}}</td>
                         <td v-if="td.status=='风险状态'"><span style="background-color:#FF9966;color:white;padding:3px 6px;border-radius: 5px;">{{td.status}}</span></td>
                         <td v-if="td.status=='问题状态'"><span style="background-color:#FF7777;color:white;padding:3px 6px;border-radius: 5px;">{{td.status}}</span></td>
                         <td v-if="td.status=='解决状态'"><span style="background-color:#99CC66;color:white;padding:3px 6px;border-radius: 5px;">{{td.status}}</span></td>
