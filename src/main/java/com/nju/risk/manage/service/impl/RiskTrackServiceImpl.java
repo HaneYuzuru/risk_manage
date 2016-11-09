@@ -2,9 +2,12 @@ package com.nju.risk.manage.service.impl;
 
 import com.google.common.collect.Lists;
 import com.nju.risk.manage.dao.IRiskTrackDAO;
-import com.nju.risk.manage.domain.*;
+import com.nju.risk.manage.domain.RiskTrackDO;
+import com.nju.risk.manage.domain.RiskTrackQueryDO;
+import com.nju.risk.manage.domain.RiskTrackVO;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 import com.nju.risk.manage.service.IRiskTrackService;
+import com.nju.risk.manage.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ import java.util.List;
  */
 @Service
 public class RiskTrackServiceImpl implements IRiskTrackService {
+    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
     @Autowired
     IRiskTrackDAO riskTrackDAO;
 
@@ -133,7 +138,9 @@ public class RiskTrackServiceImpl implements IRiskTrackService {
         riskTrackVO.setStatus(RiskStatusEnum.fromValue(riskTrackDO.getStatus()).type());
         riskTrackVO.setDescription(riskTrackDO.getDescription());
         riskTrackVO.setRiskId(riskTrackDO.getRiskId());
-
+        riskTrackVO.setId(riskTrackDO.getId());
+        riskTrackVO.setGmtCreate(DateUtil.formatDate(DATE_FORMAT, riskTrackDO.getGmtCreate()));
+        riskTrackVO.setGmtModified(DateUtil.formatDate(DATE_FORMAT, riskTrackDO.getGmtModified()));
         return riskTrackVO;
     }
 }

@@ -3,7 +3,7 @@ package com.nju.risk.manage.domain;
 /**
  * Created by zzj on 16/11/6.
  */
-public class RiskTrackVO {
+public class RiskTrackVO extends BaseVO {
     private Integer id;
 
     /**
