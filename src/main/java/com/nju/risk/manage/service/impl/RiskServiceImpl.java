@@ -6,6 +6,7 @@ import com.nju.risk.manage.domain.*;
 import com.nju.risk.manage.domain.domainEnum.ImpactEnum;
 import com.nju.risk.manage.domain.domainEnum.PossibilityEnum;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
+import com.nju.risk.manage.domain.domainEnum.UserTypeEnum;
 import com.nju.risk.manage.service.IRiskService;
 import com.nju.risk.manage.service.IRiskTrackService;
 import com.nju.risk.manage.service.IUserService;
@@ -37,6 +38,15 @@ public class RiskServiceImpl implements IRiskService {
     @Override
     public int addRiskItem(RiskVO riskVO) {
         RiskDO riskDO = vo2Do(riskVO);
+        Integer committerId = riskDO.getCommitter();
+        if (committerId == null) {
+            return 0;
+        }
+        UserDO userDO = userService.getUserById(committerId);
+        if (userDO.getUserType() != UserTypeEnum.MANAGER.value()) {
+            return 0;
+        }
+
         if (riskDO == null) {
             return 0;
         }
@@ -153,6 +163,17 @@ public class RiskServiceImpl implements IRiskService {
             riskVOs.add(do2vo(riskDO));
         }
         return riskVOs;
+    }
+
+    @Override
+    public RiskVO getById(int riskId) {
+        List<RiskDO> riskDOs = riskDAO.selectByIdList(Lists.<Integer>newArrayList(riskId));
+        if (CollectionUtils.isEmpty(riskDOs)) {
+            return null;
+        }
+
+        RiskDO riskDO = riskDOs.get(0);
+        return do2vo(riskDO);
     }
 
     private List<Integer> genUserIds(List<UserDO> users) {

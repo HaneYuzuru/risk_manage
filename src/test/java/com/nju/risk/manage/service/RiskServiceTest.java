@@ -1,7 +1,9 @@
 package com.nju.risk.manage.service;
 
 import com.nju.risk.manage.domain.RiskVO;
+import com.nju.risk.manage.domain.UserDO;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
+import com.nju.risk.manage.domain.domainEnum.UserTypeEnum;
 import com.nju.risk.manage.util.BaseDaoTestConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,28 +19,41 @@ import java.util.List;
 public class RiskServiceTest extends BaseDaoTestConfiguration {
     @Autowired
     IRiskService riskService;
+    @Autowired
+    IUserService userService;
 
     @Test
-    public void testSearch() {
-        String name = "na";
-        List<RiskVO> risks = riskService.search(name, IRiskService.SEARCH_BY_COMMITTER, true);
-        System.out.println(risks);
-    }
+    public void testAPI() {
+        UserDO userDO = new UserDO();
+        userDO.setPassword("12345a");
+        userDO.setName("winsky");
+        userDO.setUserType(UserTypeEnum.MANAGER.value());
+        boolean ret = userService.register(userDO);
+        Assert.assertTrue(ret);
 
-    @Test
-    public void testSearchByTime() {
-        String start = "2016-11-05";
-        String end = "2016-11-06";
-        List<RiskVO> risks = riskService.searchByTime(start, end);
-        System.out.println(risks.size());
-
-    }
-
-    @Test
-    public void testInsert() {
-        RiskVO riskVO = new RiskVO("风险", "风险内容", "高", "中", "阈值", "winsky", "nana,winsky", RiskStatusEnum.RISK.type());
+        RiskVO riskVO = new RiskVO("风险", "风险内容", "高", "中", "阈值", "winsky", "winsky", RiskStatusEnum.RISK.type());
         int result = riskService.addRiskItem(riskVO);
         Assert.assertNotEquals(0, result);
+
+        List<RiskVO> riskVOs = riskService.searchByTime("1999-01-01", "2999-01-01");
+        Assert.assertNotEquals(0, riskVOs.size());
+
+        RiskVO vo = riskVOs.get(0);
+        int riskId = vo.getId();
+
+        riskVO.setId(riskId);
+        riskVO.setName("风险-修改");
+        ret = riskService.updateRiskItem(riskVO);
+        Assert.assertTrue(ret);
+
+        List<RiskVO> vos = riskService.search("修改", IRiskService.SEARCH_BY_NAME, true);
+        Assert.assertNotEquals(0, vos.size());
+
+        RiskVO risk = riskService.getById(riskId);
+        Assert.assertEquals("风险-修改", risk.getName());
+
+        boolean delRet = riskService.deleteRiskItem(riskId);
+        Assert.assertTrue(delRet);
     }
 
 }
