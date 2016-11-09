@@ -45,7 +45,7 @@ var vm = new Vue({
         delete:function(index){
             if(confirm("确定要删除该风险吗?")==true){
                 var riskid=vm.tds[index].id;
-                $.post("/risk/delete", {"idStr":riskid},
+                $.post("risk/delete", {"idStr":riskid},
                     function(result){
                         if(result['result']=="true"){
                             vm.isUpdate=(vm.isUpdate==0?1:0);
