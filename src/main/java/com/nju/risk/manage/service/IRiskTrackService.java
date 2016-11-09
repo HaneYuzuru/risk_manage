@@ -47,4 +47,6 @@ public interface IRiskTrackService {
      * @return
      */
     public List<RiskTrackVO> searchByTime(int riskId, String start, String end);
+
+    public RiskTrackVO selectById(int riskTrackId);
 }

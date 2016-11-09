@@ -34,7 +34,7 @@ public class RiskTrackController extends BaseController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView riskView(@RequestParam("riskID") int riskID) {
         ModelAndView result = turnToPage("risktrack");
-        RiskVO vo=iRiskService.getById(riskID);
+        RiskVO vo = iRiskService.getById(riskID);
         result.addObject("riskVO", vo);
         result.addObject("riskID", riskID);
         return result;
@@ -43,10 +43,10 @@ public class RiskTrackController extends BaseController {
     @RequestMapping(value = "/getRisktracks", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> Login(@RequestParam("beginDate") String beginDate,
-                                     @RequestParam("endDate") String endDate,@RequestParam("riskID") int riskID) throws Exception {
+                                     @RequestParam("endDate") String endDate, @RequestParam("riskID") int riskID) throws Exception {
 
         Map<String, Object> modelMap = new HashMap<String, Object>(1);
-        List<RiskTrackVO> list = riskTrackService.searchByTime(riskID,beginDate,endDate);
+        List<RiskTrackVO> list = riskTrackService.searchByTime(riskID, beginDate, endDate);
         modelMap.put("list", list);
         return modelMap;
     }
@@ -71,14 +71,18 @@ public class RiskTrackController extends BaseController {
 
     @RequestMapping(value = "/update")
     @ResponseBody
-    public Map<String, Object> update(@RequestParam("id") int id, @RequestParam("riskId") int riskId, @RequestParam("description") String description, @RequestParam("status") int status) {
-        RiskTrackVO riskTrackVO = new RiskTrackVO();
-        riskTrackVO.setId(id);
-        riskTrackVO.setRiskId(riskId);
-        riskTrackVO.setStatus(RiskStatusEnum.fromValue(status).type());
+    public Map<String, Object> update(@RequestParam("id") int id, @RequestParam("description") String description) {
+        Map<String, Object> modelMap = new HashMap<>(1);
+
+        RiskTrackVO riskTrackVO = riskTrackService.selectById(id);
+
+        if (riskTrackVO == null) {
+            modelMap.put("result", "该id的风险跟踪不存在");
+            return modelMap;
+        }
+
         riskTrackVO.setDescription(description);
 
-        Map<String, Object> modelMap = new HashMap<String, Object>(1);
         boolean result = riskTrackService.updateRiskTrackItem(riskTrackVO);
         if (result) {
             modelMap.put("result", "true");
