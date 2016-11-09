@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
 /**
  * author: winsky
  * date: 2016/11/5
@@ -27,8 +25,6 @@ public class RiskDAOTrackTest extends BaseDaoTestConfiguration {
         riskTrackDO.setDataStatus(1);
         boolean ret = trackDAO.insert(riskTrackDO);
         Assert.assertTrue(ret);
-        List<RiskTrackDO> resultList = trackDAO.selectByIdList(Lists.newArrayList(1));
-        Assert.assertTrue(resultList.size() > 0);
     }
 
     @Test
@@ -49,11 +45,6 @@ public class RiskDAOTrackTest extends BaseDaoTestConfiguration {
         int ret = trackDAO.batchInsert(Lists.newArrayList(riskTrackDO, riskTrackDO2));
         Assert.assertEquals(2, ret);
         int changeNum = trackDAO.batchUpdate(Lists.newArrayList(riskTrackDO, riskTrackDO2));
-        List<RiskTrackDO> resultList = trackDAO.selectByIdList(Lists.newArrayList(2, 3));
-        Assert.assertEquals(2, resultList.size());
         Assert.assertEquals(0, changeNum);
-        int deleteNum = trackDAO.batchDeleteByIdList(Lists.newArrayList(2, 3));
-        Assert.assertEquals(2, deleteNum);
-
     }
 }
