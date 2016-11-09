@@ -17,29 +17,29 @@ import java.util.List;
  */
 @Repository
 public class RiskDAOImpl implements IRiskDAO {
-    private final static String BASE = "com.nju.risk.manage.dao.IRiskDAO.";
+    private static final String BASE = "com.nju.risk.manage.dao.IRiskDAO.";
 
-    private final static String STATEMENT_INSERT = BASE + "insert";
+    private static final String STATEMENT_INSERT = BASE + "insert";
 
-    private final static String STATEMENT_BATCH_INSERT = BASE + "batchInsert";
+    private static final String STATEMENT_BATCH_INSERT = BASE + "batchInsert";
 
-    private final static String STATEMENT_UPDATE = BASE + "update";
+    private static final String STATEMENT_UPDATE = BASE + "update";
 
-    private final static String STATEMENT_BATCH_UPDATE = BASE + "batchUpdate";
+    private static final String STATEMENT_BATCH_UPDATE = BASE + "batchUpdate";
 
-    private final static String STATEMENT_DELETE = BASE + "delete";
+    private static final String STATEMENT_DELETE = BASE + "delete";
 
-    private final static String STATEMENT_BATCH_DELETE_BY_ID_LIST = BASE + "batchDeleteByIdList";
+    private static final String STATEMENT_BATCH_DELETE_BY_ID_LIST = BASE + "batchDeleteByIdList";
 
-    private final static String STATEMENT_SELECT_BY_ID_LIST = BASE + "selectByIdList";
+    private static final String STATEMENT_SELECT_BY_ID_LIST = BASE + "selectByIdList";
 
-    private final static String STATEMENT_SEARCH = BASE + "search";
+    private static final String STATEMENT_SEARCH = BASE + "search";
 
-    private final static String STATEMENT_SEARCH_BY_COMMITTER = BASE + "searchByCommitterIds";
+    private static final String STATEMENT_SEARCH_BY_COMMITTER = BASE + "searchByCommitterIds";
 
-    private final static String STATEMENT_SEARCH_BY_FOLLOWER = BASE + "searchByFollowerIds";
+    private static final String STATEMENT_SEARCH_BY_FOLLOWER = BASE + "searchByFollowerIds";
 
-    private final static String STATEMENT_SEARCH_BY_TIME = BASE + "searchByTime";
+    private static final String STATEMENT_SEARCH_BY_TIME = BASE + "searchByTime";
 
     @Autowired
     private SqlSession sqlSession;

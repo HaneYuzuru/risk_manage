@@ -20,25 +20,25 @@ import java.util.List;
  */
 @Repository
 public class UserDAOImpl implements IUserDAO {
-    private final static String BASE = "com.nju.risk.manage.dao.IUserDAO.";
+    private static final String BASE = "com.nju.risk.manage.dao.IUserDAO.";
 
-    private final static String STATEMENT_INSERT = BASE + "insert";
+    private static final String STATEMENT_INSERT = BASE + "insert";
 
-    private final static String STATEMENT_BATCH_INSERT = BASE + "batchInsert";
+    private static final String STATEMENT_BATCH_INSERT = BASE + "batchInsert";
 
-    private final static String STATEMENT_UPDATE = BASE + "update";
+    private static final String STATEMENT_UPDATE = BASE + "update";
 
-    private final static String STATEMENT_BATCH_UPDATE = BASE + "batchUpdate";
+    private static final String STATEMENT_BATCH_UPDATE = BASE + "batchUpdate";
 
-    private final static String STATEMENT_DELETE = BASE + "delete";
+    private static final String STATEMENT_DELETE = BASE + "delete";
 
-    private final static String STATEMENT_BATCH_DELETE_BY_ID_LIST = BASE + "batchDeleteByIdList";
+    private static final String STATEMENT_BATCH_DELETE_BY_ID_LIST = BASE + "batchDeleteByIdList";
 
-    private final static String STATEMENT_SELECT_BY_ID_LIST = BASE + "selectByIdList";
+    private static final String STATEMENT_SELECT_BY_ID_LIST = BASE + "selectByIdList";
 
-    private final static String STATEMENT_SELECT_BY_NAME = BASE + "selectByName";
+    private static final String STATEMENT_SELECT_BY_NAME = BASE + "selectByName";
 
-    private final static String STATEMENT_SEARCH_BY_NAME = BASE + "searchByName";
+    private static final String STATEMENT_SEARCH_BY_NAME = BASE + "searchByName";
 
     @Autowired
     private SqlSession sqlSession;
