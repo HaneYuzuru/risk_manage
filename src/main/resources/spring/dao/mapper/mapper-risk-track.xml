@@ -133,4 +133,15 @@
             #{item,jdbcType=INTEGER}
         </foreach>
     </select>
+
+    <select id="searchByTime" resultMap="BaseResultMap" parameterType="com.nju.risk.manage.domain.RiskQueryDO">
+        select
+        <include refid="Base_Column_List"/>
+        from `risk_track`
+        WHERE data_status =0
+        <if test="riskId != null">
+            AND risk_id = #{riskId}
+        </if>
+        AND gmt_create BETWEEN #{start} AND #{end} ORDER BY gmt_create DESC
+    </select>
 </mapper>

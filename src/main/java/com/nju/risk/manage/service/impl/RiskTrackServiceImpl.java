@@ -54,26 +54,7 @@ public class RiskTrackServiceImpl implements IRiskTrackService {
 
     @Override
     public List<RiskTrackVO> searchByTime(String start, String end) {
-        if (StringUtils.isEmpty(start) || StringUtils.isEmpty(end)) {
-            return Lists.newArrayList();
-        }
-
-        String startTime = start + " 00:00:00";
-        String endTime = end + " 23:59:59";
-
-        RiskTrackQueryDO riskTrackQueryDO = new RiskTrackQueryDO();
-        riskTrackQueryDO.setStart(startTime);
-        riskTrackQueryDO.setEnd(endTime);
-
-        List<RiskTrackDO> riskTrackDOs = riskTrackDAO.searchByTime(riskTrackQueryDO);
-        if (CollectionUtils.isEmpty(riskTrackDOs)) {
-            return Lists.newArrayList();
-        }
-        List<RiskTrackVO> riskTrackVOs = Lists.newArrayList();
-        for (RiskTrackDO riskTrackDO : riskTrackDOs) {
-            riskTrackVOs.add(do2vo(riskTrackDO));
-        }
-        return riskTrackVOs;
+        return searchByTime(-1, start, end);
     }
 
     public List<RiskTrackDO> getRiskByRiskId(int riskId) {
@@ -100,6 +81,33 @@ public class RiskTrackServiceImpl implements IRiskTrackService {
             }
         }
         return RiskStatusEnum.fromValue(status);
+    }
+
+    @Override
+    public List<RiskTrackVO> searchByTime(int riskId, String start, String end) {
+        if (StringUtils.isEmpty(start) || StringUtils.isEmpty(end)) {
+            return Lists.newArrayList();
+        }
+
+        String startTime = start + " 00:00:00";
+        String endTime = end + " 23:59:59";
+
+        RiskTrackQueryDO riskTrackQueryDO = new RiskTrackQueryDO();
+        if (riskId != -1) {
+            riskTrackQueryDO.setRiskId(riskId);
+        }
+        riskTrackQueryDO.setStart(startTime);
+        riskTrackQueryDO.setEnd(endTime);
+
+        List<RiskTrackDO> riskTrackDOs = riskTrackDAO.searchByTime(riskTrackQueryDO);
+        if (CollectionUtils.isEmpty(riskTrackDOs)) {
+            return Lists.newArrayList();
+        }
+        List<RiskTrackVO> riskTrackVOs = Lists.newArrayList();
+        for (RiskTrackDO riskTrackDO : riskTrackDOs) {
+            riskTrackVOs.add(do2vo(riskTrackDO));
+        }
+        return riskTrackVOs;
     }
 
     private RiskTrackDO vo2do(RiskTrackVO riskTrackVO) {

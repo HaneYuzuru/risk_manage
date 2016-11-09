@@ -6,9 +6,19 @@ package com.nju.risk.manage.domain;
  * description:
  */
 public class RiskTrackQueryDO {
+    private Integer riskId = null;
+
     private String start = null;
 
     private String end = null;
+
+    public Integer getRiskId() {
+        return riskId;
+    }
+
+    public void setRiskId(Integer riskId) {
+        this.riskId = riskId;
+    }
 
     public String getStart() {
         return start;

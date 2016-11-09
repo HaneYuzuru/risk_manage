@@ -37,4 +37,14 @@ public interface IRiskTrackService {
      * @return
      */
     public RiskStatusEnum getRiskStatus(int riskId);
+
+    /**
+     * 获取某个时间段的某个风险全部跟踪情况，以创建时间排序
+     *
+     * @param riskId 风险id
+     * @param start  开始时间
+     * @param end    结束时间
+     * @return
+     */
+    public List<RiskTrackVO> searchByTime(int riskId, String start, String end);
 }
