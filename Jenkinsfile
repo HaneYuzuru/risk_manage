@@ -11,10 +11,10 @@ node {
         sh "${mvnHome}/bin/mvn -B clean package -Dmaven.test.skip=true"
     }
     stage('deploy') {
-        sh "sudo su && docker stop my || true"
-        sh "sudo su && docker rm my || true"
-        sh "sudo su && docker run --name my -p 11111:8080 -d tomcat"
-        sh "sudo su && docker cp target/risk_manage.war my:/usr/local/tomcat/webapps"
+        sh "docker stop my || true"
+        sh "docker rm my || true"
+        sh "docker run --name my -p 11111:8080 -d tomcat"
+        sh "docker cp target/risk_manage.war my:/usr/local/tomcat/webapps"
     }
     stage('results') {
         archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
