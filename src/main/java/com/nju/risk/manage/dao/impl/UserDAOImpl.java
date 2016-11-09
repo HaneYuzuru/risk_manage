@@ -110,23 +110,18 @@ public class UserDAOImpl implements IUserDAO {
             return null;
         }
 
-        try {
-            UserDO user = users.get(0);
-            String expect = user.getPassword();
-            if (expect.equals(password)) {
-                return user;
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        UserDO user = users.get(0);
+        String expect = user.getPassword();
+        if (expect.equals(password)) {
+            return user;
+        } else {
             return null;
         }
     }
 
     @Override
     public List<UserDO> searchByName(String name) {
-        if (name==null) {
+        if (name == null) {
             return Lists.newArrayList();
         }
         return sqlSession.selectList(STATEMENT_SEARCH_BY_NAME, name);

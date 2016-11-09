@@ -9,10 +9,8 @@ import java.util.Date;
  * description:
  */
 public class DateUtil {
-    private static SimpleDateFormat simpleDateFormat = null;
-
     public static String formatDate(String format, Date date) {
-        simpleDateFormat = new SimpleDateFormat(format);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
         return simpleDateFormat.format(date);
     }
 }

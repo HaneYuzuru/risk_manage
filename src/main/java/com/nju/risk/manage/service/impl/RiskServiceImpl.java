@@ -47,9 +47,6 @@ public class RiskServiceImpl implements IRiskService {
             return 0;
         }
 
-        if (riskDO == null) {
-            return 0;
-        }
         int newId = riskDAO.insert(riskDO);
 
         if (newId > 0) {
