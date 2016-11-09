@@ -36,8 +36,8 @@ var vm = new Vue({
             $('#modifyID').val(risk.id);
             $('#modifyname').val(risk.name);
             $('#modifycontent').val(risk.content);
-            $("input[type=radio][name=modifyoptionsRadiosinline][value="+risk.possibility+"]").attr("checked",'checked');
-            $("input[type=radio][name=modifyoptionsRadiosinline1][value="+risk.impact+"]").attr("checked",'checked');
+            $("input[type=radio][name=modifyoptionsRadiosinline][value="+risk.possibility+"]").prop("checked",true);
+            $("input[type=radio][name=modifyoptionsRadiosinline1][value="+risk.impact+"]").prop("checked",true);
             $('#modifytrigger').val(risk.trigger);
             $('#modifyoptions').val(risk.followerNames.split(","));
             $('#modifyModal').modal();
@@ -157,6 +157,7 @@ $("#submitRisk").unbind().bind("click", function () {
     if(name==null||name==""){
         $('#empTip').text("风险名不能为空");
         $('#empTip').show();
+        $("input[type='radio'][name='optionsRadiosinline'][value='高']").prop("checked",true);
     }
     else if(content==null||content==""){
         $('#empTip').text("风险内容不能为空");
@@ -169,11 +170,20 @@ $("#submitRisk").unbind().bind("click", function () {
     else{
         $('#empTip').hide();
         var ids=$("#options").val();
-        var followers=ids.join();
+        var followers="";
+        if(ids!=null){
+            followers=ids.join();
+        }
         $.post("/risk/add", {"name": name,"content":content,"possibility":$('input:radio[name="optionsRadiosinline"]:checked').val(),"impact":$('input:radio[name="optionsRadiosinline1"]:checked').val(),"trigger":trigger,"followers":followers},
             function(result){
                 if(result['result']=="true"){
                     vm.isUpdate=(vm.isUpdate==0?1:0);
+                    $('#riskname').val("");
+                    $('#content').val("");
+                    $("input[type='radio'][name='optionsRadiosinline'][value='高']").prop("checked",true);
+                    $("input[type='radio'][name='optionsRadiosinline1'][value='高']").prop("checked",true);
+                    $('#trigger').val("");
+                    $('#options').val(null);
                 }
                 else{
                     alert(result['result']);
@@ -280,7 +290,7 @@ function removeNotFollowers(){
             }
         }
         if(isIn==false){
-            btns.children().eq(0).remove();
+            btns.children().eq(0).replaceWith("<label style='width:52px;'></label>");
         }
     });
 }

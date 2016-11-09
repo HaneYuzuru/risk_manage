@@ -70,12 +70,14 @@
         </div>
     </#if>
 
-        <div class="row" >
+        <div class="row" style="margin-bottom:20px;">
             <div class="col-sm-12 col-md-12 main" style="padding-top:10px;">
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                        <#if type==1 !>
                         <th><input type="checkbox" id="checkAll" name="checkAll" /></th>
+                        </#if>
                         <th>修改时间</th>
                         <th>风险名</th>
                         <th>风险内容</th>
@@ -90,7 +92,9 @@
                     </thead>
                     <tbody id="trs">
                     <tr v-for="td in tds">
+                        <#if type==1 !>
                         <td><input type="checkbox" name="checkItem" /></td>
+                        </#if>
                         <td>{{td.gmtModified}}</td>
                         <td>{{td.name}}</td>
                         <td>{{td.content}}</td>

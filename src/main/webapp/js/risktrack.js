@@ -36,12 +36,19 @@ var vm = new Vue({
         modify: function(index) {
             var risk=vm.tds[index];
             $('#modifyID').val(risk.id);
-            $('#modifyname').val(risk.name);
-            $('#modifycontent').val(risk.content);
-            $("input[type=radio][name=modifyoptionsRadiosinline][value="+risk.possibility+"]").attr("checked",'checked');
-            $("input[type=radio][name=modifyoptionsRadiosinline1][value="+risk.impact+"]").attr("checked",'checked');
-            $('#modifytrigger').val(risk.trigger);
-            $('#modifyoptions').val(risk.followerNames.split(","));
+            $('#modifycontent').val(risk.description);
+            var val=0;
+            if(risk.status=="风险状态"){
+                val=0;
+            }
+            else if(risk.status=="问题状态"){
+                val=1;
+            }
+            else if(risk.status=="解决状态"){
+                val=2;
+            }
+            $("input[type=radio][name=modifyoptionsRadiosinline][value="+val+"]").prop("checked",true);
+            $("input[type=radio][name=modifyoptionsRadiosinline]").attr("disabled","disabled");
             $('#modifyModal').modal();
         }
     }
@@ -55,7 +62,7 @@ vm.$watch('tds',function(val){
 })
 
 vm.$watch('isUpdate',function(val){
-    $.post("/risk/getRisks", {"beginDate": $("#date_begin").text(), "endDate": $("#date_end").text()},
+    $.post("/riskTrack/getRisktracks", {"beginDate": getTheDate(-5), "endDate": getTheDate(0),"riskID":$('#riskID').val()},
         function(result){
             vm.$set('tds', result.list);
         }, "json");
@@ -104,15 +111,17 @@ function getTheDate(days) {
 $("#submitRisk").unbind().bind("click", function () {
     var content=$('#content').val();
     if(content==null||content==""){
-        $('#empTip').text("风险内容不能为空");
+        $('#empTip').text("跟踪描述不能为空");
         $('#empTip').show();
     }
     else{
         $('#empTip').hide();
-        $.post("/riskTrack/add", {"content":content,"possibility":$('input:radio[name="optionsRadiosinline"]:checked').val(),"impact":$('input:radio[name="optionsRadiosinline1"]:checked').val(),"trigger":trigger,"followers":followers},
+        $.post("/riskTrack/add", {"riskId":$('#riskID').val(),"description":content,"status":$('input:radio[name="optionsRadiosinline"]:checked').val()},
             function(result){
                 if(result['result']=="true"){
                     vm.isUpdate=(vm.isUpdate==0?1:0);
+                    $('#content').val("");
+                    $("input[type='radio'][name='optionsRadiosinline'][value='0']").prop("checked",true);
                 }
                 else{
                     alert(result['result']);
@@ -123,27 +132,15 @@ $("#submitRisk").unbind().bind("click", function () {
 });
 
 $("#modifyRisk").unbind().bind("click", function () {
-    var name=$('#modifyname').val();
     var content=$('#modifycontent').val();
-    var trigger=$('#modifytrigger').val();
-    if(name==null||name==""){
-        $('#empTip2').text("风险名不能为空");
-        $('#empTip2').show();
-    }
-    else if(content==null||content==""){
-        $('#empTip2').text("风险内容不能为空");
-        $('#empTip2').show();
-    }
-    else if(trigger==null||trigger==""){
-        $('#empTip2').text("触发条件不能为空");
+    if(content==null||content==""){
+        $('#empTip2').text("跟踪描述不能为空");
         $('#empTip2').show();
     }
     else{
         $('#empTip2').hide();
-        var id=$("#modifyID").val();
-        var ids=$("#modifyoptions").val();
-        var followers=ids.join();
-        $.post("/risk/update", {"id":id,"name": name,"content":content,"possibility":$('input:radio[name="modifyoptionsRadiosinline"]:checked').val(),"impact":$('input:radio[name="modifyoptionsRadiosinline1"]:checked').val(),"trigger":trigger,"followers":followers},
+        var id=$('#riskID').val();
+        $.post("/risk/update", {"id":id,"content":content},
             function(result){
                 if(result['result']=="true"){
                     vm.isUpdate=(vm.isUpdate==0?1:0);
