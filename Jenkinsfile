@@ -3,7 +3,8 @@ node {
         git branch: 'release', url: 'git@github.com:HaneYuzuru/risk_manage.git'
     }
     stage('QA') {
-        sh 'sonar-scanner'
+        def scannerHome = tool 'sonarqube';
+        sh "${scannerHome}/bin/sonar-scanner"
     }
     stage('build') {
         def mvnHome = tool 'M3'
