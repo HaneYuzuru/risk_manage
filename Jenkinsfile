@@ -11,7 +11,7 @@ node {
         sh "${mvnHome}/bin/mvn -B clean package -Dmaven.test.skip=true"
     }
     stage('deploy') {
-        sh "whoami ; docker stop my || true"
+        sh "whoami ; service docker status; docker run hello-world; docker stop my || true"
         sh "docker rm my || true"
         sh "docker run --name my -p 11111:8080 -d tomcat"
         sh "docker cp target/risk_manage.war my:/usr/local/tomcat/webapps"
