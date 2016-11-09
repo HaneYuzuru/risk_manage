@@ -26,7 +26,7 @@ jQuery(document).ready(function() {
 		});
 		if (isEmpty == false) {
 			$.ajax({
-				url: '/login/testlogin',
+				url: 'login/testlogin',
 				type: 'POST', //GET
 				async: true,    //或false,是否异步
 				data: {

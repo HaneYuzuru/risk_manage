@@ -35,7 +35,7 @@ var vm = new Vue({
         },
         modify: function(index) {
             var risk=vm.tds[index];
-            $('#riskID').val(risk.id);
+            $('#modifyID').val(risk.id);
             $('#modifycontent').val(risk.description);
             var val=0;
             if(risk.status=="风险状态"){
