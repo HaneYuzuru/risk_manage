@@ -117,7 +117,7 @@ public class RiskTrackServiceImpl implements IRiskTrackService {
 
     @Override
     public RiskTrackVO selectById(int riskTrackId) {
-        List<RiskTrackDO> riskTrackDOs = riskTrackDAO.selectByRiskIdList(Lists.newArrayList(riskTrackId));
+        List<RiskTrackDO> riskTrackDOs = riskTrackDAO.selectByIdList(Lists.newArrayList(riskTrackId));
         if (CollectionUtils.isEmpty(riskTrackDOs)) {
             return null;
         }
