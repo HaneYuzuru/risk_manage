@@ -1,7 +1,9 @@
 package com.nju.risk.manage.controller;
 
 import com.nju.risk.manage.domain.RiskTrackVO;
+import com.nju.risk.manage.domain.RiskVO;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
+import com.nju.risk.manage.service.IRiskService;
 import com.nju.risk.manage.service.IRiskTrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,11 +28,27 @@ import java.util.Map;
 public class RiskTrackController extends BaseController {
     @Autowired
     IRiskTrackService riskTrackService;
+    @Autowired
+    IRiskService iRiskService;
 
-    @RequestMapping
-    public ModelAndView riskView() {
-        // TODO: 2016/11/7 View的字符串
-        return turnToPage("");
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView riskView(@RequestParam("riskID") int riskID) {
+        ModelAndView result = turnToPage("risktrack");
+        RiskVO vo=iRiskService.getById(riskID);
+        result.addObject("riskVO", vo);
+        result.addObject("riskID", riskID);
+        return result;
+    }
+
+    @RequestMapping(value = "/getRisktracks", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> Login(@RequestParam("beginDate") String beginDate,
+                                     @RequestParam("endDate") String endDate,@RequestParam("riskID") int riskID) throws Exception {
+
+        Map<String, Object> modelMap = new HashMap<String, Object>(1);
+        List<RiskTrackVO> list = riskTrackService.searchByTime(riskID,beginDate,endDate);
+        modelMap.put("list", list);
+        return modelMap;
     }
 
     @RequestMapping(value = "/add")

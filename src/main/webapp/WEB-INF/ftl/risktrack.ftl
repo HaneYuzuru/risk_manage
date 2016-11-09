@@ -18,7 +18,20 @@
 <link rel="stylesheet" href="css/dateRange.css">
 <div class="body" style="min-height:510px;" id="app">
     <div class="container-fluid">
-        <div class="row" style="margin-top:-55px;">
+        <input type="hidden" id="riskID" value="${riskID!}" />
+        <div class="row" style="margin-top:-45px;">
+            <div class="col-sm-12 col-md-12 main">
+                <div class="form-group" style="background-color:#666666;font-size:17px;color:white;border-radius:10px;padding:10px 20px;height:46px;">
+                    <span class="col-sm-2 col-md-2">风险名称 : ${riskVO.getName()!}&nbsp;&nbsp;</span>
+                    <span class="col-sm-2 col-md-2">内容 : ${riskVO.getContent()!}&nbsp;&nbsp;</span>
+                    <span class="col-sm-2 col-md-2">可能性 : ${riskVO.getPossibility()!}&nbsp;&nbsp;</span>
+                    <span class="col-sm-2 col-md-2">影响程度 : ${riskVO.getImpact()!}&nbsp;&nbsp;</span>
+                    <span class="col-sm-2 col-md-2">触发器 : ${riskVO.getTrigger()!}&nbsp;&nbsp;</span>
+                    <span class="col-sm-2 col-md-2">当前状态 : ${riskVO.getStatus()!}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="position:relative;top:-5px;">
             <div class="col-sm-12 col-md-12 main">
                 <!-- page inner nav -->
                 <nav class="navbar navbar-default" id="app-navbar" style="top:10px;">
@@ -54,73 +67,41 @@
             </div>
             <!--/.main -->
         </div>
-        <input type="hidden" id="hiddenUsername" value="${username!}" />
         <!--/.row -->
-    <#if type==1 !>
         <div class="row">
             <div class="col-sm-12 col-md-12 main" style="padding-bottom: 0px;">
                 <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" >
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 增加
                 </button>
-                <button type="button" class="btn btn-default btn-sm" id="batchBtn">
-                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> 批量删除
+                <button type="button" class="btn btn-default btn-sm" id="backBtn">
+                    <span class="glyphicon glyphicon-share-alt"></span> 返回
                 </button>
-                <span id="ltip" style="display:none;color:red;position:relative;left:5px;top:2px;">您未选择任何风险</span>
             </div>
         </div>
-    </#if>
 
         <div class="row" >
             <div class="col-sm-12 col-md-12 main" style="padding-top:10px;">
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th><input type="checkbox" id="checkAll" name="checkAll" /></th>
-                        <th>修改时间</th>
-                        <th>风险名</th>
-                        <th>风险内容</th>
-                        <th>可能性</th>
-                        <th>影响程度</th>
-                        <th>触发器</th>
+                        <th>创建时间</th>
                         <th>风险状态</th>
-                        <th>提交者</th>
-                        <th>跟踪者</th>
+                        <th>描述</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody id="trs">
                     <tr v-for="td in tds">
-                        <td><input type="checkbox" name="checkItem" /></td>
-                        <td>{{td.gmtModified}}</td>
-                        <td>{{td.name}}</td>
-                        <td>{{td.content}}</td>
-                        <td>{{td.possibility}}</td>
-                        <td>{{td.impact}}</td>
-                        <td>{{td.trigger}}</td>
-                        <td>{{td.status}}</td>
-                        <td>{{td.committerName}}</td>
-                        <td>{{td.followerNames}}</td>
+                        <td>{{td.riskId}}</td>
+                        <td v-if="td.status=='风险状态'"><span style="background-color:#FF9966;color:white;padding:3px 6px;border-radius: 5px;">{{td.status}}</span></td>
+                        <td v-if="td.status=='问题状态'"><span style="background-color:#FF7777;color:white;padding:3px 6px;border-radius: 5px;">{{td.status}}</span></td>
+                        <td v-if="td.status=='解决状态'"><span style="background-color:#99CC66;color:white;padding:3px 6px;border-radius: 5px;">{{td.status}}</span></td>
+                        <td>{{td.description}}</td>
                         <td>
-                        <#if type==0 !>
-                            <button v-on:click="track($index)" type="button"
-                                    class="btn btn-default btn-xs"
-                                    style="padding:1px 10px;font-size:15px;margin-top:-2px;margin-bottom:0px;">跟踪
-                            </button>
-                        </#if>
-                        <#if type==1 !>
-                            <button v-on:click="track($index)" type="button"
-                                    class="btn btn-default btn-xs"
-                                    style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">跟踪
-                            </button>
                             <button v-on:click="modify($index)" type="button"
                                     class="btn btn-default btn-xs"
-                                    style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">修改
+                                    style="padding:1px 10px;font-size:15px;margin-top:-2px;margin-bottom:0px;">修改
                             </button>
-                            <button v-on:click="delete($index)" type="button"
-                                    class="btn btn-default btn-xs"
-                                    style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">删除
-                            </button>
-                        </#if>
                         </td>
                         <td style="display: none;">{{td.id}}</td>
                     </tr>
@@ -138,7 +119,7 @@
 </div>
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-           aria-labelledby="myModalLabel" aria-hidden="true">
+     aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -147,75 +128,32 @@
                     &times;
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                    增加风险
+                    增加风险跟踪
                 </h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form" id="addForm">
-                    <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label" style="margin-left:-10px;">风险名</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="riskname" name="name"
-                                   placeholder="风险名...">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">风险内容</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" rows="3" cols="20" name="content" id="content"></textarea>
-                        </div>
-                    </div>
                     <div class="form-group" style="margin-top:-5px;">
-                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">可能性</label>
+                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">风险状态</label>
                         <div class="col-sm-10">
                             <label class="checkbox-inline" style="margin-left:-20px;">
                                 <input type="radio" name="optionsRadiosinline" id="optionsRadios3"
-                                       value="高" checked> 高
+                                       value="0" checked> 风险状态
                             </label>
                             <label class="checkbox-inline">
                                 <input type="radio" name="optionsRadiosinline" id="optionsRadios4"
-                                       value="中"> 中
+                                       value="1"> 问题状态
                             </label>
                             <label class="checkbox-inline">
                                 <input type="radio" name="optionsRadiosinline" id="optionsRadios4"
-                                       value="低"> 低
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin-top:-5px;">
-                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">影响程度</label>
-                        <div class="col-sm-10">
-                            <label class="checkbox-inline" style="margin-left:-20px;">
-                                <input type="radio" name="optionsRadiosinline1" id="optionsRadios3"
-                                       value="高" checked> 高
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="radio" name="optionsRadiosinline1" id="optionsRadios4"
-                                       value="中"> 中
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="radio" name="optionsRadiosinline1" id="optionsRadios4"
-                                       value="低"> 低
+                                       value="2"> 解决状态
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label" style="margin-left:-10px;">触发器</label>
+                        <label for="content" class="col-sm-2 control-label" style="margin-left:-10px;">描述信息</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="trigger" name="trigger"
-                                   placeholder="触发条件...">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label" style="margin-left:-10px;">跟踪者</label>
-                        <div class="col-sm-10">
-                            <select multiple class="form-control" style="height:103px;" id="options" name="followers">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            <textarea class="form-control" rows="3" cols="20" name="content" id="content"></textarea>
                         </div>
                     </div>
                 </form>
@@ -226,7 +164,7 @@
                         data-dismiss="modal">关闭
                 </button>
                 <button type="button" class="btn btn-primary" id="submitRisk">
-                    提交风险
+                    提交跟踪
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -333,6 +271,6 @@
 <#include "footer.ftl"/>
 <script src="js/vue.min.js"></script>
 <script src="js/dateRange.js"></script>
-<script src="js/home.js"></script>
+<script src="js/risktrack.js"></script>
 </body>
 </html>

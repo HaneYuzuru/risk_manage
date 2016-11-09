@@ -1,6 +1,8 @@
 /**
  * Created by huanghanqian on 16/11/6.
  */
+$('#yonghu').removeClass('active');
+$('#fengxian').addClass('active');
 var vm = new Vue({
     el: '#app',
     ready: function () {
@@ -53,6 +55,10 @@ var vm = new Vue({
                         }
                     }, "json");
             }
+        },
+        track:function(index){
+            var id=vm.tds[index].id;
+            window.location.href="riskTrack?riskID="+id;
         }
     }
 })
@@ -61,6 +67,7 @@ var vm = new Vue({
 vm.$watch('tds',function(val){
     vm.$nextTick(function() {
         initTableCheckbox();
+        removeNotFollowers();
     });
 })
 
@@ -255,4 +262,25 @@ $("#batchBtn").unbind().bind("click", function () {
                 }, "json");
         }
     }
+
 });
+
+function removeNotFollowers(){
+    $('#trs').children().each(function(i,n){
+        var tr = $(n)
+        var followers=tr.children().eq(9).text();
+        var btns=tr.children().eq(10);
+        var fo=followers.split(",");
+        var username=$('#hiddenUsername').val();
+        var isIn=false;
+        for(var i=0;i<fo.length;i++){
+            if(fo[i]==username){
+                isIn=true;
+                break;
+            }
+        }
+        if(isIn==false){
+            btns.children().eq(0).remove();
+        }
+    });
+}

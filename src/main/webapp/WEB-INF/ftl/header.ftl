@@ -13,9 +13,9 @@
                 </div>
                 <div class="span08">
                     <ul class="nav nav-pills">
-                        <li class="active" id="fengxian"><a href="#"><span class="glyphicon glyphicon-th-large"></span> 风险条目</a></li>
-                        <#if type==1 !>
-                           <li id="yonghu"><a href="store"><span class="glyphicon glyphicon-user"></span> 用户管理</a></li>
+                        <li class="active" id="fengxian" style="margin-top:-1px;"><a href="risk"><span class="glyphicon glyphicon-th-large"></span> 风险条目</a></li>
+                        <#if type==2 !>
+                           <li id="yonghu"><a href="user"><span class="glyphicon glyphicon-user"></span> 用户管理</a></li>
                         </#if>
                     </ul>
                 </div>
