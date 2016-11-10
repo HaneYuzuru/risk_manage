@@ -7,9 +7,9 @@
     <!-- 配置数据源 -->
     <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 数据库基本信息配置 -->
-        <property name="url" value="jdbc:mysql://localhost:3306/risk_manage?useUnicode=true&amp;characterEncoding=UTF8&amp;connectTimeout=500&amp;socketTimeout=20000&amp;allowMultiQueries=true"/>
+        <property name="url" value="jdbc:mysql://139.219.194.182:3306/risk_manage?useUnicode=true&amp;characterEncoding=UTF8&amp;connectTimeout=500&amp;socketTimeout=20000&amp;allowMultiQueries=true"/>
         <property name="username" value="root"/>
-        <property name="password" value="12345a"/>
+        <property name="password" value=""/>
 
         <!-- 初始化连接大小 -->
         <property name="initialSize" value="50"/>
