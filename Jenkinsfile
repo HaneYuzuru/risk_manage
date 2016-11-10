@@ -5,7 +5,6 @@ node {
     stage('QA') {
         def scannerHome = tool 'sonarqube';
         sh "${scannerHome}/bin/sonar-scanner"
-        sh "sonar-scanner"
     }
     stage('build') {
         def mvnHome = tool 'M3'
