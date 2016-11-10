@@ -14,14 +14,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by zzj on 16/11/6.
  */
 @Service
 public class RiskTrackServiceImpl implements IRiskTrackService {
-    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss z";
+    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     @Autowired
     IRiskTrackDAO riskTrackDAO;
@@ -149,8 +151,16 @@ public class RiskTrackServiceImpl implements IRiskTrackService {
         riskTrackVO.setDescription(riskTrackDO.getDescription());
         riskTrackVO.setRiskId(riskTrackDO.getRiskId());
         riskTrackVO.setId(riskTrackDO.getId());
-        riskTrackVO.setGmtCreate(DateUtil.formatDate(DATE_FORMAT, riskTrackDO.getGmtCreate()));
-        riskTrackVO.setGmtModified(DateUtil.formatDate(DATE_FORMAT, riskTrackDO.getGmtModified()));
+
+        // 时间的问题
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+        Calendar gc = Calendar.getInstance();
+
+        gc.setTime(riskTrackDO.getGmtCreate());
+        riskTrackVO.setGmtCreate(DateUtil.formatDate(DATE_FORMAT, gc.getTime()));
+
+        gc.setTime(riskTrackDO.getGmtModified());
+        riskTrackVO.setGmtModified(DateUtil.formatDate(DATE_FORMAT, gc.getTime()));
         return riskTrackVO;
     }
 }
