@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * author: winsky
@@ -25,7 +27,7 @@ import java.util.List;
  */
 @Service
 public class RiskServiceImpl implements IRiskService {
-    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss z";
+    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private final static String DEFAULT_RISK_TRACK_DESCRIPTION = "用户新增风险项，系统自动创建该风险的跟踪记录";
 
     @Autowired
@@ -191,8 +193,16 @@ public class RiskServiceImpl implements IRiskService {
             return null;
         }
         RiskVO riskVO = new RiskVO();
-        riskVO.setGmtCreate(DateUtil.formatDate(DATE_FORMAT, risk.getGmtCreate()));
-        riskVO.setGmtModified(DateUtil.formatDate(DATE_FORMAT, risk.getGmtModified()));
+
+        // 时间的问题
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+        Calendar gc = Calendar.getInstance();
+
+        gc.setTime(risk.getGmtCreate());
+        riskVO.setGmtCreate(DateUtil.formatDate(DATE_FORMAT, gc.getTime()));
+
+        gc.setTime(risk.getGmtModified());
+        riskVO.setGmtModified(DateUtil.formatDate(DATE_FORMAT, gc.getTime()));
         riskVO.setDataStatus(risk.getDataStatus());
         riskVO.setId(risk.getId());
         riskVO.setName(risk.getName());
