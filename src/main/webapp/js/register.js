@@ -11,7 +11,6 @@ jQuery(document).ready(function() {
      */
 
     $('#registerBtn').click(function(){
-        $.ajaxSettings.async=false;
         var isEmpty=false;
         $('.registration-form').find('input[type="text"], input[type="password"], textarea').each(function() {
             if( $(this).val() == "" ) {
@@ -26,7 +25,7 @@ jQuery(document).ready(function() {
             $.ajax({
                 url: '/risk_manage-release-1.0-SNAPSHOT/login/testRegister',
                 type: 'POST', //GET
-                async: false,    //或false,是否异步
+                async: true,    //或false,是否异步
                 data: {
                     username: $('#form-username').val()
                 },
@@ -53,8 +52,6 @@ jQuery(document).ready(function() {
                 }
             })
         }
-        $.ajaxSettings.async=true;
-
     });
 
 
