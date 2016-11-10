@@ -22,11 +22,9 @@
         <div class="row" style="margin-top:-45px;">
             <div class="col-sm-12 col-md-12 main">
                 <div class="form-group" style="background-color:#666666;font-size:17px;color:white;border-radius:10px;padding:10px 20px;height:46px;">
-                    <span class="col-sm-2 col-md-2">风险名称 : ${riskVO.getName()!}&nbsp;&nbsp;</span>
-                    <span class="col-sm-2 col-md-2">内容 : ${riskVO.getContent()!}&nbsp;&nbsp;</span>
-                    <span class="col-sm-2 col-md-2">可能性 : ${riskVO.getPossibility()!}&nbsp;&nbsp;</span>
-                    <span class="col-sm-2 col-md-2">影响程度 : ${riskVO.getImpact()!}&nbsp;&nbsp;</span>
-                    <span class="col-sm-2 col-md-2">触发器 : ${riskVO.getTrigger()!}&nbsp;&nbsp;</span>
+                    <span class="col-sm-3 col-md-3">风险名称 : ${riskVO.getName()!}&nbsp;&nbsp;</span>
+                    <span class="col-sm-4 col-md-4">内容 : ${riskVO.getContent()!}&nbsp;&nbsp;</span>
+                    <span class="col-sm-3 col-md-3">触发器 : ${riskVO.getTrigger()!}&nbsp;&nbsp;</span>
                     <span class="col-sm-2 col-md-2">当前状态 : ${riskVO.getStatus()!}</span>
                 </div>
             </div>

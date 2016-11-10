@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form role="form" action="/login/submitRegister" method="post" class="registration-form">
+                        <form role="form" action="/risk_manage-release-1.0-SNAPSHOT/login/submitRegister" method="post" class="registration-form">
                             <div class="form-group">
                                 <label class="sr-only" for="form-username">用户名</label>
                                 <input type="text" name="form-firstname" placeholder="用户名..."
