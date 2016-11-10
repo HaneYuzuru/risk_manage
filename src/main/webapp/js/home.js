@@ -300,6 +300,9 @@ function removeNotFollowers(){
            // btns.children().eq(0).replaceWith("<label style='width:52px;'></label>");
             btns.children().eq(btns.children().length-1).remove();
            // $('#trs').children().eq(0).children().eq(10).children().eq([$('#trs').children().eq(0).children().eq(10).children().length-1])
+            if(btns.children().length==3){
+                btns.css("width","184px");
+            }
         }
     });
 }
