@@ -3,6 +3,7 @@
  */
 $('#yonghu').removeClass('active');
 $('#fengxian').addClass('active');
+var userType=$('#hiddenType').val();
 var vm = new Vue({
     el: '#app',
     ready: function () {
@@ -66,7 +67,9 @@ var vm = new Vue({
 
 vm.$watch('tds',function(val){
     vm.$nextTick(function() {
-        initTableCheckbox();
+        if(userType==1){
+            initTableCheckbox();
+        }
         removeNotFollowers();
     });
 })
@@ -280,6 +283,10 @@ function removeNotFollowers(){
         var tr = $(n)
         var followers=tr.children().eq(9).text();
         var btns=tr.children().eq(10);
+        if(userType==0){
+            followers=tr.children().eq(8).text();
+            btns=tr.children().eq(9);
+        }
         var fo=followers.split(",");
         var username=$('#hiddenUsername').val();
         var isIn=false;

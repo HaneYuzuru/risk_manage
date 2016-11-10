@@ -55,6 +55,7 @@
             <!--/.main -->
         </div>
         <input type="hidden" id="hiddenUsername" value="${username!}" />
+        <input type="hidden" id="hiddenType" value="${type!}" />
         <!--/.row -->
     <#if type==1 !>
         <div class="row">
