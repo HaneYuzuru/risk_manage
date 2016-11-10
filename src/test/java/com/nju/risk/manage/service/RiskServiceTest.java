@@ -5,10 +5,12 @@ import com.nju.risk.manage.domain.UserDO;
 import com.nju.risk.manage.domain.domainEnum.RiskStatusEnum;
 import com.nju.risk.manage.domain.domainEnum.UserTypeEnum;
 import com.nju.risk.manage.util.BaseDaoTestConfiguration;
+import com.nju.risk.manage.utils.DateUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,4 +58,9 @@ public class RiskServiceTest extends BaseDaoTestConfiguration {
         Assert.assertTrue(delRet);
     }
 
+    @Test
+    public void testDate(){
+        String s= DateUtil.formatDate("yyyy-MM-dd HH:mm:ss z",new Date());
+        System.out.println(s);
+    }
 }

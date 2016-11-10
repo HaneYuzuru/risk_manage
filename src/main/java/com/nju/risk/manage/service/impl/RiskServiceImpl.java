@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Service
 public class RiskServiceImpl implements IRiskService {
-    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss z";
     private final static String DEFAULT_RISK_TRACK_DESCRIPTION = "用户新增风险项，系统自动创建该风险的跟踪记录";
 
     @Autowired
