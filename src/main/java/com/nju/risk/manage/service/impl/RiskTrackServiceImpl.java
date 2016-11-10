@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Service
 public class RiskTrackServiceImpl implements IRiskTrackService {
-    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss z";
 
     @Autowired
     IRiskTrackDAO riskTrackDAO;
