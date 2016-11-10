@@ -1,6 +1,6 @@
 node {
     stage('SCM') {
-        git branch: 'develop', url: 'git@github.com:HaneYuzuru/risk_manage.git'
+        git branch: 'develop', url: 'https://github.com/HaneYuzuru/risk_manage.git'
     }
     stage('QA') {
         def scannerHome = tool 'sonarqube';
