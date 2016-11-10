@@ -113,10 +113,6 @@
                             </button>
                         </#if>
                         <#if type==1 !>
-                            <button v-on:click="track($index)" type="button"
-                                    class="btn btn-default btn-xs"
-                                    style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">跟踪
-                            </button>
                             <button v-on:click="modify($index)" type="button"
                                     class="btn btn-default btn-xs"
                                     style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">修改
@@ -124,6 +120,10 @@
                             <button v-on:click="delete($index)" type="button"
                                     class="btn btn-default btn-xs"
                                     style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">删除
+                            </button>
+                            <button v-on:click="track($index)" type="button"
+                                    class="btn btn-default btn-xs"
+                                    style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">跟踪
                             </button>
                         </#if>
                         </td>

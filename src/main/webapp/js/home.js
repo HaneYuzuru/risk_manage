@@ -297,7 +297,9 @@ function removeNotFollowers(){
             }
         }
         if(isIn==false){
-            btns.children().eq(0).replaceWith("<label style='width:52px;'></label>");
+           // btns.children().eq(0).replaceWith("<label style='width:52px;'></label>");
+            btns.children().eq(btns.children().length-1).remove();
+           // $('#trs').children().eq(0).children().eq(10).children().eq([$('#trs').children().eq(0).children().eq(10).children().length-1])
         }
     });
 }
