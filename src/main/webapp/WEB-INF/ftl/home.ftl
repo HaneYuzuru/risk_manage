@@ -79,16 +79,16 @@
                         <#if type==1 !>
                         <th><input type="checkbox" id="checkAll" name="checkAll" /></th>
                         </#if>
-                        <th>修改时间</th>
-                        <th>风险名</th>
-                        <th>风险内容</th>
-                        <th>可能性</th>
-                        <th>影响程度</th>
-                        <th>触发器</th>
-                        <th>风险状态</th>
-                        <th>提交者</th>
-                        <th>跟踪者</th>
-                        <th>操作</th>
+                        <th style="width:50px;">修改时间</th>
+                        <th style="width:50px;">风险名</th>
+                        <th style="width:50px;">风险内容</th>
+                        <th style="width:50px;">可能性</th>
+                        <th style="width:50px;">影响程度</th>
+                        <th style="width:50px;">触发器</th>
+                        <th style="width:50px;">风险状态</th>
+                        <th style="width:50px;">提交者</th>
+                        <th style="width:50px;">跟踪者</th>
+                        <th style="width:50px;">操作</th>
                     </tr>
                     </thead>
                     <tbody id="trs">
@@ -113,10 +113,6 @@
                             </button>
                         </#if>
                         <#if type==1 !>
-                            <button v-on:click="track($index)" type="button"
-                                    class="btn btn-default btn-xs"
-                                    style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">跟踪
-                            </button>
                             <button v-on:click="modify($index)" type="button"
                                     class="btn btn-default btn-xs"
                                     style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">修改
@@ -124,6 +120,10 @@
                             <button v-on:click="delete($index)" type="button"
                                     class="btn btn-default btn-xs"
                                     style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">删除
+                            </button>
+                            <button v-on:click="track($index)" type="button"
+                                    class="btn btn-default btn-xs"
+                                    style="padding:1px 10px;font-size:15px;margin-top:-5px;margin-bottom:-2px;">跟踪
                             </button>
                         </#if>
                         </td>
