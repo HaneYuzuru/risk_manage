@@ -1,5 +1,19 @@
 
 jQuery(document).ready(function() {
+
+	$.ajax({
+		url: '/risk_manage-release-1.0-SNAPSHOT/login/testlogin',
+		type: 'POST', //GET
+		async: true,    //或false,是否异步
+		data: {
+			username: "check",
+			password: "222"
+		},
+		timeout: 5000,    //超时时间
+		dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+		success: function (res) {
+		}
+	});
 	
     /*
         Fullscreen background
