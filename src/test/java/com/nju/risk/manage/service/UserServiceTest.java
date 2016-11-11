@@ -22,18 +22,18 @@ public class UserServiceTest extends BaseDaoTestConfiguration {
     public void testAPI() {
         UserDO userDO = new UserDO();
         userDO.setPassword("12345a");
-        userDO.setName("winsky");
+        userDO.setName("test");
         userDO.setUserType(UserTypeEnum.DEVELOPER.value());
         boolean result = userService.register(userDO);
         Assert.assertTrue(result);
 
-        result = userService.checkUserName("winsky");
+        result = userService.checkUserName("test");
         Assert.assertFalse(result);
 
-        int ret = userService.login("winsky", "12345a");
+        int ret = userService.login("test", "12345a");
         Assert.assertEquals(IUserService.LOGIN_SUCCESS, ret);
 
-        UserDO user = userService.getUserByName("winsky");
+        UserDO user = userService.getUserByName("test");
         Assert.assertEquals(UserTypeEnum.DEVELOPER.value(), user.getUserType(), 0);
 
         List<UserDO> users = userService.searchByName("in");
