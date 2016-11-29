@@ -35,8 +35,5 @@ public class UserServiceTest extends BaseDaoTestConfiguration {
 
         UserDO user = userService.getUserByName("test");
         Assert.assertEquals(UserTypeEnum.DEVELOPER.value(), user.getUserType(), 0);
-
-        List<UserDO> users = userService.searchByName("in");
-        Assert.assertNotEquals(0, users.size());
     }
 }
